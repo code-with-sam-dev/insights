@@ -1,0 +1,34 @@
+{
+  "_comment": [
+    "Numbers typed by hand, for platforms whose analytics APIs are gated.",
+    "",
+    "TikTok and LinkedIn both put analytics behind developer programme approval,",
+    "and TikTok's is tied to a business account that cannot be switched on.",
+    "Meta needs app review before the Graph API returns Page or Instagram",
+    "insights. Until those clear, these numbers come off each platform's own",
+    "dashboard once a week.",
+    "",
+    "Leave a metric out entirely rather than guessing it. A missing metric reads",
+    "as 'no data' everywhere in this system. A guessed one becomes a trend line",
+    "and then becomes advice.",
+    "",
+    "The date is the day the numbers were read, not the day they were typed."
+  ],
+  "date": "2026-09-11",
+  "tiktok": {
+    "followers": 0,
+    "views30d": 0
+  },
+  "instagram": {
+    "followers": 0
+  },
+  "facebook": {
+    "followers": 0
+  },
+  "x": {
+    "followers": 0
+  },
+  "linkedin": {
+    "enquiries": 0
+  }
+}

@@ -1,0 +1,30 @@
+# End to end, with one command each.
+#
+#   docker compose run --rm test      the full suite
+#   docker compose up web             the dashboard at http://localhost:8080
+#   docker compose run --rm collect   a real collection run, needs the secrets
+services:
+  test:
+    build: .
+    command: npm test
+
+  collect:
+    build: .
+    command: npm run collect
+    environment:
+      INSIGHTS_DATA_KEY: ${INSIGHTS_DATA_KEY}
+      YOUTUBE_API_KEY: ${YOUTUBE_API_KEY}
+      YOUTUBE_CHANNEL_ID: ${YOUTUBE_CHANNEL_ID}
+      YOUTUBE_OAUTH_CLIENT_ID: ${YOUTUBE_OAUTH_CLIENT_ID:-}
+      YOUTUBE_OAUTH_CLIENT_SECRET: ${YOUTUBE_OAUTH_CLIENT_SECRET:-}
+      YOUTUBE_OAUTH_REFRESH_TOKEN: ${YOUTUBE_OAUTH_REFRESH_TOKEN:-}
+    volumes:
+      - ./web/data:/app/web/data
+
+  web:
+    build: .
+    # Passkeys are bound to an origin, and localhost counts as a secure one, so
+    # the whole unlock flow can be exercised here before anything is published.
+    command: npx --yes serve -l 8080 web
+    ports:
+      - "8080:8080"

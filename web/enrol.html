@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Enrol - Code with Sam Insights</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Enrol</h1>
+      <p class="lede">
+        Run this once. It creates the key that encrypts the dashboard, binds a
+        passkey to it, and binds a recovery passphrase to it as well. Running it
+        again makes a new key and orphans every report already published, so do
+        not run it twice without meaning to.
+      </p>
+
+      <ol class="steps">
+        <li>Choose a recovery passphrase. Long, and stored somewhere you will
+          still have it in a year. It is the only route back in if the passkey
+          is ever lost, and there is no server that can reset it.</li>
+        <li>Enrol. Your phone or laptop will ask for Face ID or a fingerprint.</li>
+        <li>Commit the generated <code>keys.json</code> and put the data key in
+          the repository secrets. Both are shown at the end.</li>
+      </ol>
+
+      <form id="enrol-form">
+        <label>
+          <span>Recovery passphrase</span>
+          <input id="passphrase" type="password" autocomplete="new-password" required />
+        </label>
+        <label>
+          <span>Repeat it</span>
+          <input id="passphrase2" type="password" autocomplete="new-password" required />
+        </label>
+        <button class="primary" type="submit">Create key and enrol passkey</button>
+      </form>
+
+      <p id="status" class="error" hidden></p>
+
+      <section id="output" hidden>
+        <h2>1. Commit this as web/data/keys.json</h2>
+        <p class="small">
+          Safe to publish. These are the data key wrapped twice over. Neither
+          wrap opens without your passkey or your passphrase.
+        </p>
+        <textarea id="keys" rows="12" readonly></textarea>
+
+        <h2>2. Add this as the INSIGHTS_DATA_KEY repository secret</h2>
+        <p class="small">
+          This one is the actual secret. It is what the collection workflow uses
+          to encrypt. Paste it into the repository settings, then close this
+          page. It is not stored anywhere by this page.
+        </p>
+        <textarea id="datakey" rows="2" readonly></textarea>
+      </section>
+    </main>
+
+    <script type="module" src="./enrol.js"></script>
+    <style>
+      .steps { max-width: 34rem; line-height: 1.6; }
+      #enrol-form { display: grid; gap: 0.9rem; max-width: 26rem; margin: 1.5rem 0; }
+      #enrol-form label { display: grid; gap: 0.3rem; }
+      #enrol-form span { font-weight: 600; font-size: 0.9rem; }
+      #enrol-form input { font: inherit; padding: 0.6rem 0.8rem; border: 2px solid var(--hairline);
+        border-radius: 10px; background: var(--card); color: inherit; }
+      textarea { width: 100%; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+        padding: 0.8rem; border: 2px solid var(--hairline); border-radius: 10px;
+        background: var(--card); color: inherit; }
+    </style>
+  </body>
+</html>

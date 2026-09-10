@@ -1,0 +1,54 @@
+name: Collect
+
+# Once a day is right for this data. Subscriber counts and watch hours move
+# slowly, the projections are trend based, and a tighter schedule would burn
+# API quota to redraw the same picture.
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  # Two runs writing the encrypted history at once would have one silently
+  # overwrite the other's day.
+  group: collect
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run the test suite
+        # The collector rewrites the encrypted history in place. Shipping a
+        # broken merge would corrupt every trend line with no visible error,
+        # so the tests gate the write rather than merely reporting after it.
+        run: npm test
+
+      - name: Collect
+        env:
+          INSIGHTS_DATA_KEY: ${{ secrets.INSIGHTS_DATA_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          YOUTUBE_CHANNEL_ID: ${{ vars.YOUTUBE_CHANNEL_ID }}
+          YOUTUBE_OAUTH_CLIENT_ID: ${{ secrets.YOUTUBE_OAUTH_CLIENT_ID }}
+          YOUTUBE_OAUTH_CLIENT_SECRET: ${{ secrets.YOUTUBE_OAUTH_CLIENT_SECRET }}
+          YOUTUBE_OAUTH_REFRESH_TOKEN: ${{ secrets.YOUTUBE_OAUTH_REFRESH_TOKEN }}
+        run: npm run collect
+
+      - name: Commit the encrypted report
+        run: |
+          git config user.name "code-with-sam-dev"
+          git config user.email "noreply@github.com"
+          git add web/data/insights.enc.json
+          # Nothing to commit is a normal outcome, not a failure: it means the
+          # numbers have not moved since the last run.
+          git diff --staged --quiet || git commit -m "Collect $(date -u +%Y-%m-%d)"
+          git push

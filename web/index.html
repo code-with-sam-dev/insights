@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Insights - Code with Sam</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="masthead">
+        <h1>Insights</h1>
+        <p class="sub">Code with Sam. Private.</p>
+      </header>
+
+      <section id="lock" class="lock">
+        <p class="lede">
+          Everything on this page is encrypted. The file this browser just
+          downloaded is unreadable without your key, which is why the page can
+          sit at a public address.
+        </p>
+
+        <button id="unlock-passkey" class="primary" type="button">
+          Unlock with passkey
+        </button>
+
+        <details class="fallback">
+          <summary>Use the recovery passphrase instead</summary>
+          <p class="small">
+            For when the phone is not to hand. Slower on purpose: the key
+            derivation is deliberately expensive so the passphrase cannot be
+            guessed cheaply.
+          </p>
+          <form id="passphrase-form">
+            <input
+              id="passphrase"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Recovery passphrase"
+            />
+            <button type="submit">Unlock</button>
+          </form>
+        </details>
+
+        <p id="lock-error" class="error" hidden></p>
+      </section>
+
+      <section id="report" hidden>
+        <div id="verdict" class="verdict"></div>
+
+        <h2>Closest to paying</h2>
+        <div id="platforms" class="cards"></div>
+
+        <h2>What is working</h2>
+        <div id="content-best"></div>
+
+        <h2>What is not</h2>
+        <div id="content-worst"></div>
+
+        <h2>Not enough data to judge</h2>
+        <div id="content-thin"></div>
+
+        <footer id="meta" class="meta"></footer>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

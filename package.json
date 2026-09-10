@@ -1,0 +1,16 @@
+{
+  "name": "codewithsam-insights",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Private analytics dashboard for the Code with Sam channels.",
+  "scripts": {
+    "build": "node tools/build-web.mjs",
+    "test": "node tools/build-web.mjs && node --test",
+    "collect": "node src/collect.mjs",
+    "serve": "npx --yes serve web"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
