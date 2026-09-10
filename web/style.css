@@ -127,3 +127,67 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 
 .meta { margin-top: 3rem; color: var(--ink-soft); font-size: 0.85rem; }
 .meta p { margin: 0.3rem 0; }
+
+/* ---------- filters ---------- */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 1.5rem 0 0.5rem;
+}
+.filter-group { display: grid; gap: 0.4rem; }
+.filter-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.chip {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  background: var(--card);
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.chip[aria-pressed='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ---------- charts ---------- */
+
+.chart { width: 100%; height: auto; display: block; overflow: visible; }
+.chart .grid { stroke: var(--hairline); stroke-width: 1; }
+.chart .line { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; }
+.chart .area { fill: var(--accent); opacity: 0.09; }
+.chart .target { stroke: var(--good); stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
+.chart .axis { font-size: 10px; fill: var(--ink-soft); }
+.chart .dot { fill: var(--accent); }
+
+.chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.chart-head h3 { margin: 0; font-size: 0.95rem; }
+.chart-head .now { font-variant-numeric: tabular-nums; font-weight: 700; }
+.chart-head .delta { font-size: 0.82rem; color: var(--ink-soft); }
+.chart-head .delta.up { color: var(--good); }
+.chart-head .delta.down { color: var(--bad); }
+
+.bars { display: grid; gap: 0.35rem; margin: 0.5rem 0 1rem; }
+.bars .row { display: grid; grid-template-columns: minmax(6rem, 14rem) 1fr auto; gap: 0.6rem; align-items: center; font-size: 0.88rem; }
+.bars .track { height: 16px; border-radius: 4px; background: var(--hairline); overflow: hidden; }
+.bars .track > span { display: block; height: 100%; background: var(--accent); }
+.bars .row .val { font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+.bars .row .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

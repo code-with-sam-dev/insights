@@ -49,10 +49,31 @@
       <section id="report" hidden>
         <div id="verdict" class="verdict"></div>
 
+        <div class="filters">
+          <div class="filter-group">
+            <span class="filter-label">Window</span>
+            <div id="window-filter" class="chips" role="group" aria-label="Time window"></div>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Platforms</span>
+            <div id="platform-filter" class="chips" role="group" aria-label="Platforms"></div>
+          </div>
+        </div>
+        <p id="filter-note" class="note" hidden></p>
+
         <h2>Closest to paying</h2>
         <div id="platforms" class="cards"></div>
 
+        <h2>Growth</h2>
+        <p class="note">
+          Every chart starts at zero. Scaling to the data's own minimum makes
+          990 to 1000 look like a tenfold rise, which on a page about where to
+          spend effort is the most misleading thing a chart can do.
+        </p>
+        <div id="trends" class="cards"></div>
+
         <h2>What is working</h2>
+        <div id="content-chart"></div>
         <div id="content-best"></div>
 
         <h2>What is not</h2>

@@ -238,3 +238,40 @@ test('contentRanking returns empty results rather than throwing on no data', () 
   assert.deepEqual(result.best, []);
   assert.deepEqual(result.worst, []);
 });
+
+test('a platform whose programme is closed reads as blocked, but still keeps its data', () => {
+  /*
+    Two different things were conflated in the first version: whether the
+    numbers can be READ, and whether the platform can PAY. TikTok is both
+    readable by hand and closed for monetisation, and it rendered as "on track"
+    towards a programme it cannot join. That is the most misleading state the
+    dashboard could produce, because it points effort at a dead end.
+  */
+  const tiktok = {
+    id: 'tiktok',
+    name: 'TikTok',
+    dataSource: 'manual',
+    monetisation: {
+      name: 'Creator Rewards',
+      blocked: true,
+      blockedReason: 'Needs a business account, which cannot be switched on.',
+      requirements: [{metric: 'followers', target: 10000, label: 'followers'}],
+    },
+  };
+
+  const state = evaluatePlatform(tiktok, {
+    followers: [
+      {date: '2026-09-01', value: 0},
+      {date: '2026-09-11', value: 100},
+    ],
+  });
+
+  assert.equal(state.status, 'blocked', 'the programme is closed, so it is not a route to money');
+  assert.equal(state.etaDays, null, 'no ETA can be honest towards a programme that cannot be joined');
+  assert.match(state.blockedReason, /business account/);
+
+  // The gaps survive, because the followers are still real and still worth
+  // charting. Blocked means "not a route to money", not "throw the data away".
+  assert.equal(state.gaps.length, 1);
+  assert.equal(state.gaps[0].current, 100);
+});

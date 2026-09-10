@@ -12,6 +12,11 @@ import {readFile, writeFile} from 'node:fs/promises';
 const HEADER =
   '/* GENERATED from src/crypto.mjs by tools/build-web.mjs. Do not edit. */\n';
 
-const source = await readFile('src/crypto.mjs', 'utf8');
-await writeFile('web/crypto.js', HEADER + source);
-console.log('web/crypto.js written from src/crypto.mjs');
+/** Modules written to run in both places, copied rather than transformed. */
+const SHARED = ['crypto', 'chart'];
+
+for (const name of SHARED) {
+  const source = await readFile(`src/${name}.mjs`, 'utf8');
+  await writeFile(`web/${name}.js`, HEADER.replace('crypto', name) + source);
+  console.log(`web/${name}.js written from src/${name}.mjs`);
+}

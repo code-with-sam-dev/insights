@@ -2,3 +2,8 @@ node_modules/
 .DS_Store
 *.log
 .env
+
+# web/data is NOT ignored. It holds keys.json and the encrypted report the
+# collection workflow commits, both of which have to be in the repository for
+# the deployed page to work at all. Demo files are marked with "_demo": true
+# instead, and tools/demo-data.mjs refuses to overwrite anything without it.

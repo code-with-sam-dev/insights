@@ -43,7 +43,10 @@ export const PLATFORMS = [
     role: 'Largest reach per unit of effort, and the cheapest place to test a hook.',
     monetisation: {
       name: 'Creator Rewards',
-      note: 'Blocked in practice: the programme needs a business account, and the free switch for one no longer exists in the app. Documented in production/distribution.md.',
+      // Readable by hand, but closed for monetisation. Two different facts.
+      blocked: true,
+      blockedReason:
+        'Creator Rewards needs a business account, and the free switch for one no longer exists in the app. The follower and view numbers are still tracked, because they matter for sponsorship even though the programme is shut.',
       requirements: [
         {metric: 'followers', target: 10000, label: 'followers'},
         {metric: 'views30d', target: 100000, label: 'views in 30 days'},

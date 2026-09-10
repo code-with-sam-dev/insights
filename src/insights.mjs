@@ -117,6 +117,26 @@ export function evaluatePlatform(platform, history = {}) {
   const stalled = gaps.some((g) => g.etaDays === null);
   const etaDays = met ? 0 : stalled ? null : Math.max(...gaps.map((g) => g.etaDays));
 
+  /*
+    Being readable and being able to pay are separate facts, and conflating
+    them produced the worst state this dashboard can show: TikTok counting
+    down towards a programme it cannot join. The numbers stay, because they
+    are real and worth charting; the countdown goes, because it points effort
+    at a dead end.
+  */
+  if (platform.monetisation?.blocked) {
+    return {
+      ...platform,
+      status: 'blocked',
+      met: false,
+      gaps,
+      stalled: false,
+      etaDays: null,
+      blockedReason:
+        platform.monetisation.blockedReason ?? 'This programme is not open to the account.',
+    };
+  }
+
   return {
     ...platform,
     status: 'tracking',

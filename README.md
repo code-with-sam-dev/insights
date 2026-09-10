@@ -66,6 +66,16 @@ match, so a hand edited copy cannot reach the deployed page. That check exists
 because a crypto file that silently drifts from its source fails at unlock time,
 which is the worst possible moment to find out.
 
+## Trying it before it has any real data
+
+    node tools/demo-data.mjs
+    docker compose up web
+
+Writes an invented report into `web/data/` and prints the passphrase to unlock
+it. The demo files are marked `"_demo": true` and the generator refuses to
+overwrite anything without that marker, so it cannot destroy real keys. Delete
+them (`rm web/data/*.json`) before enrolling for real, and do not commit them.
+
 ## Setup, once
 
 1. **Enrol.** Open `/enrol` on the deployed site, or `http://localhost:8080/enrol.html`.
