@@ -275,3 +275,56 @@ test('a platform whose programme is closed reads as blocked, but still keeps its
   assert.equal(state.gaps.length, 1);
   assert.equal(state.gaps[0].current, 100);
 });
+
+test('a platform with no readings at all is awaiting data, not stalled', () => {
+  /*
+    Seen live on 2026-09-11: YouTube rendered as STALLED while every one of its
+    metrics said "no data collected yet", and the verdict announced that it
+    "has data but no upward trend". It had nothing. Stalled is a judgement about
+    the work and says push harder or change approach; awaiting is a judgement
+    about the plumbing and says go and configure the collector. Opposite
+    actions, so they cannot share a status.
+  */
+  const state = evaluatePlatform(YOUTUBE, {});
+  assert.equal(state.status, 'awaiting');
+  assert.equal(state.stalled, false, 'nothing has stalled, because nothing has started');
+  assert.equal(state.etaDays, null);
+});
+
+test('a platform with readings that are not moving is stalled, not awaiting', () => {
+  // The real stall: numbers exist, and they are flat. This one IS about the
+  // work, and it must stay distinguishable from the case above.
+  const state = evaluatePlatform(YOUTUBE, {
+    subscribers: [
+      {date: '2026-09-01', value: 12},
+      {date: '2026-09-11', value: 12},
+    ],
+    watchHours: [
+      {date: '2026-09-01', value: 3},
+      {date: '2026-09-11', value: 3},
+    ],
+  });
+  assert.equal(state.status, 'tracking');
+  assert.equal(state.stalled, true);
+});
+
+test('one metric collected out of two is still tracking, not awaiting', () => {
+  // Partial data is real data. Only a total absence is awaiting.
+  const state = evaluatePlatform(YOUTUBE, {
+    subscribers: [
+      {date: '2026-09-01', value: 0},
+      {date: '2026-09-11', value: 100},
+    ],
+  });
+  assert.equal(state.status, 'tracking');
+});
+
+test('focusOrder ranks awaiting below stalled, because it is not a signal about the work', () => {
+  const states = [
+    {id: 'awaiting', etaDays: null, status: 'awaiting'},
+    {id: 'blocked', etaDays: null, status: 'blocked'},
+    {id: 'stalled', etaDays: null, status: 'tracking', stalled: true},
+    {id: 'moving', etaDays: 900, status: 'tracking'},
+  ];
+  assert.deepEqual(focusOrder(states).map((s) => s.id), ['moving', 'stalled', 'awaiting', 'blocked']);
+});

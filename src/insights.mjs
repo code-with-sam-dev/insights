@@ -112,10 +112,23 @@ export function evaluatePlatform(platform, history = {}) {
 
   const met = requirements.length > 0 && gaps.length === 0;
 
+  /*
+    Nothing collected at all is a different fact from collected and flat, and
+    they lead to opposite actions. Stalled says the work is not compounding, so
+    change the approach. Awaiting says the collector is not configured, so go
+    and fix the plumbing. Shipped once with these merged, and the page told Sam
+    that YouTube "has data but no upward trend" while every metric on the card
+    read "no data collected yet".
+
+    Partial data is real data. Only a total absence counts as awaiting.
+  */
+  const anyData = gaps.some((g) => g.current !== null);
+  const awaiting = !met && gaps.length > 0 && !anyData;
+
   // Every requirement has to be met, so the platform ETA is the slowest gap.
   // Any gap with no route to the target makes the whole platform unknown.
-  const stalled = gaps.some((g) => g.etaDays === null);
-  const etaDays = met ? 0 : stalled ? null : Math.max(...gaps.map((g) => g.etaDays));
+  const stalled = !awaiting && gaps.some((g) => g.etaDays === null);
+  const etaDays = met ? 0 : stalled || awaiting ? null : Math.max(...gaps.map((g) => g.etaDays));
 
   /*
     Being readable and being able to pay are separate facts, and conflating
@@ -139,7 +152,7 @@ export function evaluatePlatform(platform, history = {}) {
 
   return {
     ...platform,
-    status: 'tracking',
+    status: awaiting ? 'awaiting' : 'tracking',
     met,
     gaps,
     stalled,
@@ -151,13 +164,15 @@ export function evaluatePlatform(platform, history = {}) {
  * Platforms in the order Sam should care about them.
  *
  * Already earning first, because protecting income beats chasing it. Then
- * soonest to pay. Then stalled, which still deserves a decision. Then blocked,
- * which deserves none until the block lifts.
+ * soonest to pay. Then stalled, which is a real signal about the work and
+ * deserves a decision. Then awaiting, which is a signal about the plumbing
+ * rather than the work. Then blocked, which deserves nothing until it lifts.
  */
 export function focusOrder(states) {
   const rank = (s) => {
     if (s.met) return 0;
-    if (s.status === 'blocked') return 3;
+    if (s.status === 'blocked') return 4;
+    if (s.status === 'awaiting') return 3;
     if (s.etaDays === null) return 2;
     return 1;
   };

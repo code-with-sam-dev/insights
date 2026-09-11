@@ -108,6 +108,7 @@ input[type="password"] {
 .tag.earning { color: var(--good); }
 .tag.tracking { color: var(--accent); }
 .tag.stalled { color: var(--warn); }
+.tag.awaiting { color: var(--ink-soft); }
 .tag.blocked { color: var(--bad); }
 
 .gap { margin: 0.55rem 0; }

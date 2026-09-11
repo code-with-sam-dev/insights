@@ -172,6 +172,7 @@ function humanEta(days) {
 function statusOf(platform) {
   if (platform.met) return 'earning';
   if (platform.status === 'blocked') return 'blocked';
+  if (platform.status === 'awaiting') return 'awaiting';
   if (platform.stalled || platform.etaDays === null) return 'stalled';
   return 'tracking';
 }
@@ -347,15 +348,39 @@ function verdict(platforms) {
   const live = platforms.filter((p) => p.status !== 'blocked');
   const earning = live.filter((p) => p.met);
   const moving = live.filter((p) => !p.met && p.etaDays !== null);
-  const stalled = live.filter((p) => !p.met && p.etaDays === null);
+  const awaiting = live.filter((p) => p.status === 'awaiting');
+  const stalled = live.filter((p) => p.status !== 'awaiting' && !p.met && p.etaDays === null);
 
   if (moving.length === 0) {
+    /*
+      Awaiting is reported before stalled, and never described as a trend.
+      Telling Sam that a platform "has data but no upward trend" when nothing
+      was ever collected points him at the wrong problem entirely: he would go
+      and make more videos when the actual fix is a missing API key.
+    */
+    if (awaiting.length > 0 && stalled.length === 0) {
+      return {
+        headline: 'No data has been collected yet.',
+        body:
+          `${awaiting.map((p) => p.name).join(', ')} ${awaiting.length === 1 ? 'has' : 'have'} nothing to show, which is a gap in the collection rather than in the work. ` +
+          'Check the collection errors at the bottom of this page: they name what is missing.',
+      };
+    }
+
+    if (stalled.length > 0) {
+      return {
+        headline: 'Nothing selected is on track to pay yet.',
+        body:
+          `${stalled.map((p) => p.name).join(', ')} ${stalled.length === 1 ? 'has' : 'have'} data but no upward trend. That is a signal about the work rather than about the numbers: nothing here is compounding.` +
+          (awaiting.length > 0
+            ? ` ${awaiting.map((p) => p.name).join(', ')} ${awaiting.length === 1 ? 'is' : 'are'} not being collected at all, so nothing can be said about ${awaiting.length === 1 ? 'it' : 'them'} either way.`
+            : ''),
+      };
+    }
+
     return {
-      headline: 'Nothing selected is on track to pay yet.',
-      body:
-        stalled.length > 0
-          ? `${stalled.map((p) => p.name).join(', ')} ${stalled.length === 1 ? 'has' : 'have'} data but no upward trend. That is a signal about the work rather than about the numbers: nothing here is compounding.`
-          : 'There is not enough history to see a trend. Come back after a few more collection runs.',
+      headline: 'Not enough history yet.',
+      body: 'There are readings but no trend to draw from them. Come back after a few more collection runs.',
     };
   }
 
@@ -404,11 +429,29 @@ function platformCard(platform) {
   const card = document.createElement('article');
   card.className = 'card';
 
-  const label = {earning: 'earning', tracking: 'on track', stalled: 'stalled', blocked: 'blocked'}[status];
+  const label = {
+    earning: 'earning',
+    tracking: 'on track',
+    stalled: 'stalled',
+    awaiting: 'no data yet',
+    blocked: 'blocked',
+  }[status];
 
   card.innerHTML = `
     <h3>${platform.name} <span class="tag ${status}">${label}</span></h3>
     <p class="role">${platform.role ?? ''}</p>`;
+
+  if (status === 'awaiting') {
+    for (const gap of platform.gaps ?? []) card.append(gapRow(gap));
+    const note = document.createElement('p');
+    note.className = 'note';
+    note.textContent =
+      platform.dataSource === 'manual'
+        ? 'Nothing entered yet. These numbers are typed by hand into data/manual.json, because this platform gates its analytics API.'
+        : 'Nothing collected yet. The collector is missing credentials for this platform; the errors at the foot of this page say which.';
+    card.append(note);
+    return card;
+  }
 
   if (status === 'blocked') {
     // Still show the gaps where there are any. Blocked means "not a route to
