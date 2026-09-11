@@ -64,3 +64,16 @@ test('web/data is not ignored, because the deployed page needs what lives there'
     'web/data must stay tracked'
   );
 });
+
+test('the collect workflow deploys as well as collecting', async () => {
+  /*
+    A push made with GITHUB_TOKEN does not trigger other workflows; GitHub
+    blocks that to prevent loops. So a collect job that only commits leaves the
+    published page serving a stale report forever, and nothing anywhere reports
+    a failure. This caught us once already. The fix is that the same job which
+    writes the report also publishes it.
+  */
+  const workflow = await readFile('.github/workflows/collect.yml', 'utf8');
+  assert.match(workflow, /actions\/deploy-pages/, 'collect must publish what it wrote');
+  assert.match(workflow, /pages: write/, 'and needs the permission to do it');
+});

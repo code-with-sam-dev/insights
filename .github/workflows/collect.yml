@@ -10,6 +10,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   # Two runs writing the encrypted history at once would have one silently
@@ -20,6 +22,9 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -52,3 +57,23 @@ jobs:
           # numbers have not moved since the last run.
           git diff --staged --quiet || git commit -m "Collect $(date -u +%Y-%m-%d)"
           git push
+
+      # This job deploys as well as collects, and that is deliberate.
+      #
+      # A push made with GITHUB_TOKEN does not trigger other workflows. GitHub
+      # blocks that on purpose, to stop workflows triggering each other in a
+      # loop. The consequence here caught me out: the commit above lands, the
+      # Deploy workflow never fires, and the published page keeps serving
+      # yesterday's report forever with nothing anywhere reporting a failure.
+      #
+      # Deploying in the same job removes the class of bug rather than the
+      # instance. The page cannot lag the report, because the same run produces
+      # both.
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
