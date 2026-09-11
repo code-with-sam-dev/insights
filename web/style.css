@@ -192,3 +192,38 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .bars .track > span { display: block; height: 100%; background: var(--accent); }
 .bars .row .val { font-variant-numeric: tabular-nums; color: var(--ink-soft); }
 .bars .row .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---------- upload register ---------- */
+
+.ep-card {
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background: var(--card);
+  padding: 1rem 1.15rem;
+  margin-bottom: 0.9rem;
+}
+.ep-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+}
+.ep-head h3 { margin: 0; font-size: 1rem; }
+.ep-head .count { font-variant-numeric: tabular-nums; font-weight: 700; }
+.ep-missing { font-size: 0.85rem; color: var(--bad); margin: 0.4rem 0 0; }
+
+.up-row {
+  display: grid;
+  grid-template-columns: 5.5rem 6rem 1fr;
+  gap: 0.6rem;
+  align-items: baseline;
+  font-size: 0.88rem;
+  padding: 0.25rem 0;
+  border-top: 1px solid var(--hairline);
+}
+.up-row:first-of-type { border-top: 0; }
+.up-row .plat { font-weight: 700; }
+.up-row .asset { color: var(--ink-soft); }
+.up-row a { color: var(--accent); word-break: break-all; }
+.up-row .blocked { color: var(--warn); }

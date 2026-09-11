@@ -1,0 +1,35 @@
+{
+  "_comment": [
+    "The upload register: what actually went out, and what did not.",
+    "",
+    "An entry is PUBLISHED only if it has a url. Everything else is pending,",
+    "whether or not `blocked` explains why. A half-finished post is the",
+    "dangerous case, because it feels done and is not.",
+    "",
+    "Keep this honest. It is the only durable record of a distribution run;",
+    "session reminders die with the session."
+  ],
+  "entries": [
+    {"episode": 1, "platform": "youtube", "asset": "episode", "url": "https://youtu.be/Oa9vjdg232g", "at": "2026-09-10"},
+    {"episode": 1, "platform": "youtube", "asset": "short-1", "url": "https://youtube.com/shorts/eu6UFlFn6t0", "at": "2026-09-10"},
+    {"episode": 1, "platform": "youtube", "asset": "short-2", "url": "https://youtube.com/shorts/4ehpY9ZJzZo", "at": "2026-09-10"},
+    {"episode": 1, "platform": "youtube", "asset": "short-3", "url": "https://www.youtube.com/@CodewithSam-Dev", "at": "2026-09-10", "note": "Public, id never recorded. Worth recovering."},
+    {"episode": 1, "platform": "linkedin", "asset": "post", "url": "https://www.linkedin.com/company/code-with-sam-dev", "at": "2026-09-10"},
+    {"episode": 1, "platform": "x", "asset": "post", "url": "https://x.com/CodeWithSamDev/status/2098169825172357627", "at": "2026-09-11"},
+    {"episode": 1, "platform": "tiktok", "asset": "short-1", "url": "https://www.tiktok.com/@codewithsamdev", "at": "2026-09-10"},
+    {"episode": 1, "platform": "facebook", "asset": "short-1", "url": "https://www.facebook.com/profile.php?id=61594191065024", "at": "2026-09-10"},
+    {"episode": 1, "platform": "instagram", "asset": "short-1", "url": "https://www.instagram.com/codewithsamdev", "at": "2026-09-10"},
+    {"episode": 1, "platform": "tiktok", "asset": "short-2", "blocked": "Scheduled one per day to avoid looking like spam to TikTok's cold start. Still outstanding."},
+    {"episode": 1, "platform": "tiktok", "asset": "short-3", "blocked": "Scheduled after short 2. Still outstanding."},
+
+    {"episode": 2, "platform": "youtube", "asset": "episode", "url": "https://youtu.be/BTEAzv90W4E", "at": "2026-09-11"},
+    {"episode": 2, "platform": "youtube", "asset": "short-1", "url": "https://youtube.com/shorts/WeTEdAVIqME", "at": "2026-09-11"},
+    {"episode": 2, "platform": "youtube", "asset": "short-2", "url": "https://youtube.com/shorts/PBLV35JPwA8", "at": "2026-09-11"},
+    {"episode": 2, "platform": "youtube", "asset": "short-3", "url": "https://youtube.com/shorts/oz6NVmGKbYo", "at": "2026-09-11"},
+    {"episode": 2, "platform": "linkedin", "asset": "post", "url": "https://www.linkedin.com/company/code-with-sam-dev", "at": "2026-09-11"},
+    {"episode": 2, "platform": "x", "asset": "post", "url": "https://x.com/CodeWithSamDev/status/2098354200912466028", "at": "2026-09-11"},
+    {"episode": 2, "platform": "facebook", "asset": "short-1", "blocked": "Facebook threw a confirm-you-are-human checkpoint. Needs Sam."},
+    {"episode": 2, "platform": "instagram", "asset": "short-1", "blocked": "Instagram ignores a programmatically set file. Needs Sam at the file picker, or the phone."},
+    {"episode": 2, "platform": "tiktok", "asset": "short-1", "blocked": "Upload spins indefinitely with no error and empties the input. Needs Sam."}
+  ]
+}

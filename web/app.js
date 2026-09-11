@@ -530,6 +530,7 @@ function render() {
   $('verdict').innerHTML = `<strong>${headline}</strong><span>${body}</span>`;
 
   $('platforms').replaceChildren(...platforms.map(platformCard));
+  renderUploads(report.uploads);
   renderTrends();
 
   const best = visibleContent(report.content.best);
@@ -553,4 +554,60 @@ function render() {
     meta.push(`<p>${report.errors.length} metric(s) failed to collect: ${report.errors.join('; ')}</p>`);
   }
   $('meta').innerHTML = meta.join('');
+}
+
+/* ---------- upload register ---------- */
+
+/**
+ * What went out and what did not.
+ *
+ * Deliberately blunt. The whole value is that a gap is visible without reading
+ * a chat transcript, so a pending item is shown in warn colour with the reason
+ * beside it rather than tucked away behind a filter.
+ */
+function renderUploads(reg) {
+  const host = $('uploads');
+  if (!reg || !reg.byEpisode?.length) {
+    host.innerHTML = '<p class="note">No uploads recorded yet.</p>';
+    return;
+  }
+
+  host.replaceChildren(
+    ...reg.byEpisode.map((ep) => {
+      const card = document.createElement('article');
+      card.className = 'ep-card';
+
+      const complete = ep.pending === 0;
+      card.innerHTML = `
+        <div class="ep-head">
+          <h3>Episode ${ep.episode}</h3>
+          <span class="count" style="color:${complete ? 'var(--good)' : 'var(--warn)'}">
+            ${ep.published} of ${ep.total} published
+          </span>
+        </div>`;
+
+      for (const e of ep.entries) {
+        const row = document.createElement('div');
+        row.className = 'up-row';
+        row.innerHTML = `
+          <span class="plat">${e.platform}</span>
+          <span class="asset">${e.asset}</span>
+          <span>${
+            e.url
+              ? `<a href="${e.url}" target="_blank" rel="noopener">${e.url}</a>`
+              : `<span class="blocked">pending${e.blocked ? ': ' + e.blocked : ''}</span>`
+          }</span>`;
+        card.append(row);
+      }
+
+      if (ep.missingPlatforms.length) {
+        const m = document.createElement('p');
+        m.className = 'ep-missing';
+        m.textContent = `Not reached: ${ep.missingPlatforms.join(', ')}`;
+        card.append(m);
+      }
+
+      return card;
+    })
+  );
 }

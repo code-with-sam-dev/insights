@@ -13,6 +13,7 @@
 
 import {PLATFORMS, THRESHOLDS_VERIFIED} from './platforms.mjs';
 import {evaluatePlatform, focusOrder, contentRanking} from './insights.mjs';
+import {uploadRegister} from './uploads.mjs';
 
 /**
  * Fold one day's snapshot into the accumulated history.
@@ -50,7 +51,7 @@ export function mergeSnapshot(history, snapshot) {
 }
 
 /** Everything the page needs, already decided. The browser only renders. */
-export function buildReport(history, {content = [], generatedAt} = {}) {
+export function buildReport(history, {content = [], generatedAt, uploads = []} = {}) {
   const states = PLATFORMS.map((platform) =>
     evaluatePlatform(platform, history[platform.id] ?? {})
   );
@@ -60,6 +61,9 @@ export function buildReport(history, {content = [], generatedAt} = {}) {
     thresholdsVerified: THRESHOLDS_VERIFIED,
     platforms: focusOrder(states),
     content: contentRanking(content, {minViews: 100}),
+    // What actually went out, and what did not. The register is the durable
+    // record of a distribution run; a chat transcript is not.
+    uploads: uploadRegister(uploads),
     history,
   };
 }

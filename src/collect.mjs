@@ -34,6 +34,7 @@ import {collectYouTube} from './youtube.mjs';
 
 const REPORT_PATH = 'web/data/insights.enc.json';
 const MANUAL_PATH = 'data/manual.json';
+const UPLOADS_PATH = 'data/uploads.json';
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -104,8 +105,18 @@ async function main() {
     history = mergeSnapshot(history, {date: readOn ?? date, ...platforms});
   }
 
+  // The upload register. Hand maintained, because the only reliable source of
+  // "did this actually publish" is a human or an agent confirming it on the
+  // public page.
+  const uploadsFile = await readJson(UPLOADS_PATH);
+  const uploads = uploadsFile?.entries ?? [];
+
   const merged = mergeSnapshot(history, snapshot);
-  const report = buildReport(merged, {content, generatedAt: new Date().toISOString()});
+  const report = buildReport(merged, {
+    content,
+    uploads,
+    generatedAt: new Date().toISOString(),
+  });
   report.errors = errors;
 
   const box = await encryptPayload(key, report);

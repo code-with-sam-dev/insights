@@ -328,3 +328,67 @@ test('focusOrder ranks awaiting below stalled, because it is not a signal about 
   ];
   assert.deepEqual(focusOrder(states).map((s) => s.id), ['moving', 'stalled', 'awaiting', 'blocked']);
 });
+
+/* ---------------- upload register ---------------- */
+
+import {uploadRegister} from '../src/uploads.mjs';
+
+test('the register separates what is published from what is still pending', () => {
+  /*
+    Sam asked for this after a run where three platforms succeeded and three did
+    not. Without a register the only record is a chat transcript, and the next
+    session starts by guessing what actually went out.
+  */
+  const reg = uploadRegister([
+    {episode: 2, platform: 'youtube', asset: 'episode', url: 'https://youtu.be/X', at: '2026-09-11'},
+    {episode: 2, platform: 'tiktok', asset: 'short-1', blocked: 'upload spins forever'},
+  ]);
+
+  assert.equal(reg.published.length, 1);
+  assert.equal(reg.pending.length, 1);
+  assert.equal(reg.pending[0].blocked, 'upload spins forever');
+});
+
+test('an entry without a url is pending even if nothing marks it blocked', () => {
+  // A half-finished post is the dangerous case: it feels done and is not.
+  const reg = uploadRegister([{episode: 2, platform: 'instagram', asset: 'short-1'}]);
+  assert.equal(reg.pending.length, 1);
+  assert.equal(reg.published.length, 0);
+});
+
+test('the register counts coverage per episode, so a gap is visible at a glance', () => {
+  const reg = uploadRegister([
+    {episode: 2, platform: 'youtube', asset: 'episode', url: 'u'},
+    {episode: 2, platform: 'x', asset: 'short-1', url: 'u'},
+    {episode: 2, platform: 'tiktok', asset: 'short-1'},
+    {episode: 1, platform: 'youtube', asset: 'episode', url: 'u'},
+  ]);
+  const ep2 = reg.byEpisode.find((e) => e.episode === 2);
+  assert.equal(ep2.published, 2);
+  assert.equal(ep2.pending, 1);
+  assert.equal(ep2.total, 3);
+  assert.equal(reg.byEpisode[0].episode, 2, 'newest episode first');
+});
+
+test('a platform that was attempted but never published still counts as missing', () => {
+  /*
+    TikTok here has an entry but no URL. "Attempted" is not "reached": the
+    register exists to show where the episode actually is, and an attempt that
+    produced nothing leaves the episode absent from that platform. Getting this
+    backwards would let a failed run look like a complete one.
+  */
+  const reg = uploadRegister([
+    {episode: 2, platform: 'youtube', asset: 'episode', url: 'u'},
+    {episode: 2, platform: 'tiktok', asset: 'short-1'},
+  ]);
+  const ep2 = reg.byEpisode.find((e) => e.episode === 2);
+  assert.deepEqual(ep2.missingPlatforms, ['facebook', 'instagram', 'linkedin', 'tiktok', 'x']);
+  assert.ok(!ep2.missingPlatforms.includes('youtube'), 'youtube was actually reached');
+});
+
+test('an empty register does not throw', () => {
+  const reg = uploadRegister([]);
+  assert.deepEqual(reg.published, []);
+  assert.deepEqual(reg.pending, []);
+  assert.deepEqual(reg.byEpisode, []);
+});
