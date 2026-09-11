@@ -8,7 +8,8 @@
     "build": "node tools/build-web.mjs",
     "test": "node tools/build-web.mjs && node --test",
     "collect": "node src/collect.mjs",
-    "serve": "npx --yes serve web"
+    "serve": "npx --yes serve web",
+    "decrypt": "node tools/decrypt-report.mjs"
   },
   "engines": {
     "node": ">=22"

@@ -1,0 +1,18 @@
+{
+  "v": 1,
+  "createdAt": "2026-09-11T04:47:54.763Z",
+  "passkey": {
+    "v": 1,
+    "iv": "FWlOuDiRCecCQc8W",
+    "ciphertext": "7yoOfKzA2FUg6AfKXGviP+qElk/3gfxNaCEpklfY8w9AUujYe1sRzpvVkSMCcrdo",
+    "kdf": "HKDF-SHA256"
+  },
+  "passphrase": {
+    "v": 1,
+    "iv": "y0TgESyhHZJUy4YU",
+    "ciphertext": "gn50xeBArYAD4cD7NCByDCoteooOJQq1YHzPOUKQ2rtwd7hQLqUernCEuMPtxeTD",
+    "kdf": "PBKDF2-SHA256",
+    "iterations": 600000,
+    "salt": "b7N8frud8dBAmlFR8r+1fw=="
+  }
+}
