@@ -1,11 +1,20 @@
 name: Collect
 
-# Once a day is right for this data. Subscriber counts and watch hours move
-# slowly, the projections are trend based, and a tighter schedule would burn
-# API quota to redraw the same picture.
+# Every fifteen minutes, so the dashboard reads as close to live as a static
+# page honestly can. Sam asked for real time; the page cannot call the platform
+# APIs itself without shipping the API key to whoever opens it, so the closest
+# safe thing is to collect often and let the page notice new data on its own.
+#
+# The cost is bounded on both sides. YouTube's Data API charges about 3 quota
+# units a run against a daily 10,000, so ~300 a day. And the collector compares
+# the plaintext report before writing, so a run where nothing moved writes
+# nothing and commits nothing.
+#
+# GitHub runs scheduled workflows on a best-effort queue and is often several
+# minutes late, especially on the hour. Nothing here depends on exact timing.
 on:
   schedule:
-    - cron: '17 5 * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -53,9 +62,12 @@ jobs:
           git config user.name "code-with-sam-dev"
           git config user.email "noreply@github.com"
           git add web/data/insights.enc.json
-          # Nothing to commit is a normal outcome, not a failure: it means the
-          # numbers have not moved since the last run.
-          git diff --staged --quiet || git commit -m "Collect $(date -u +%Y-%m-%d)"
+          # Nothing to commit is the NORMAL outcome now, not a failure. At four
+          # runs an hour most of them find the numbers unmoved, and the
+          # collector declines to rewrite the file in that case, so there is
+          # nothing staged. Timestamped to the minute because there are now
+          # many commits a day.
+          git diff --staged --quiet || git commit -m "Collect $(date -u +'%Y-%m-%d %H:%M')"
           git push
 
       # This job deploys as well as collects, and that is deliberate.

@@ -57,13 +57,26 @@ for (let i = 29; i >= 0; i -= 1) {
   });
 }
 
+/*
+  The demo uses the REAL catalogue and the REAL upload register, and only fakes
+  the numbers. The matrix and the schedule are the parts most likely to be
+  quietly wrong, and feeding them invented rows would hide exactly the bug
+  worth catching: a shape mismatch between what the collector writes and what
+  the page reads.
+*/
+const json = async (path) => JSON.parse(await readFile(path, 'utf8'));
+const catalogue = (await json('data/catalogue.json')).assets;
+const uploads = (await json('data/uploads.json')).entries;
+
 const report = buildReport(history, {
+  catalogue,
+  uploads,
   content: [
-    {id: 's1', title: 'Kafka guarantees ordering... right?', platform: 'youtube', views: 1840, engagements: 221},
-    {id: 's2', title: 'Same key, same partition', platform: 'youtube', views: 3120, engagements: 94},
-    {id: 's3', title: 'Kafka kept the order. Your app did not.', platform: 'youtube', views: 2260, engagements: 340},
-    {id: 's4', title: 'Full episode: Kafka ordering', platform: 'youtube', views: 940, engagements: 61},
-    {id: 's5', title: 'Just posted', platform: 'youtube', views: 12, engagements: 4},
+    {id: 's1', title: 'Kafka guarantees ordering... right?', platform: 'youtube', views: 1840, likes: 190, comments: 31, engagements: 221},
+    {id: 's2', title: 'Same key, same partition', platform: 'youtube', views: 3120, likes: 88, comments: 6, engagements: 94},
+    {id: 's3', title: 'Kafka kept the order. Your app did not.', platform: 'youtube', views: 2260, likes: 297, comments: 43, engagements: 340},
+    {id: 's4', title: 'Full episode: Kafka ordering', platform: 'youtube', views: 940, likes: 55, comments: 6, engagements: 61},
+    {id: 's5', title: 'Just posted', platform: 'youtube', views: 12, likes: 4, comments: 0, engagements: 4},
   ],
 });
 report.errors = ['watchHours: OAuth not configured, so the YouTube projection is incomplete.'];

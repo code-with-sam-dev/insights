@@ -39,9 +39,9 @@ body {
   font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
 }
 
-.wrap { max-width: 52rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+.wrap { max-width: 68rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
 
-.masthead { margin-bottom: 2rem; }
+.masthead { margin-bottom: 1.25rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 h1 { font-size: 1.9rem; margin: 0; letter-spacing: -0.02em; }
 h2 { font-size: 1.1rem; margin: 2.5rem 0 0.85rem; letter-spacing: -0.01em; }
 .sub, .small { color: var(--ink-soft); font-size: 0.9rem; }
@@ -227,3 +227,118 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .up-row .asset { color: var(--ink-soft); }
 .up-row a { color: var(--accent); word-break: break-all; }
 .up-row .blocked { color: var(--warn); }
+
+/* ============================================================
+   Studio-style shell: a wider board, tabbed, with a live clock.
+   Added 2026-09-11 when the page grew from one scroll into four
+   questions that get asked on different days.
+   ============================================================ */
+
+/* --- freshness clock --- */
+.freshness {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; color: var(--ink-soft);
+  border: 1px solid var(--hairline); border-radius: 999px;
+  padding: 0.35rem 0.8rem; background: var(--card);
+}
+.dot-live, .dot-stale {
+  width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+}
+.dot-live { background: var(--good); }
+/* Stale is amber, never red. The numbers are not wrong, they are old, and
+   those two call for different reactions. */
+.dot-stale { background: var(--warn); }
+
+/* --- tabs --- */
+.tabs {
+  display: flex; gap: 0.25rem; border-bottom: 1px solid var(--hairline);
+  margin: 0 0 1.5rem; overflow-x: auto;
+}
+.tab {
+  font: inherit; font-weight: 600; color: var(--ink-soft);
+  background: none; border: 0; border-bottom: 2px solid transparent;
+  padding: 0.7rem 0.9rem; cursor: pointer; white-space: nowrap;
+}
+.tab:hover { color: var(--ink); }
+.tab[aria-selected='true'] { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* --- KPI strip --- */
+.kpis {
+  display: grid; gap: 0.75rem; margin: 1rem 0 1.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+}
+.kpi {
+  background: var(--card); border: 1px solid var(--hairline);
+  border-radius: 12px; padding: 0.9rem 1rem; display: grid; gap: 0.15rem;
+}
+.kpi-label { font-size: 0.8rem; color: var(--ink-soft); }
+.kpi-value { font-size: 1.6rem; font-weight: 700; line-height: 1.1; }
+.kpi-sub { font-size: 0.75rem; color: var(--ink-soft); }
+
+/* --- per-platform performance --- */
+.perf-row {
+  display: grid; grid-template-columns: 8.5rem 1fr auto; gap: 0.6rem;
+  align-items: baseline; padding: 0.45rem 0; border-top: 1px solid var(--hairline);
+  font-size: 0.9rem;
+}
+.perf-role { color: var(--ink-soft); font-size: 0.8rem; }
+.perf-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.perf-num { color: var(--ink-soft); font-size: 0.8rem; white-space: nowrap; }
+.perf-total {
+  margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px solid var(--hairline);
+  color: var(--ink-soft); font-size: 0.8rem;
+}
+.muted { color: var(--ink-soft); }
+
+/* --- tables: the matrix and the schedule --- */
+.table-scroll { overflow-x: auto; }
+table.grid { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+table.grid th, table.grid td {
+  border-bottom: 1px solid var(--hairline); padding: 0.5rem 0.6rem; text-align: left;
+}
+table.grid th { font-size: 0.78rem; color: var(--ink-soft); font-weight: 600; }
+.col-plat { text-transform: capitalize; white-space: nowrap; }
+.row-ep { white-space: nowrap; color: var(--ink-soft); }
+.row-asset { min-width: 16rem; }
+.row-title { overflow: hidden; text-overflow: ellipsis; }
+
+.kindtag {
+  display: inline-block; font-size: 0.68rem; text-transform: uppercase;
+  letter-spacing: 0.04em; padding: 0.1rem 0.4rem; border-radius: 4px;
+  border: 1px solid var(--hairline); color: var(--ink-soft); margin-right: 0.45rem;
+}
+
+/* Cells. The published tick is the only strong colour on the grid, because
+   scanning for what is DONE is the fast read; everything else is the gap. */
+td.cell-yes, td.cell-no, td.cell-blocked, td.cell-na {
+  text-align: center; font-weight: 700; width: 3.2rem;
+}
+td.cell-yes { color: var(--good); }
+td.cell-yes a { color: inherit; text-decoration: none; }
+td.cell-no { color: var(--bad); }
+td.cell-blocked { color: var(--warn); }
+/* Not applicable is deliberately almost invisible: a platform that never
+   carries this kind of asset is not a gap, and drawing it like one produces a
+   permanent red nobody can clear. */
+td.cell-na { color: var(--hairline); }
+
+/* --- schedule --- */
+.today-list { display: grid; gap: 0.6rem; margin-bottom: 1rem; }
+.today-item {
+  background: var(--card); border: 1px solid var(--hairline); border-left: 3px solid var(--accent);
+  border-radius: 10px; padding: 0.7rem 0.9rem;
+  display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;
+}
+.byhand {
+  font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--warn); border: 1px solid var(--warn); border-radius: 4px;
+  padding: 0.05rem 0.35rem;
+}
+.path { font-size: 0.75rem; color: var(--ink-soft); word-break: break-all; }
+.note.good { color: var(--good); }
+.warnline { color: var(--warn); }
+
+@media (max-width: 40rem) {
+  .perf-row { grid-template-columns: 1fr; gap: 0.15rem; }
+  .perf-num { white-space: normal; }
+}

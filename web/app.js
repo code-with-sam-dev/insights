@@ -42,9 +42,14 @@ async function unlock(getDataKey) {
     const [keys, box] = await Promise.all([fetchJson(KEYS_URL), fetchJson(REPORT_URL)]);
     const dataKey = await getDataKey(keys);
     state.report = await decryptPayload(dataKey, box);
+    // Held in memory only, for the refresh loop. It never touches storage: a
+    // key in localStorage would outlive the tab and turn "private while I am
+    // looking at it" into "private until someone opens this browser".
+    state.dataKey = dataKey;
     state.platforms = new Set(state.report.platforms.map((p) => p.id));
     buildFilters();
     render();
+    startRefresh();
   } catch (error) {
     fail(describe(error));
   }
@@ -97,8 +102,10 @@ $('passphrase-form').addEventListener('submit', async (event) => {
  */
 const state = {
   report: null,
+  dataKey: null,
   windowDays: 30,
   platforms: new Set(),
+  tab: 'overview',
 };
 
 const WINDOWS = [
@@ -530,8 +537,12 @@ function render() {
   $('verdict').innerHTML = `<strong>${headline}</strong><span>${body}</span>`;
 
   $('platforms').replaceChildren(...platforms.map(platformCard));
-  renderUploads(report.uploads);
+  renderKpis();
+  renderPerformance();
+  renderMatrix();
+  renderSchedule();
   renderTrends();
+  paintFreshness();
 
   const best = visibleContent(report.content.best);
   $('content-chart').replaceChildren(contentChart(best));
@@ -556,58 +567,331 @@ function render() {
   $('meta').innerHTML = meta.join('');
 }
 
-/* ---------- upload register ---------- */
+/* ---------- tabs ---------- */
 
 /**
- * What went out and what did not.
+ * Four panels rather than one long scroll.
  *
- * Deliberately blunt. The whole value is that a gap is visible without reading
- * a chat transcript, so a pending item is shown in warn colour with the reason
- * beside it rather than tucked away behind a filter.
+ * The sections answer different questions on different days: "where do I put
+ * the next hour" is a weekly question, "what do I post today" is a daily one.
+ * Stacking them meant the daily one was always four screens down.
  */
-function renderUploads(reg) {
-  const host = $('uploads');
-  if (!reg || !reg.byEpisode?.length) {
-    host.innerHTML = '<p class="note">No uploads recorded yet.</p>';
+function showTab(name) {
+  state.tab = name;
+  for (const button of document.querySelectorAll('.tab')) {
+    button.setAttribute('aria-selected', String(button.dataset.tab === name));
+  }
+  for (const panel of document.querySelectorAll('.panel')) {
+    panel.hidden = panel.dataset.panel !== name;
+  }
+}
+
+for (const button of document.querySelectorAll('.tab')) {
+  button.addEventListener('click', () => showTab(button.dataset.tab));
+}
+
+/* ---------- freshness and auto refresh ---------- */
+
+/**
+ * How old the data is, in words, updated every few seconds.
+ *
+ * This is the honest half of "real time". The page cannot call the platform
+ * APIs itself: doing so would ship the API key to whoever opened it, which is
+ * the whole reason collection happens in an Action. What the page CAN do is
+ * notice the moment new data lands and say plainly how stale the current
+ * reading is.
+ */
+function ageText(iso) {
+  const seconds = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
+  if (seconds < 90) return 'updated just now';
+  const minutes = seconds / 60;
+  if (minutes < 60) return `updated ${Math.round(minutes)} min ago`;
+  const hours = minutes / 60;
+  if (hours < 36) return `updated ${Math.round(hours)} h ago`;
+  return `updated ${Math.round(hours / 24)} days ago`;
+}
+
+function paintFreshness() {
+  if (!state.report) return;
+  const box = $('freshness');
+  box.hidden = false;
+  const minutes = (Date.now() - new Date(state.report.generatedAt).getTime()) / 60000;
+  // Collection runs every 15 minutes. An hour without a new reading means the
+  // workflow is failing, and silence about that is how a dashboard starts
+  // lying: the numbers still look fine, they are just old.
+  const stale = minutes > 60;
+  $('freshness-dot').className = stale ? 'dot-stale' : 'dot-live';
+  $('freshness-text').textContent = stale
+    ? `${ageText(state.report.generatedAt)}, collection may have stopped`
+    : ageText(state.report.generatedAt);
+}
+
+let refreshTimer = null;
+
+/**
+ * Poll for a newer report and re-render in place.
+ *
+ * Polling rather than pushing, because a static host has nothing to push with.
+ * The fetch is cheap and conditional on content: if the decrypted report is the
+ * same as the one on screen, nothing re-renders, so scroll position and the
+ * open tab survive.
+ */
+async function refresh() {
+  if (!state.dataKey) return;
+  try {
+    const box = await fetchJson(REPORT_URL);
+    const next = await decryptPayload(state.dataKey, box);
+    if (next.generatedAt === state.report?.generatedAt) return;
+    state.report = next;
+    for (const platform of next.platforms) {
+      // A platform added since unlock should appear rather than silently sit
+      // filtered out by a set built before it existed.
+      if (!state.platforms.has(platform.id)) state.platforms.add(platform.id);
+    }
+    buildFilters();
+    render();
+  } catch {
+    // A failed poll is not worth interrupting a working page for. The
+    // freshness clock keeps counting, so a run of failures becomes visible as
+    // the reading ageing rather than as an error nobody can act on.
+  }
+}
+
+function startRefresh() {
+  if (refreshTimer) return;
+  paintFreshness();
+  setInterval(paintFreshness, 10_000);
+  refreshTimer = setInterval(refresh, 60_000);
+  // Coming back to a tab left open overnight should not show yesterday.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') refresh();
+  });
+}
+
+/* ---------- KPI strip ---------- */
+
+function kpi(label, value, sub) {
+  const box = document.createElement('div');
+  box.className = 'kpi';
+  box.innerHTML = `
+    <span class="kpi-label">${label}</span>
+    <span class="kpi-value">${value}</span>
+    <span class="kpi-sub">${sub ?? ''}</span>`;
+  return box;
+}
+
+function renderKpis() {
+  const perf = state.report.performance;
+  const totals = Object.values(perf?.byPlatform ?? {}).reduce(
+    (t, p) => ({
+      views: t.views + p.totals.views,
+      likes: t.likes + p.totals.likes,
+      comments: t.comments + p.totals.comments,
+    }),
+    {views: 0, likes: 0, comments: 0}
+  );
+
+  const youtube = state.report.platforms.find((p) => p.id === 'youtube');
+  const subs = youtube?.metrics?.subscribers ?? youtube?.current?.subscribers ?? null;
+
+  $('kpis').replaceChildren(
+    kpi('Views', num(totals.views), 'across every measured post'),
+    kpi('Likes', num(totals.likes), ''),
+    kpi('Comments', num(totals.comments), ''),
+    kpi('Subscribers', subs === null ? 'no data' : num(subs), 'YouTube')
+  );
+}
+
+/* ---------- performance per platform ---------- */
+
+function postLine(role, post) {
+  if (!post) return `<div class="perf-row"><span class="perf-role">${role}</span><span class="muted">not enough posts</span></div>`;
+  const title = post.title ?? post.id;
+  const link = post.url
+    ? `<a href="${post.url}" target="_blank" rel="noopener">${title}</a>`
+    : title;
+  return `
+    <div class="perf-row">
+      <span class="perf-role">${role}</span>
+      <span class="perf-title" title="${title}">${link}</span>
+      <span class="perf-num">${num(post.views)} views &middot; ${num(post.likes)} likes &middot; ${num(post.comments)} comments</span>
+    </div>`;
+}
+
+function renderPerformance() {
+  const perf = state.report.performance;
+  if (!perf) {
+    $('performance').replaceChildren();
     return;
   }
 
-  host.replaceChildren(
-    ...reg.byEpisode.map((ep) => {
+  const cards = state.report.platforms
+    .filter((p) => state.platforms.has(p.id))
+    .map((platform) => {
+      const data = perf.byPlatform[platform.id];
       const card = document.createElement('article');
-      card.className = 'ep-card';
+      card.className = 'card';
 
-      const complete = ep.pending === 0;
+      if (!data || data.status === 'awaiting') {
+        // Never a zero. "No data" and "no engagement" lead to opposite
+        // decisions, and only one of them is about the videos.
+        card.innerHTML = `
+          <div class="chart-head"><h3>${platform.name}</h3></div>
+          <p class="note">Awaiting per-post data. ${
+            platform.dataSource === 'api'
+              ? 'The collector has not returned any posts yet.'
+              : 'This platform has no open API, so these numbers are entered by hand.'
+          }</p>`;
+        return card;
+      }
+
       card.innerHTML = `
-        <div class="ep-head">
-          <h3>Episode ${ep.episode}</h3>
-          <span class="count" style="color:${complete ? 'var(--good)' : 'var(--warn)'}">
-            ${ep.published} of ${ep.total} published
-          </span>
+        <div class="chart-head">
+          <h3>${platform.name}</h3>
+          <span class="muted">${data.measured} post${data.measured === 1 ? '' : 's'} measured</span>
+        </div>
+        ${postLine('Most watched', data.best)}
+        ${postLine('Least watched', data.worst)}
+        ${postLine('Most liked', data.mostLiked)}
+        ${postLine('Most commented', data.mostCommented)}
+        <div class="perf-total">
+          Total ${num(data.totals.views)} views, ${num(data.totals.likes)} likes,
+          ${num(data.totals.comments)} comments
         </div>`;
-
-      for (const e of ep.entries) {
-        const row = document.createElement('div');
-        row.className = 'up-row';
-        row.innerHTML = `
-          <span class="plat">${e.platform}</span>
-          <span class="asset">${e.asset}</span>
-          <span>${
-            e.url
-              ? `<a href="${e.url}" target="_blank" rel="noopener">${e.url}</a>`
-              : `<span class="blocked">pending${e.blocked ? ': ' + e.blocked : ''}</span>`
-          }</span>`;
-        card.append(row);
-      }
-
-      if (ep.missingPlatforms.length) {
-        const m = document.createElement('p');
-        m.className = 'ep-missing';
-        m.textContent = `Not reached: ${ep.missingPlatforms.join(', ')}`;
-        card.append(m);
-      }
-
       return card;
-    })
+    });
+
+  $('performance').replaceChildren(...cards);
+}
+
+/* ---------- the upload matrix ---------- */
+
+const CELL = {
+  published: {mark: '&#10003;', cls: 'cell-yes', word: 'published'},
+  pending: {mark: '&#8226;', cls: 'cell-no', word: 'not posted'},
+  blocked: {mark: '!', cls: 'cell-blocked', word: 'blocked'},
+  'n/a': {mark: '&ndash;', cls: 'cell-na', word: 'not applicable'},
+};
+
+function renderMatrix() {
+  const m = state.report.matrix;
+  if (!m?.rows?.length) {
+    $('matrix').innerHTML = '<p class="note">No assets catalogued yet.</p>';
+    $('coverage').replaceChildren();
+    return;
+  }
+
+  const c = m.coverage;
+  $('coverage').replaceChildren(
+    kpi('Published', `${c.published} / ${c.applicable}`, 'placements that exist'),
+    kpi('Outstanding', num(c.pending - c.blocked), 'ready to post'),
+    kpi('Blocked', num(c.blocked), 'cannot post yet'),
+    kpi('Assets made', num(m.rows.length), 'episodes, shorts and posts')
   );
+
+  const head = m.columns
+    .map((p) => `<th class="col-plat">${p}</th>`)
+    .join('');
+
+  const body = m.rows
+    .map((row) => {
+      const cells = m.columns
+        .map((p) => {
+          const cell = row.cells[p];
+          const style = CELL[cell.status];
+          const inner = cell.url
+            ? `<a href="${cell.url}" target="_blank" rel="noopener" title="${cell.at ?? ''}">${style.mark}</a>`
+            : style.mark;
+          const title = cell.blocked ? `${style.word}: ${cell.blocked}` : style.word;
+          return `<td class="${style.cls}" title="${title}">${inner}</td>`;
+        })
+        .join('');
+      return `
+        <tr>
+          <td class="row-ep">Ep ${row.episode}</td>
+          <td class="row-asset">
+            <span class="kindtag kind-${row.kind}">${row.kind}</span>
+            <span class="row-title" title="${row.title ?? row.asset}">${row.title ?? row.asset}</span>
+          </td>
+          ${cells}
+        </tr>`;
+    })
+    .join('');
+
+  $('matrix').innerHTML = `
+    <table class="grid">
+      <thead><tr><th>Episode</th><th>Asset</th>${head}</tr></thead>
+      <tbody>${body}</tbody>
+    </table>`;
+
+  // An upload recorded against an asset the catalogue does not know means
+  // either a render is missing from the catalogue or something went out under
+  // the wrong name. Both are mistakes worth seeing.
+  const orphans = m.orphans ?? [];
+  $('orphans').innerHTML = orphans.length
+    ? `<p class="note warnline">${orphans.length} upload(s) recorded against assets not in the catalogue:
+       ${orphans.map((o) => `episode ${o.episode} ${o.asset} on ${o.platform}`).join('; ')}.
+       Either the catalogue is missing a render, or something was posted under the wrong name.</p>`
+    : '';
+}
+
+/* ---------- the posting schedule ---------- */
+
+function scheduleRow(item) {
+  return `
+    <tr>
+      <td class="row-ep">${item.date}</td>
+      <td class="col-plat">${item.platform}${item.manual ? ' <span class="byhand">by hand</span>' : ''}</td>
+      <td>Ep ${item.episode}</td>
+      <td class="row-title" title="${item.title ?? item.asset}">${item.title ?? item.asset}</td>
+    </tr>`;
+}
+
+function renderSchedule() {
+  const plan = state.report.schedule;
+  if (!plan) return;
+
+  if (plan.today.length === 0) {
+    $('today').innerHTML =
+      '<p class="note good">Nothing due today. Everything ready to post has been posted.</p>';
+  } else {
+    $('today').innerHTML = `
+      <div class="today-list">
+        ${plan.today
+          .map(
+            (i) => `<div class="today-item">
+              <span class="col-plat">${i.platform}</span>
+              <span class="row-title">${i.title ?? i.asset}</span>
+              ${i.manual ? '<span class="byhand">you post this one</span>' : ''}
+              ${i.file ? `<code class="path">${i.file}</code>` : ''}
+            </div>`
+          )
+          .join('')}
+      </div>`;
+  }
+
+  const later = plan.items.filter((i) => !plan.today.includes(i));
+  $('upcoming').innerHTML = later.length
+    ? `<table class="grid">
+        <thead><tr><th>Date</th><th>Platform</th><th>Episode</th><th>Asset</th></tr></thead>
+        <tbody>${later.map(scheduleRow).join('')}</tbody>
+       </table>
+       <p class="note">Backlog clears on ${plan.clearsOn} at the current pacing.</p>`
+    : '<p class="note">Nothing queued beyond today.</p>';
+
+  $('schedule-blocked').innerHTML = plan.blocked.length
+    ? `<table class="grid">
+        <thead><tr><th>Platform</th><th>Episode</th><th>Asset</th><th>Why</th></tr></thead>
+        <tbody>${plan.blocked
+          .map(
+            (b) => `<tr>
+              <td class="col-plat">${b.platform}</td>
+              <td>Ep ${b.episode}</td>
+              <td class="row-title">${b.title ?? b.asset}</td>
+              <td class="muted">${b.blocked}</td>
+            </tr>`
+          )
+          .join('')}</tbody>
+       </table>`
+    : '<p class="note good">Nothing blocked.</p>';
 }

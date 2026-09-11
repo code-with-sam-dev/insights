@@ -1,0 +1,97 @@
+{
+  "_comment": [
+    "Everything the channel has MADE, independent of where it went.",
+    "",
+    "This file exists because data/uploads.json only records attempts. An asset",
+    "that was rendered and then never posted anywhere leaves no trace there, so",
+    "the most expensive gap of all, a finished clip nobody published, was the",
+    "one thing the register could not show.",
+    "",
+    "kind decides which platforms are expected to carry it:",
+    "  episode  the long form cut. YouTube only.",
+    "  short    a vertical cut. YouTube, TikTok, Instagram, Facebook.",
+    "  post     the written announcement for an episode. LinkedIn and X.",
+    "",
+    "Add a row here the moment a render is final, not when it is posted."
+  ],
+  "assets": [
+    {
+      "episode": 1,
+      "asset": "episode",
+      "kind": "episode",
+      "title": "Kafka Ordering Explained: Why Your Messages Still Arrive Out of Order",
+      "file": "assets/exports/kafka-ordering-episode-01.mp4",
+      "createdAt": "2026-09-10"
+    },
+    {
+      "episode": 1,
+      "asset": "post",
+      "kind": "post",
+      "title": "Episode 1 announcement",
+      "createdAt": "2026-09-10"
+    },
+    {
+      "episode": 1,
+      "asset": "short-1",
+      "kind": "short",
+      "title": "Does Kafka guarantee ordering? Yes, and no.",
+      "file": "assets/exports/shorts/short-1-yes-and-no.mp4",
+      "createdAt": "2026-09-10"
+    },
+    {
+      "episode": 1,
+      "asset": "short-2",
+      "kind": "short",
+      "title": "How do you keep Kafka events in order?",
+      "file": "assets/exports/shorts/short-2-same-key.mp4",
+      "createdAt": "2026-09-10"
+    },
+    {
+      "episode": 1,
+      "asset": "short-3",
+      "kind": "short",
+      "title": "Kafka kept the order. Your app did not.",
+      "file": "assets/exports/shorts/short-3-consumer-breaks.mp4",
+      "createdAt": "2026-09-10"
+    },
+    {
+      "episode": 2,
+      "asset": "episode",
+      "kind": "episode",
+      "title": "Kafka Partitions Explained: Why More Consumers Do Not Always Make You Faster",
+      "file": "motion/out/ep2/final/kafka-partitions-episode-02.mp4",
+      "createdAt": "2026-09-11"
+    },
+    {
+      "episode": 2,
+      "asset": "post",
+      "kind": "post",
+      "title": "Episode 2 announcement",
+      "createdAt": "2026-09-11"
+    },
+    {
+      "episode": 2,
+      "asset": "short-1",
+      "kind": "short",
+      "title": "4 consumers. 3 partitions. What does consumer 4 do?",
+      "file": "motion/out/ep2/final/Ep2ShortIdle.mp4",
+      "createdAt": "2026-09-11"
+    },
+    {
+      "episode": 2,
+      "asset": "short-2",
+      "kind": "short",
+      "title": "Will more Kafka consumers make it faster?",
+      "file": "motion/out/ep2/final/Ep2ShortFaster.mp4",
+      "createdAt": "2026-09-11"
+    },
+    {
+      "episode": 2,
+      "asset": "short-3",
+      "kind": "short",
+      "title": "Why not just create 100 Kafka partitions?",
+      "file": "motion/out/ep2/final/Ep2ShortMany.mp4",
+      "createdAt": "2026-09-11"
+    }
+  ]
+}

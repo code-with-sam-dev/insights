@@ -66,7 +66,9 @@ export async function channelStats({apiKey, channelId}) {
  *
  * Engagements are likes plus comments. Neither is a perfect proxy for whether
  * a viewer got value, but the ratio between videos is comparable, which is all
- * the ranking needs.
+ * the ranking needs. Likes and comments are also returned separately, because
+ * the most liked clip and the most commented clip are usually different ones
+ * and the difference is the signal.
  */
 export async function videoStats({apiKey, uploadsPlaylist, limit = 50}) {
   if (!uploadsPlaylist) return [];
@@ -82,15 +84,24 @@ export async function videoStats({apiKey, uploadsPlaylist, limit = 50}) {
     `${DATA_API}/videos?part=snippet,statistics&id=${ids.join(',')}&key=${apiKey}`;
   const stats = await getJson(statsUrl);
 
-  return (stats.items ?? []).map((v) => ({
-    id: v.id,
-    title: v.snippet.title,
-    platform: 'youtube',
-    publishedAt: v.snippet.publishedAt,
-    views: Number(v.statistics.viewCount ?? 0),
-    engagements:
-      Number(v.statistics.likeCount ?? 0) + Number(v.statistics.commentCount ?? 0),
-  }));
+  return (stats.items ?? []).map((v) => {
+    const likes = Number(v.statistics.likeCount ?? 0);
+    const comments = Number(v.statistics.commentCount ?? 0);
+    return {
+      id: v.id,
+      title: v.snippet.title,
+      platform: 'youtube',
+      url: `https://www.youtube.com/watch?v=${v.id}`,
+      publishedAt: v.snippet.publishedAt,
+      views: Number(v.statistics.viewCount ?? 0),
+      // Kept split as well as summed. Sam asked which post has the most likes
+      // and which has the most comments, and those two are frequently not the
+      // same post, nor the most watched one. Summing them first threw that away.
+      likes,
+      comments,
+      engagements: likes + comments,
+    };
+  });
 }
 
 /**

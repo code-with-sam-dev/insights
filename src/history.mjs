@@ -14,6 +14,9 @@
 import {PLATFORMS, THRESHOLDS_VERIFIED} from './platforms.mjs';
 import {evaluatePlatform, focusOrder, contentRanking} from './insights.mjs';
 import {uploadRegister} from './uploads.mjs';
+import {uploadMatrix, coverage, COLUMNS} from './matrix.mjs';
+import {postingPlan} from './schedule.mjs';
+import {performanceByPlatform} from './performance.mjs';
 
 /**
  * Fold one day's snapshot into the accumulated history.
@@ -51,19 +54,53 @@ export function mergeSnapshot(history, snapshot) {
 }
 
 /** Everything the page needs, already decided. The browser only renders. */
-export function buildReport(history, {content = [], generatedAt, uploads = []} = {}) {
+export function buildReport(
+  history,
+  {content = [], generatedAt, uploads = [], catalogue = [], today} = {}
+) {
   const states = PLATFORMS.map((platform) =>
     evaluatePlatform(platform, history[platform.id] ?? {})
   );
+
+  // The join between what was made and where it went. Doing it here rather
+  // than in the browser keeps the page a renderer: every decision about what
+  // counts as published or pending is made once, in tested code, and the page
+  // cannot quietly disagree with the Action about it.
+  const {rows, orphans} = uploadMatrix(catalogue, uploads);
 
   return {
     generatedAt: generatedAt ?? new Date().toISOString(),
     thresholdsVerified: THRESHOLDS_VERIFIED,
     platforms: focusOrder(states),
     content: contentRanking(content, {minViews: 100}),
+    // Per-post results, split by platform. Best, worst, most liked and most
+    // commented disagree with each other, which is the point of showing them.
+    performance: performanceByPlatform(content),
     // What actually went out, and what did not. The register is the durable
     // record of a distribution run; a chat transcript is not.
     uploads: uploadRegister(uploads),
+    matrix: {columns: COLUMNS, rows, orphans, coverage: coverage(rows)},
+    schedule: postingPlan(rows, today ? {today} : {}),
     history,
   };
+}
+
+/**
+ * Did anything actually move since the last run?
+ *
+ * Collection runs every fifteen minutes so the dashboard reads as live. That
+ * is ninety-six runs a day, and committing each one would bury the repository
+ * history in noise and push the Pages deploy queue for nothing.
+ *
+ * The comparison has to be on the plaintext report. Ciphertext is useless here
+ * because AES-GCM uses a fresh IV each time, so encrypting the same data twice
+ * produces different bytes and every run would look like a change.
+ *
+ * generatedAt is excluded for the same reason: it is the clock moving, not the
+ * data.
+ */
+export function reportChanged(previous, next) {
+  if (!previous) return true;
+  const strip = ({generatedAt, ...rest}) => JSON.stringify(rest);
+  return strip(previous) !== strip(next);
 }

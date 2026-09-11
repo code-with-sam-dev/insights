@@ -29,12 +29,13 @@ import {readFile, writeFile, mkdir} from 'node:fs/promises';
 import {dirname} from 'node:path';
 
 import {importDataKey, encryptPayload, decryptPayload} from './crypto.mjs';
-import {mergeSnapshot, buildReport} from './history.mjs';
+import {mergeSnapshot, buildReport, reportChanged} from './history.mjs';
 import {collectYouTube} from './youtube.mjs';
 
 const REPORT_PATH = 'web/data/insights.enc.json';
 const MANUAL_PATH = 'data/manual.json';
 const UPLOADS_PATH = 'data/uploads.json';
+const CATALOGUE_PATH = 'data/catalogue.json';
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -54,15 +55,15 @@ async function readJson(path) {
  * disagree, and carrying on would silently start the history again from zero,
  * destroying every trend with no error anyone would notice.
  */
-async function loadHistory(key) {
+async function loadPrevious(key) {
   const existing = await readJson(REPORT_PATH);
   if (!existing) {
     console.log('No existing report. Starting a new history.');
-    return {};
+    return null;
   }
   const report = await decryptPayload(key, existing);
   console.log(`Loaded history generated at ${report.generatedAt}.`);
-  return report.history ?? {};
+  return report;
 }
 
 async function main() {
@@ -70,7 +71,8 @@ async function main() {
   if (!rawKey) throw new Error('INSIGHTS_DATA_KEY is not set. Nothing can be written.');
   const key = await importDataKey(rawKey);
 
-  let history = await loadHistory(key);
+  const previous = await loadPrevious(key);
+  let history = previous?.history ?? {};
   const date = today();
   const snapshot = {date};
   let content = [];
@@ -111,13 +113,31 @@ async function main() {
   const uploadsFile = await readJson(UPLOADS_PATH);
   const uploads = uploadsFile?.entries ?? [];
 
+  // Everything that was MADE, which is a different question from what went
+  // out. A finished clip nobody posted leaves no row in the register at all,
+  // so without this the most expensive gap was the invisible one.
+  const catalogueFile = await readJson(CATALOGUE_PATH);
+  const catalogue = catalogueFile?.assets ?? [];
+
   const merged = mergeSnapshot(history, snapshot);
   const report = buildReport(merged, {
     content,
     uploads,
+    catalogue,
+    today: date,
     generatedAt: new Date().toISOString(),
   });
   report.errors = errors;
+
+  // Running every fifteen minutes means ninety-six runs a day. Writing on every
+  // one of them would fill the repository with commits whose only difference is
+  // a timestamp, and queue a Pages deploy for each. Compare the plaintext,
+  // because ciphertext always differs: AES-GCM uses a fresh IV each time.
+  if (!reportChanged(previous, report)) {
+    console.log('Nothing moved since the last run. Not rewriting the report.');
+    for (const error of errors) console.log(`  ${error}`);
+    return;
+  }
 
   const box = await encryptPayload(key, report);
   await mkdir(dirname(REPORT_PATH), {recursive: true});

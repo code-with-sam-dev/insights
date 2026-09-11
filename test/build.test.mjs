@@ -77,3 +77,43 @@ test('the collect workflow deploys as well as collecting', async () => {
   assert.match(workflow, /actions\/deploy-pages/, 'collect must publish what it wrote');
   assert.match(workflow, /pages: write/, 'and needs the permission to do it');
 });
+
+/*
+  The page and the script agree on element ids only by convention, and a
+  mismatch fails in the least useful way there is: $('missing') returns null,
+  the renderer throws mid-run, and everything below the failure silently stops
+  rendering. Nobody runs a browser in CI, so this is the only place it gets
+  caught.
+
+  Added 2026-09-11, when the page was reorganised into tabs and half the hosts
+  moved or were renamed.
+*/
+test('every element the dashboard writes to exists in the page', async () => {
+  const app = await readFile('web/app.js', 'utf8');
+  const html = await readFile('web/index.html', 'utf8');
+
+  const ids = new Set(
+    [...stripComments(app).matchAll(/\$\('([a-z0-9-]+)'\)/gi)].map((m) => m[1])
+  );
+  assert.ok(ids.size > 10, 'expected the dashboard to address many elements');
+
+  const missing = [...ids].filter((id) => !html.includes(`id="${id}"`));
+  assert.deepEqual(missing, [], `app.js writes to ids the page does not define: ${missing}`);
+});
+
+test('every tab button has a panel, and every panel has a button', async () => {
+  const html = await readFile('web/index.html', 'utf8');
+  const tabs = [...html.matchAll(/data-tab="([a-z]+)"/g)].map((m) => m[1]).sort();
+  const panels = [...html.matchAll(/data-panel="([a-z]+)"/g)].map((m) => m[1]).sort();
+  assert.deepEqual(tabs, panels, 'a tab without a panel shows an empty screen');
+});
+
+test('the dashboard never writes a credential to storage', async () => {
+  // The data key is held in memory for the refresh loop. Persisting it would
+  // turn "private while the tab is open" into "private until somebody opens
+  // this browser", which is a different and much weaker promise.
+  const app = stripComments(await readFile('web/app.js', 'utf8'));
+  for (const sink of ['localStorage', 'sessionStorage', 'indexedDB', 'document.cookie']) {
+    assert.equal(app.includes(sink), false, `app.js must not use ${sink}`);
+  }
+});
