@@ -102,6 +102,20 @@ them (`rm web/data/*.json`) before enrolling for real, and do not commit them.
 Re-running enrolment makes a **new** key and orphans every report already
 published. Do not run it twice by accident.
 
+## A gotcha when changing the logic
+
+Every judgement (status, gaps, ETAs, rankings) is computed by the **collector**
+and baked into the encrypted payload. The page only formats what it is given.
+
+That is deliberate, so the logic lives where it can be tested in Node rather
+than in a browser nobody runs tests in. The consequence is easy to miss:
+changing how a platform is classified needs a **re-collection**, not just a
+deploy. Ship the code, then:
+
+    gh workflow run collect.yml
+
+Otherwise the new page faithfully renders yesterday's verdict and looks broken.
+
 ## What the numbers can honestly say
 
 Access differs sharply by platform, and the dashboard is built to admit that
