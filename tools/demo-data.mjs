@@ -71,12 +71,22 @@ const uploads = (await json('data/uploads.json')).entries;
 const report = buildReport(history, {
   catalogue,
   uploads,
+  // Real video ids and real durations, invented numbers. The ids matter: the
+  // content library joins measurements to the register by id, so demo data with
+  // made up ids would exercise none of that join and would show every clip as
+  // unregistered. Durations matter for the same reason on the Shorts split.
   content: [
-    {id: 's1', title: 'Kafka guarantees ordering... right?', platform: 'youtube', views: 1840, likes: 190, comments: 31, engagements: 221},
-    {id: 's2', title: 'Same key, same partition', platform: 'youtube', views: 3120, likes: 88, comments: 6, engagements: 94},
-    {id: 's3', title: 'Kafka kept the order. Your app did not.', platform: 'youtube', views: 2260, likes: 297, comments: 43, engagements: 340},
-    {id: 's4', title: 'Full episode: Kafka ordering', platform: 'youtube', views: 940, likes: 55, comments: 6, engagements: 61},
-    {id: 's5', title: 'Just posted', platform: 'youtube', views: 12, likes: 4, comments: 0, engagements: 4},
+    {id: 'eu6UFlFn6t0', title: 'Does Kafka guarantee ordering? Yes, and no.', platform: 'youtube', views: 1840, likes: 190, comments: 31, engagements: 221, publishedAt: '2026-09-10T12:00:00Z', durationSeconds: 42},
+    {id: '4ehpY9ZJzZo', title: 'How do you keep Kafka events in order?', platform: 'youtube', views: 3120, likes: 88, comments: 6, engagements: 94, publishedAt: '2026-09-10T12:30:00Z', durationSeconds: 38},
+    {id: 'Oa9vjdg232g', title: 'Kafka Ordering Explained', platform: 'youtube', views: 940, likes: 55, comments: 6, engagements: 61, publishedAt: '2026-09-10T09:00:00Z', durationSeconds: 372},
+    {id: 'BTEAzv90W4E', title: 'Kafka Partitions Explained', platform: 'youtube', views: 610, likes: 41, comments: 4, engagements: 45, publishedAt: '2026-09-11T09:00:00Z', durationSeconds: 338},
+    {id: 'fdrbDnkAruU', title: 'Design a Digital Wallet: The $100 Transfer That Disappears', platform: 'youtube', views: 402, likes: 27, comments: 5, engagements: 32, publishedAt: '2026-09-12T09:00:00Z', durationSeconds: 818},
+    {id: 'K1jAVd3M_l8', title: 'Your API just charged them twice', platform: 'youtube', views: 2610, likes: 143, comments: 19, engagements: 162, publishedAt: '2026-09-12T10:00:00Z', durationSeconds: 31},
+    {id: 'JpWDt7XTRd4', title: 'Both writes succeeded. The money vanished.', platform: 'youtube', views: 1180, likes: 76, comments: 11, engagements: 87, publishedAt: '2026-09-12T10:20:00Z', durationSeconds: 32},
+    {id: 'mYygHIg4SOs', title: 'Your p95 dashboard is lying to you', platform: 'youtube', views: 340, likes: 12, comments: 1, engagements: 13, publishedAt: '2026-09-12T10:40:00Z', durationSeconds: 33},
+    // Deliberately absent from data/uploads.json, to exercise the case Sam
+    // asked for: something uploaded that nobody wrote down must still appear.
+    {id: 'nOtInReg1st', title: 'Posted an hour ago, not yet registered', platform: 'youtube', views: 12, likes: 4, comments: 0, engagements: 4, publishedAt: '2026-09-13T08:00:00Z', durationSeconds: 44},
   ],
 });
 report.errors = ['watchHours: OAuth not configured, so the YouTube projection is incomplete.'];

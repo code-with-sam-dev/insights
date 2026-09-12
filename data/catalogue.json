@@ -92,6 +92,38 @@
       "title": "Why not just create 100 Kafka partitions?",
       "file": "motion/out/ep2/final/Ep2ShortMany.mp4",
       "createdAt": "2026-09-11"
+    },
+    {
+      "episode": 3,
+      "asset": "episode",
+      "kind": "episode",
+      "title": "Design a Digital Wallet: The $100 Transfer That Disappears",
+      "file": "motion/out/digital-wallet/digital-wallet-v02.mp4",
+      "createdAt": "2026-09-12"
+    },
+    {
+      "episode": 3,
+      "asset": "short-1",
+      "kind": "short",
+      "title": "Your API just charged them twice",
+      "file": "motion/out/digital-wallet/shorts/short-1-idempotency.mp4",
+      "createdAt": "2026-09-12"
+    },
+    {
+      "episode": 3,
+      "asset": "short-2",
+      "kind": "short",
+      "title": "Both writes succeeded. The money vanished.",
+      "file": "motion/out/digital-wallet/shorts/short-2-lost-update.mp4",
+      "createdAt": "2026-09-12"
+    },
+    {
+      "episode": 3,
+      "asset": "short-3",
+      "kind": "short",
+      "title": "Your p95 dashboard is lying to you",
+      "file": "motion/out/digital-wallet/shorts/short-3-percentiles.mp4",
+      "createdAt": "2026-09-12"
     }
   ]
 }

@@ -70,6 +70,21 @@ export async function channelStats({apiKey, channelId}) {
  * the most liked clip and the most commented clip are usually different ones
  * and the difference is the signal.
  */
+/**
+ * Seconds from an ISO 8601 duration, or null when there is nothing to read.
+ *
+ * Null rather than zero on purpose: zero would classify every video whose
+ * duration failed to collect as a Short, which is the one mistake that would
+ * make the Shorts comparison meaningless.
+ */
+export function parseDuration(iso) {
+  const match = /^P(?:\d+D)?T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$/.exec(String(iso ?? ''));
+  if (!match) return null;
+  const [h, m, s] = [match[1], match[2], match[3]].map((v) => Number(v ?? 0));
+  const total = h * 3600 + m * 60 + s;
+  return Number.isFinite(total) ? total : null;
+}
+
 export async function videoStats({apiKey, uploadsPlaylist, limit = 50}) {
   if (!uploadsPlaylist) return [];
 
@@ -81,7 +96,7 @@ export async function videoStats({apiKey, uploadsPlaylist, limit = 50}) {
   if (ids.length === 0) return [];
 
   const statsUrl =
-    `${DATA_API}/videos?part=snippet,statistics&id=${ids.join(',')}&key=${apiKey}`;
+    `${DATA_API}/videos?part=snippet,statistics,contentDetails&id=${ids.join(',')}&key=${apiKey}`;
   const stats = await getJson(statsUrl);
 
   return (stats.items ?? []).map((v) => {
@@ -100,6 +115,9 @@ export async function videoStats({apiKey, uploadsPlaylist, limit = 50}) {
       likes,
       comments,
       engagements: likes + comments,
+      // Decides Short against long form on the content library page. The two
+      // are not comparable and must never be averaged together.
+      durationSeconds: parseDuration(v.contentDetails?.duration),
     };
   });
 }

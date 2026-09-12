@@ -342,3 +342,44 @@ td.cell-na { color: var(--hairline); }
   .perf-row { grid-template-columns: 1fr; gap: 0.15rem; }
   .perf-num { white-space: normal; }
 }
+
+/* ---------- masthead actions ---------- */
+
+.masthead-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Deliberately quiet. It opens GitHub in a new tab, and a loud button would
+   suggest the page itself is collecting, which it never does. */
+.refresh {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 13px;
+  text-decoration: none;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.refresh:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ---------- content library ---------- */
+
+.tag-unregistered {
+  background: var(--warn-bg, #fff4e5);
+  color: var(--warn, #8a5300);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.fmt-short { color: var(--accent); }
+.fmt-long { color: var(--ink-soft, #667); }
+.fmt-unknown { color: var(--muted, #999); }

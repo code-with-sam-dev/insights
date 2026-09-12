@@ -15,6 +15,7 @@ import {PLATFORMS, THRESHOLDS_VERIFIED} from './platforms.mjs';
 import {evaluatePlatform, focusOrder, contentRanking} from './insights.mjs';
 import {uploadRegister} from './uploads.mjs';
 import {uploadMatrix, coverage, COLUMNS} from './matrix.mjs';
+import {contentLibrary, shortsPerformance} from './library.mjs';
 import {postingPlan} from './schedule.mjs';
 import {performanceByPlatform} from './performance.mjs';
 
@@ -68,6 +69,8 @@ export function buildReport(
   // cannot quietly disagree with the Action about it.
   const {rows, orphans} = uploadMatrix(catalogue, uploads);
 
+  const libraryRows = contentLibrary({catalogue, uploads, posts: content});
+
   return {
     generatedAt: generatedAt ?? new Date().toISOString(),
     thresholdsVerified: THRESHOLDS_VERIFIED,
@@ -81,6 +84,13 @@ export function buildReport(
     uploads: uploadRegister(uploads),
     matrix: {columns: COLUMNS, rows, orphans, coverage: coverage(rows)},
     schedule: postingPlan(rows, today ? {today} : {}),
+    // Everything uploaded anywhere, with its numbers. Built from what was
+    // measured as well as from the register, so a video published since the
+    // last edit of data/uploads.json appears here on its own.
+    library: {
+      rows: libraryRows,
+      shorts: shortsPerformance(libraryRows),
+    },
     history,
   };
 }

@@ -191,6 +191,34 @@
       "asset": "short-3",
       "url": "https://www.tiktok.com/@codewithsamdev/video/7684262583662103829",
       "at": "2026-09-11"
+    },
+    {
+      "episode": 3,
+      "platform": "youtube",
+      "asset": "episode",
+      "url": "https://youtu.be/fdrbDnkAruU",
+      "at": "2026-09-12"
+    },
+    {
+      "episode": 3,
+      "platform": "youtube",
+      "asset": "short-1",
+      "url": "https://youtube.com/shorts/K1jAVd3M_l8",
+      "at": "2026-09-12"
+    },
+    {
+      "episode": 3,
+      "platform": "youtube",
+      "asset": "short-2",
+      "url": "https://youtube.com/shorts/JpWDt7XTRd4",
+      "at": "2026-09-12"
+    },
+    {
+      "episode": 3,
+      "platform": "youtube",
+      "asset": "short-3",
+      "url": "https://youtube.com/shorts/mYygHIg4SOs",
+      "at": "2026-09-12"
     }
   ]
 }

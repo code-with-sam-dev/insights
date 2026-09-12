@@ -531,6 +531,8 @@ function render() {
   const report = state.report;
   $('lock').hidden = true;
   $('report').hidden = false;
+  const refreshLink = $('refresh');
+  if (refreshLink) refreshLink.hidden = false;
 
   const platforms = visiblePlatforms();
   const {headline, body} = verdict(platforms);
@@ -540,6 +542,9 @@ function render() {
   renderKpis();
   renderPerformance();
   renderMatrix();
+  renderShortsSummary();
+  renderLibraryFilter();
+  renderLibrary();
   renderSchedule();
   renderTrends();
   paintFreshness();
@@ -666,6 +671,128 @@ function startRefresh() {
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') refresh();
   });
+}
+
+/* ---------- the content library ---------- */
+
+/**
+ * Every upload, everywhere, with its numbers.
+ *
+ * The report does the joining; this only draws it. Two things are deliberate.
+ * A row with no measurement shows "no data" and never a zero, because zero
+ * views and an uncollected number lead to opposite decisions. And a row the
+ * register does not know is shown with a tag rather than hidden: it means
+ * something went out without being written down, which is worth seeing.
+ */
+const FORMATS = [
+  {id: 'all', label: 'Everything'},
+  {id: 'short', label: 'Shorts'},
+  {id: 'long', label: 'Long form'},
+];
+
+function libraryRows() {
+  const rows = state.report.library?.rows ?? [];
+  const pick = state.libraryFormat ?? 'all';
+  return pick === 'all' ? rows : rows.filter((r) => r.format === pick);
+}
+
+function renderLibraryFilter() {
+  const host = $('library-filter');
+  if (!host) return;
+  host.replaceChildren(
+    ...FORMATS.map((f) => {
+      const b = document.createElement('button');
+      b.className = 'chip';
+      b.textContent = f.label;
+      b.setAttribute('aria-pressed', String((state.libraryFormat ?? 'all') === f.id));
+      b.addEventListener('click', () => {
+        state.libraryFormat = f.id;
+        renderLibraryFilter();
+        renderLibrary();
+      });
+      return b;
+    })
+  );
+}
+
+function shortsCard(title, s, sub) {
+  if (!s || s.status !== 'measured') {
+    return kpi(title, 'awaiting', 'nothing measured yet');
+  }
+  return kpi(title, num(s.medianViews), `${sub}, mean ${num(s.meanViews)} over ${s.measured}`);
+}
+
+function renderShortsSummary() {
+  const host = $('shorts-summary');
+  if (!host) return;
+  const lib = state.report.library?.shorts;
+  if (!lib) {
+    host.replaceChildren();
+    return;
+  }
+
+  const cards = [
+    shortsCard('Shorts, median views', lib.shorts, 'median'),
+    shortsCard('Long form, median views', lib.long, 'median'),
+  ];
+
+  if (lib.shorts?.status === 'measured') {
+    cards.push(
+      kpi('Best Short', lib.shorts.best?.title ?? 'no data', `${num(lib.shorts.best?.views)} views`),
+      kpi('Weakest Short', lib.shorts.worst?.title ?? 'no data', `${num(lib.shorts.worst?.views)} views`)
+    );
+  }
+  host.replaceChildren(...cards);
+}
+
+function renderLibrary() {
+  const host = $('library');
+  if (!host) return;
+
+  const rows = libraryRows();
+  if (rows.length === 0) {
+    host.innerHTML = '<p class="note">Nothing uploaded yet.</p>';
+    return;
+  }
+
+  const body = rows
+    .map((r) => {
+      const when = (r.publishedAt ?? r.at ?? '').slice(0, 10);
+      const title = r.title ?? r.asset ?? 'untitled';
+      const link = r.url
+        ? `<a href="${r.url}" target="_blank" rel="noopener">${title}</a>`
+        : title;
+      const tag = r.unregistered
+        ? ' <span class="tag-unregistered">NOT IN REGISTER</span>'
+        : '';
+      // A blocked platform states its reason. It is not a clip that did badly.
+      const numbers =
+        r.status === 'measured'
+          ? `<td>${num(r.views)}</td><td>${num(r.likes)}</td><td>${num(r.comments)}</td>`
+          : `<td colspan="3" class="note">${
+              r.blocked ? `blocked: ${r.blocked}` : r.status
+            }</td>`;
+      return `
+        <tr>
+          <td class="row-ep">${when}</td>
+          <td class="col-plat">${r.platform}</td>
+          <td class="fmt-${r.format}">${r.format}</td>
+          <td class="row-title">${link}${tag}</td>
+          ${numbers}
+        </tr>`;
+    })
+    .join('');
+
+  host.innerHTML = `
+    <table class="grid">
+      <thead>
+        <tr>
+          <th>Published</th><th>Platform</th><th>Format</th><th>Title</th>
+          <th>Views</th><th>Likes</th><th>Comments</th>
+        </tr>
+      </thead>
+      <tbody>${body}</tbody>
+    </table>`;
 }
 
 /* ---------- KPI strip ---------- */

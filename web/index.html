@@ -17,9 +17,25 @@
         <!-- Age of the data, updated on a timer. The number on a dashboard is
              only as trustworthy as its timestamp, so the timestamp is never
              more than a glance away. -->
-        <div id="freshness" class="freshness" hidden>
-          <span id="freshness-dot" class="dot-live"></span>
-          <span id="freshness-text">checking</span>
+        <div class="masthead-right">
+          <div id="freshness" class="freshness" hidden>
+            <span id="freshness-dot" class="dot-live"></span>
+            <span id="freshness-text">checking</span>
+          </div>
+          <!-- The page cannot collect anything itself: doing so would mean
+               shipping the API keys to whoever opens it, and the read-only
+               guarantee in the README is worth more than one saved click. So
+               the button opens the Action that does the collecting, on GitHub,
+               where Sam is already signed in. Two clicks, no secrets. -->
+          <a
+            id="refresh"
+            class="refresh"
+            href="https://github.com/code-with-sam-dev/insights/actions/workflows/collect.yml"
+            target="_blank"
+            rel="noopener"
+            hidden
+            >Refresh now</a
+          >
         </div>
       </header>
 
@@ -59,6 +75,7 @@
         <nav class="tabs" role="tablist" aria-label="Sections">
           <button class="tab" role="tab" data-tab="overview" aria-selected="true">Overview</button>
           <button class="tab" role="tab" data-tab="content" aria-selected="false">Content</button>
+          <button class="tab" role="tab" data-tab="library" aria-selected="false">Library</button>
           <button class="tab" role="tab" data-tab="uploads" aria-selected="false">Uploads</button>
           <button class="tab" role="tab" data-tab="schedule" aria-selected="false">Schedule</button>
         </nav>
@@ -113,6 +130,28 @@
 
           <h2>Not enough data to judge</h2>
           <div id="content-thin"></div>
+        </section>
+
+        <!-- ===================== LIBRARY ===================== -->
+        <section class="panel" data-panel="library" hidden>
+          <h2>Shorts against long form</h2>
+          <p class="note">
+            Kept apart because they are not comparable: a Short is measured on
+            swipes, an episode on watch time. The median matters more than the
+            mean here, since one clip that happens to get picked up drags the
+            mean above anything the channel will repeat.
+          </p>
+          <div id="shorts-summary" class="cards"></div>
+
+          <h2>Everything uploaded, everywhere</h2>
+          <p class="note">
+            Built from what the platforms report as well as from the register,
+            so a video published since the last edit of the register still
+            appears here on the next collection run. A row marked NOT IN
+            REGISTER went out without being written down.
+          </p>
+          <div id="library-filter" class="chips" role="group" aria-label="Format"></div>
+          <div id="library" class="table-scroll"></div>
         </section>
 
         <!-- ===================== UPLOADS ===================== -->
