@@ -225,6 +225,41 @@
       "asset": "episode",
       "url": "https://youtu.be/VKOBY2vv1K0",
       "at": "2026-09-12"
+    },
+    {
+      "episode": 3,
+      "platform": "youtube",
+      "asset": "short-1",
+      "url": "https://youtube.com/shorts/wpME6KCRI4g",
+      "at": "2026-09-12"
+    },
+    {
+      "episode": 3,
+      "platform": "youtube",
+      "asset": "short-2",
+      "url": "https://youtube.com/shorts/0yIv3scYAMY",
+      "at": "2026-09-12"
+    },
+    {
+      "episode": 3,
+      "platform": "youtube",
+      "asset": "short-3",
+      "url": "https://youtube.com/shorts/t3NI1p30b-s",
+      "at": "2026-09-12"
+    },
+    {
+      "episode": 3,
+      "platform": "youtube",
+      "asset": "short-4",
+      "url": "https://youtube.com/shorts/SbVU6EiJBw4",
+      "at": "2026-09-12"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "java-gotcha-01",
+      "url": "https://youtube.com/shorts/KBSz9wxCzRA",
+      "at": "2026-09-13"
     }
   ]
 }
