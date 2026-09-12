@@ -35,9 +35,8 @@
       "episode": 1,
       "platform": "youtube",
       "asset": "short-3",
-      "url": "https://www.youtube.com/@CodewithSam-Dev",
-      "at": "2026-09-10",
-      "note": "Public, id never recorded. Worth recovering."
+      "url": "https://youtube.com/shorts/i_hug23pa-0",
+      "at": "2026-09-10"
     },
     {
       "episode": 1,
@@ -98,7 +97,7 @@
       "episode": 1,
       "platform": "tiktok",
       "asset": "short-3",
-      "note": "Paced one per day to avoid TikTok cold-start spam flags. Never posted. Not blocked: just outstanding."
+      "url": "https://youtube.com/shorts/i_hug23pa-0"
     },
     {
       "episode": 2,
@@ -218,6 +217,13 @@
       "platform": "youtube",
       "asset": "short-3",
       "url": "https://youtube.com/shorts/mYygHIg4SOs",
+      "at": "2026-09-12"
+    },
+    {
+      "episode": 3,
+      "platform": "youtube",
+      "asset": "episode",
+      "url": "https://youtu.be/VKOBY2vv1K0",
       "at": "2026-09-12"
     }
   ]
