@@ -124,6 +124,374 @@
       "title": "Your p95 dashboard is lying to you",
       "file": "motion/out/digital-wallet/shorts/short-3-percentiles.mp4",
       "createdAt": "2026-09-12"
+    },
+    {
+      "episode": 4,
+      "asset": "episode",
+      "kind": "episode",
+      "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database",
+      "file": "motion/out/kafka-04/",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 4,
+      "asset": "short-1",
+      "kind": "short",
+      "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database (Short 1)",
+      "file": "motion/out/kafka-04/shorts/short-1.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 4,
+      "asset": "short-2",
+      "kind": "short",
+      "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database (Short 2)",
+      "file": "motion/out/kafka-04/shorts/short-2.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 4,
+      "asset": "short-3",
+      "kind": "short",
+      "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database (Short 3)",
+      "file": "motion/out/kafka-04/shorts/short-3.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 4,
+      "asset": "short-4",
+      "kind": "short",
+      "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database (Short 4)",
+      "file": "motion/out/kafka-04/shorts/short-4.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 5,
+      "asset": "episode",
+      "kind": "episode",
+      "title": "Kafka Idempotency: How to Survive Duplicate Messages",
+      "file": "motion/out/kafka-05/",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 5,
+      "asset": "short-1",
+      "kind": "short",
+      "title": "Kafka Idempotency: How to Survive Duplicate Messages (Short 1)",
+      "file": "motion/out/kafka-05/shorts/short-1.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 5,
+      "asset": "short-2",
+      "kind": "short",
+      "title": "Kafka Idempotency: How to Survive Duplicate Messages (Short 2)",
+      "file": "motion/out/kafka-05/shorts/short-2.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 5,
+      "asset": "short-3",
+      "kind": "short",
+      "title": "Kafka Idempotency: How to Survive Duplicate Messages (Short 3)",
+      "file": "motion/out/kafka-05/shorts/short-3.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 5,
+      "asset": "short-4",
+      "kind": "short",
+      "title": "Kafka Idempotency: How to Survive Duplicate Messages (Short 4)",
+      "file": "motion/out/kafka-05/shorts/short-4.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 6,
+      "asset": "episode",
+      "kind": "episode",
+      "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything",
+      "file": "motion/out/kafka-06/",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 6,
+      "asset": "short-1",
+      "kind": "short",
+      "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything (Short 1)",
+      "file": "motion/out/kafka-06/shorts/short-1.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 6,
+      "asset": "short-2",
+      "kind": "short",
+      "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything (Short 2)",
+      "file": "motion/out/kafka-06/shorts/short-2.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 6,
+      "asset": "short-3",
+      "kind": "short",
+      "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything (Short 3)",
+      "file": "motion/out/kafka-06/shorts/short-3.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 6,
+      "asset": "short-4",
+      "kind": "short",
+      "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything (Short 4)",
+      "file": "motion/out/kafka-06/shorts/short-4.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 7,
+      "asset": "episode",
+      "kind": "episode",
+      "title": "Kafka Transactions and the Outbox: Where Atomicity Stops",
+      "file": "motion/out/kafka-07/",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 7,
+      "asset": "short-1",
+      "kind": "short",
+      "title": "Kafka Transactions and the Outbox: Where Atomicity Stops (Short 1)",
+      "file": "motion/out/kafka-07/shorts/short-1.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 7,
+      "asset": "short-2",
+      "kind": "short",
+      "title": "Kafka Transactions and the Outbox: Where Atomicity Stops (Short 2)",
+      "file": "motion/out/kafka-07/shorts/short-2.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 7,
+      "asset": "short-3",
+      "kind": "short",
+      "title": "Kafka Transactions and the Outbox: Where Atomicity Stops (Short 3)",
+      "file": "motion/out/kafka-07/shorts/short-3.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 7,
+      "asset": "short-4",
+      "kind": "short",
+      "title": "Kafka Transactions and the Outbox: Where Atomicity Stops (Short 4)",
+      "file": "motion/out/kafka-07/shorts/short-4.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 8,
+      "asset": "episode",
+      "kind": "episode",
+      "title": "Kafka Observability: Why Consumer Lag Is Not Enough",
+      "file": "motion/out/kafka-08/",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 8,
+      "asset": "short-1",
+      "kind": "short",
+      "title": "Kafka Observability: Why Consumer Lag Is Not Enough (Short 1)",
+      "file": "motion/out/kafka-08/shorts/short-1.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 8,
+      "asset": "short-2",
+      "kind": "short",
+      "title": "Kafka Observability: Why Consumer Lag Is Not Enough (Short 2)",
+      "file": "motion/out/kafka-08/shorts/short-2.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 8,
+      "asset": "short-3",
+      "kind": "short",
+      "title": "Kafka Observability: Why Consumer Lag Is Not Enough (Short 3)",
+      "file": "motion/out/kafka-08/shorts/short-3.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 8,
+      "asset": "short-4",
+      "kind": "short",
+      "title": "Kafka Observability: Why Consumer Lag Is Not Enough (Short 4)",
+      "file": "motion/out/kafka-08/shorts/short-4.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 9,
+      "asset": "episode",
+      "kind": "episode",
+      "title": "Build a Production-Grade Kafka Payment Pipeline",
+      "file": "motion/out/kafka-09/",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 9,
+      "asset": "short-1",
+      "kind": "short",
+      "title": "Build a Production-Grade Kafka Payment Pipeline (Short 1)",
+      "file": "motion/out/kafka-09/shorts/short-1.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 9,
+      "asset": "short-2",
+      "kind": "short",
+      "title": "Build a Production-Grade Kafka Payment Pipeline (Short 2)",
+      "file": "motion/out/kafka-09/shorts/short-2.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 9,
+      "asset": "short-3",
+      "kind": "short",
+      "title": "Build a Production-Grade Kafka Payment Pipeline (Short 3)",
+      "file": "motion/out/kafka-09/shorts/short-3.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 9,
+      "asset": "short-4",
+      "kind": "short",
+      "title": "Build a Production-Grade Kafka Payment Pipeline (Short 4)",
+      "file": "motion/out/kafka-09/shorts/short-4.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 10,
+      "asset": "episode",
+      "kind": "episode",
+      "title": "Senior Kafka Architecture Challenge: Would Your Design Survive?",
+      "file": "motion/out/kafka-10/",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 10,
+      "asset": "short-1",
+      "kind": "short",
+      "title": "Senior Kafka Architecture Challenge: Would Your Design Survive? (Short 1)",
+      "file": "motion/out/kafka-10/shorts/short-1.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 10,
+      "asset": "short-2",
+      "kind": "short",
+      "title": "Senior Kafka Architecture Challenge: Would Your Design Survive? (Short 2)",
+      "file": "motion/out/kafka-10/shorts/short-2.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 10,
+      "asset": "short-3",
+      "kind": "short",
+      "title": "Senior Kafka Architecture Challenge: Would Your Design Survive? (Short 3)",
+      "file": "motion/out/kafka-10/shorts/short-3.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": 10,
+      "asset": "short-4",
+      "kind": "short",
+      "title": "Senior Kafka Architecture Challenge: Would Your Design Survive? (Short 4)",
+      "file": "motion/out/kafka-10/shorts/short-4.mp4",
+      "createdAt": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "asset": "codex-flagship",
+      "kind": "episode",
+      "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know",
+      "file": "motion/out/codex-01/chatgpt-codex-ep01-v2.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "codex-flagship-short-1",
+      "kind": "short",
+      "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know (Short 1)",
+      "file": "motion/out/codex-01/shorts/short-1.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "codex-flagship-short-2",
+      "kind": "short",
+      "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know (Short 2)",
+      "file": "motion/out/codex-01/shorts/short-2.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "codex-flagship-short-3",
+      "kind": "short",
+      "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know (Short 3)",
+      "file": "motion/out/codex-01/shorts/short-3.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "codex-flagship-short-4",
+      "kind": "short",
+      "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know (Short 4)",
+      "file": "motion/out/codex-01/shorts/short-4.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "claude-code-flagship",
+      "kind": "episode",
+      "title": "Claude Code: Everything a Software Engineer Needs to Know",
+      "file": "motion/out/cc-flagship/claude-code-flagship-v2.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "claude-code-flagship-short-1",
+      "kind": "short",
+      "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 1)",
+      "file": "motion/out/cc-flagship/shorts/short-1.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "claude-code-flagship-short-2",
+      "kind": "short",
+      "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 2)",
+      "file": "motion/out/cc-flagship/shorts/short-2.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "claude-code-flagship-short-3",
+      "kind": "short",
+      "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 3)",
+      "file": "motion/out/cc-flagship/shorts/short-3.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "claude-code-flagship-short-4",
+      "kind": "short",
+      "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 4)",
+      "file": "motion/out/cc-flagship/shorts/short-4.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "claude-code-flagship-short-5",
+      "kind": "short",
+      "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 5)",
+      "file": "motion/out/cc-flagship/shorts/short-5.mp4",
+      "createdAt": "2026-09-14"
     }
   ]
 }

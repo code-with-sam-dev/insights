@@ -47,13 +47,6 @@
     },
     {
       "episode": 1,
-      "platform": "x",
-      "asset": "post",
-      "url": "https://x.com/CodeWithSamDev/status/2098169825172357627",
-      "at": "2026-09-11"
-    },
-    {
-      "episode": 1,
       "platform": "tiktok",
       "asset": "short-1",
       "url": "https://www.tiktok.com/@codewithsamdev/video/7683954312850066708",
@@ -75,6 +68,13 @@
     },
     {
       "episode": 1,
+      "platform": "x",
+      "asset": "post",
+      "url": "https://x.com/CodeWithSamDev/status/2098169825172357627",
+      "at": "2026-09-11"
+    },
+    {
+      "episode": 1,
       "platform": "instagram",
       "asset": "short-2",
       "url": "https://www.instagram.com/codewithsamdev/reel/DdJa1T3hny2/",
@@ -86,18 +86,6 @@
       "asset": "short-3",
       "url": "https://www.instagram.com/codewithsamdev/reel/DdJbrKfBiN3/",
       "at": "2026-09-11"
-    },
-    {
-      "episode": 1,
-      "platform": "tiktok",
-      "asset": "short-2",
-      "note": "Paced one per day to avoid TikTok cold-start spam flags. Never posted. Not blocked: just outstanding."
-    },
-    {
-      "episode": 1,
-      "platform": "tiktok",
-      "asset": "short-3",
-      "url": "https://youtube.com/shorts/i_hug23pa-0"
     },
     {
       "episode": 2,
@@ -260,6 +248,340 @@
       "asset": "java-gotcha-01",
       "url": "https://youtube.com/shorts/KBSz9wxCzRA",
       "at": "2026-09-13"
+    },
+    {
+      "episode": 10,
+      "platform": "youtube",
+      "asset": "episode",
+      "url": "https://youtu.be/rBu085eXOCo",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": 9,
+      "platform": "youtube",
+      "asset": "episode",
+      "url": "https://youtu.be/yTuNwzZP7mg",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": 8,
+      "platform": "youtube",
+      "asset": "episode",
+      "url": "https://youtu.be/i4drWVqZNgQ",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": 7,
+      "platform": "youtube",
+      "asset": "episode",
+      "url": "https://youtu.be/0EAjor8XNy8",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": 6,
+      "platform": "youtube",
+      "asset": "episode",
+      "url": "https://youtu.be/imD0PIR_Qdc",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": 5,
+      "platform": "youtube",
+      "asset": "episode",
+      "url": "https://youtu.be/lwHhlEyNdJ8",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": 4,
+      "platform": "youtube",
+      "asset": "episode",
+      "url": "https://youtu.be/RwctwkYUi7Q",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/eBWZ_2XrzDY",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/n7IeErtRTwg",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/-ui-D7Lj0T8",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/wdPm4PMN6BI",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/2C1_Twnq-pQ",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/KiyvKfVZXS8",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/MvK0VSnJH6o",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/z1MyVaMGCcY",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/ThBsVaHTS-U",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/AXaQft3eOkU",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/Dxu1XDEsZhk",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/OLvQPw8nkHI",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/ShEATJ-aNmg",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/WlYLALFi6C8",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/FgD13tzCmqc",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/xq769qiE8C4",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/WT06UqtvCUE",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/M0IXyTPW2tw",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/o649d5V2YIM",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/1X36t-8iYZg",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/Qe40ssJgAOI",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/yWqo7qJyW8M",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/YC9BvxVd5AI",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/JfNyalK3e3E",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/PfzigK4JWbM",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/TUSS1G46LQw",
+      "at": "2026-09-13"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "claude-code-flagship",
+      "url": "https://youtu.be/E7Wt3i29QtA",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "codex-flagship",
+      "url": "https://youtu.be/7HHGbN1GJn4",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/5poY2W3GgKM",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/aMHmTbvKuq8",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/aXxCgQnr4Ho",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/_EZGZujRExc",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/KexKWGvBnGQ",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/ST57-P4dL2k",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/8i26uxfazmg",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/xF9MRfOqli8",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/TE-7FIP8kGs",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/LZ_X1Yn-E5g",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "short",
+      "url": "https://youtube.com/shorts/MIbcNI8FWak",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": 1,
+      "platform": "tiktok",
+      "asset": "short-2",
+      "note": "Paced one per day to avoid TikTok cold-start spam flags. Never posted. Not blocked: just outstanding."
+    },
+    {
+      "episode": 1,
+      "platform": "tiktok",
+      "asset": "short-3",
+      "url": "https://youtube.com/shorts/i_hug23pa-0"
     }
   ]
 }
