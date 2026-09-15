@@ -582,6 +582,160 @@
       "platform": "tiktok",
       "asset": "short-3",
       "url": "https://youtube.com/shorts/i_hug23pa-0"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-episode",
+      "url": "https://www.youtube.com/watch?v=vH5UEcoJXcY",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-01-virtual-threads",
+      "url": "https://youtube.com/shorts/S2j-ySqf29Y",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-02-switch-expressions",
+      "url": "https://youtube.com/shorts/-DjGS86HYbI",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-03-records",
+      "url": "https://youtube.com/shorts/ChjFe76UILk",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-04-still-preview",
+      "url": "https://youtube.com/shorts/_JDM3aUx_34",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-05-compact-headers",
+      "url": "https://youtube.com/shorts/Bqqm6AmDWBQ",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-06-scoped-values",
+      "url": "https://youtube.com/shorts/zagW03kR6tA",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-07-sealed-patterns",
+      "url": "https://youtube.com/shorts/7UxZU5qHUrE",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-08-ffm",
+      "url": "https://youtube.com/shorts/VjqV2VBNe80",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-09-var",
+      "url": "https://youtube.com/shorts/9bLpIcwPOlc",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-10-sequenced",
+      "url": "https://youtube.com/shorts/6uhCxji92m4",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-11-text-blocks",
+      "url": "https://youtube.com/shorts/iN1INvakpQo",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-12-gatherers",
+      "url": "https://youtube.com/shorts/lKP8IsGGM0I",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-13-instanceof",
+      "url": "https://youtube.com/shorts/PdJabXQSb_U",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-14-compact-source",
+      "url": "https://youtube.com/shorts/bXJLn3WfZi0",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-15-flexible-ctors",
+      "url": "https://youtube.com/shorts/ILqXyYp76ec",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "modern-java-short-16-http-client",
+      "url": "https://youtube.com/shorts/mCSB411tnLM",
+      "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "lazy-engineer-episode",
+      "url": "https://www.youtube.com/watch?v=UcoEisshMWE",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "lazy-engineer-short-1",
+      "url": "https://youtube.com/shorts/fpLLY-DNAmc",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "lazy-engineer-short-2",
+      "url": "https://youtube.com/shorts/V4wu_0LdITs",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "lazy-engineer-short-3",
+      "url": "https://youtube.com/shorts/RZ4w8RQx3Gw",
+      "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "lazy-engineer-short-4",
+      "url": "https://youtube.com/shorts/5IbZC7GnqoI",
+      "at": "2026-09-14"
     }
   ]
 }

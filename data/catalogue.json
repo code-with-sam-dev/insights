@@ -492,6 +492,196 @@
       "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 5)",
       "file": "motion/out/cc-flagship/shorts/short-5.mp4",
       "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-episode",
+      "kind": "episode",
+      "title": "Modern Java in 18 Minutes: Everything That Actually Shipped",
+      "file": "motion/out/java/episode.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-01-virtual-threads",
+      "kind": "short",
+      "title": "Modern Java: 10,000 tasks: 5226ms vs 152ms",
+      "file": "motion/out/java/shorts/short-01-virtual-threads.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-02-switch-expressions",
+      "kind": "short",
+      "title": "Modern Java: This code is wrong and will not throw",
+      "file": "motion/out/java/shorts/short-02-switch-expressions.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-03-records",
+      "kind": "short",
+      "title": "Modern Java: Fourteen lines to one",
+      "file": "motion/out/java/shorts/short-03-records.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-04-still-preview",
+      "kind": "short",
+      "title": "Modern Java: Seventh preview. Still not shipped.",
+      "file": "motion/out/java/shorts/short-04-still-preview.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-05-compact-headers",
+      "kind": "short",
+      "title": "Modern Java: 115 MB to 76 MB, for one flag",
+      "file": "motion/out/java/shorts/short-05-compact-headers.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-06-scoped-values",
+      "kind": "short",
+      "title": "Modern Java: alice leaked onto another request",
+      "file": "motion/out/java/shorts/short-06-scoped-values.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-07-sealed-patterns",
+      "kind": "short",
+      "title": "Modern Java: No default branch. On purpose.",
+      "file": "motion/out/java/shorts/short-07-sealed-patterns.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-08-ffm",
+      "kind": "short",
+      "title": "Modern Java: JNI is over and nobody noticed",
+      "file": "motion/out/java/shorts/short-08-ffm.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-09-var",
+      "kind": "short",
+      "title": "Modern Java: Is var dynamic typing? No.",
+      "file": "motion/out/java/shorts/short-09-var.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-10-sequenced",
+      "kind": "short",
+      "title": "Modern Java: No way to ask a Set for its last item",
+      "file": "motion/out/java/shorts/short-10-sequenced.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-11-text-blocks",
+      "kind": "short",
+      "title": "Modern Java: Is this JSON valid? You cannot tell.",
+      "file": "motion/out/java/shorts/short-11-text-blocks.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-12-gatherers",
+      "kind": "short",
+      "title": "Modern Java: A spike or an incident?",
+      "file": "motion/out/java/shorts/short-12-gatherers.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-13-instanceof",
+      "kind": "short",
+      "title": "Modern Java: Two casts you did not need",
+      "file": "motion/out/java/shorts/short-13-instanceof.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-14-compact-source",
+      "kind": "short",
+      "title": "Modern Java: This is a whole Java program",
+      "file": "motion/out/java/shorts/short-14-compact-source.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-15-flexible-ctors",
+      "kind": "short",
+      "title": "Modern Java: Validate before super. Finally legal.",
+      "file": "motion/out/java/shorts/short-15-flexible-ctors.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-short-16-http-client",
+      "kind": "short",
+      "title": "Modern Java: Four lines, brand new protocol",
+      "file": "motion/out/java/shorts/short-16-http-client.mp4",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "modern-java-post",
+      "kind": "post",
+      "title": "Modern Java announcement",
+      "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "lazy-engineer-episode",
+      "kind": "episode",
+      "title": "Stop Using One AI for Everything: The Bug You Cannot Reproduce",
+      "file": "motion/out/lazy/episode.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "lazy-engineer-short-1",
+      "kind": "short",
+      "title": "The Lazy Software Engineer: You asked the author to be the judge",
+      "file": "motion/out/lazy/shorts/short-1.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "lazy-engineer-short-2",
+      "kind": "short",
+      "title": "The Lazy Software Engineer: Stop asking AI what the bug is",
+      "file": "motion/out/lazy/shorts/short-2.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "lazy-engineer-short-3",
+      "kind": "short",
+      "title": "The Lazy Software Engineer: Green tests. Wrong fix.",
+      "file": "motion/out/lazy/shorts/short-3.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "lazy-engineer-short-4",
+      "kind": "short",
+      "title": "The Lazy Software Engineer: Two models agreed. Still wrong.",
+      "file": "motion/out/lazy/shorts/short-4.mp4",
+      "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "lazy-engineer-post",
+      "kind": "post",
+      "title": "Lazy Software Engineer announcement",
+      "createdAt": "2026-09-14"
     }
   ]
 }
