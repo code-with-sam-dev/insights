@@ -682,6 +682,14 @@
       "kind": "post",
       "title": "Lazy Software Engineer announcement",
       "createdAt": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "asset": "java-short-pass-semantics",
+      "kind": "short",
+      "title": "Modern Java: Pass by value or pass by reference?",
+      "file": "motion/out/java/shorts/java-short-pass-semantics.mp4",
+      "createdAt": "2026-09-15"
     }
   ]
 }

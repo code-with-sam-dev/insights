@@ -664,8 +664,9 @@
       "episode": null,
       "platform": "youtube",
       "asset": "modern-java-short-11-text-blocks",
-      "url": "https://youtube.com/shorts/iN1INvakpQo",
-      "at": "2026-09-15"
+      "url": "https://youtube.com/shorts/pW0wjBdGF5A",
+      "at": "2026-09-15",
+      "note": "Re-uploaded with the corrected text blocks capture. iN1INvakpQo was set private."
     },
     {
       "episode": null,
@@ -736,6 +737,13 @@
       "asset": "lazy-engineer-short-4",
       "url": "https://youtube.com/shorts/5IbZC7GnqoI",
       "at": "2026-09-14"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "java-short-pass-semantics",
+      "url": "https://youtube.com/shorts/y9pLbOR28cs",
+      "at": "2026-09-15"
     }
   ]
 }
