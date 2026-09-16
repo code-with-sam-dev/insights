@@ -459,6 +459,35 @@ td.cell-na { color: var(--hairline); }
 
 .note.small { font-size: 0.78rem; margin-top: 8px; }
 
+/* The running total, under the chart. The chart shows a RATE on purpose, which
+   leaves "how many altogether" unanswered; this answers it without being
+   allowed to flatten the shape above. */
+.pulse-totals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--hairline);
+}
+
+.pulse-total { display: flex; flex-direction: column; gap: 1px; }
+
+.pulse-total-value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.pulse-total.long .pulse-total-value { color: var(--accent); }
+.pulse-total.short .pulse-total-value { color: var(--good); }
+.pulse-total.subs .pulse-total-value { color: #e8622d; }
+
+.pulse-total-label { font-size: 0.78rem; color: var(--ink-soft); }
+.pulse-total-gain { font-size: 0.78rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.pulse-total-gain.up { color: var(--good); }
+
 /* ---------- content library ---------- */
 
 .tag-unregistered {

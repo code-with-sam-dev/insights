@@ -530,6 +530,72 @@ function pulseCard({title, seriesSet, unit, render}) {
 
   card.append(head, body);
 
+  /*
+    THE RUNNING TOTAL, UNDER THE CHART, on Sam's instruction.
+
+    The chart above deliberately shows a rate and not a total, because a
+    cumulative line only ever slopes upward and hides when anything moved. That
+    is the right chart and it leaves an obvious question unanswered: how many
+    altogether. So the number goes underneath, where it answers that question
+    without being allowed to flatten the shape above it.
+
+    Beside it, what the SELECTED WINDOW added. A total on its own says nothing
+    about whether the channel is still growing, and the two together are the
+    whole story: where it has got to, and what it did lately.
+  */
+  const cutoff = state.pulseHours ? Date.now() - state.pulseHours * 3600000 : null;
+  const totals = seriesSet
+    .map((s) => {
+      const points = s.series ?? [];
+      if (points.length === 0) return null;
+
+      const last = points.at(-1);
+      // The first reading at or before the window opens is the baseline. Using
+      // the first point INSIDE the window would silently drop whatever arrived
+      // between that point and the one before it.
+      const opening =
+        cutoff === null
+          ? points[0]
+          : [...points].reverse().find((p) => Date.parse(p.at) <= cutoff) ??
+            points.find((p) => Date.parse(p.at) >= cutoff);
+
+      return {
+        label: s.label,
+        className: s.className,
+        total: last.value,
+        gained: opening ? last.value - opening.value : null,
+      };
+    })
+    .filter(Boolean);
+
+  if (totals.length > 0) {
+    const windowLabel =
+      PULSE_WINDOWS.find((w) => w.hours === state.pulseHours)?.label ?? 'this window';
+    const figures = document.createElement('div');
+    figures.className = 'pulse-totals';
+    figures.innerHTML = totals
+      .map(
+        (t) => `
+        <div class="pulse-total ${t.className}">
+          <span class="pulse-total-value">${num(t.total)}</span>
+          <span class="pulse-total-label">${t.label} in total</span>
+          ${
+            t.gained === null
+              ? ''
+              : `<span class="pulse-total-gain ${t.gained > 0 ? 'up' : ''}">${
+                  t.gained > 0 ? '+' : ''
+                }${num(t.gained)} ${
+                  state.pulseHours === null
+                    ? 'since tracking began'
+                    : `in the last ${windowLabel.toLowerCase()}`
+                }</span>`
+          }
+        </div>`
+      )
+      .join('');
+    card.append(figures);
+  }
+
   // Opened at the right hand edge, because the useful end of a growth chart is
   // now, not launch. Scrolling back is a deliberate act; scrolling forward
   // every single visit is a tax.
