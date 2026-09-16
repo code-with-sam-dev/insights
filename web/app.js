@@ -25,6 +25,7 @@ import {
   ratePerHour,
   rateBars,
   rateRuns,
+  seriesRuns,
   pathOf,
 } from './chart.js';
 
@@ -116,6 +117,10 @@ const state = {
   // Launch to date, which is what Sam asked the per-hour charts for. The
   // shorter windows are for reading one launch closely.
   pulseHours: null,
+  // Running total by default. Sam: "so that i can see how the numbers are
+  // moving from one point to another gradually". The rate answers a different
+  // question and is one click away.
+  pulseMode: 'total',
   platforms: new Set(),
   tab: 'overview',
 };
@@ -322,13 +327,25 @@ const axisClock = (ms) => new Date(ms).toLocaleTimeString(undefined, {hour: 'num
 function pulseChart(seriesSet, windowHours, render = 'bars') {
   const pad = {left: 44, right: 12, top: 10, bottom: 26};
   const cutoff = windowHours ? Date.now() - windowHours * 3600000 : null;
+  const total = state.pulseMode === 'total';
 
+  // In total mode the points ARE the readings. In rate mode they are the
+  // growth between consecutive readings, which is one fewer point and a
+  // different unit.
   const laid = seriesSet
-    .map((s) => ({
-      ...s,
-      rates: ratePerHour(s.series).filter((r) => cutoff === null || r.to >= cutoff),
-    }))
-    .filter((s) => s.rates.length > 0);
+    .map((s) => {
+      const points = (s.series ?? []).filter(
+        (p) => cutoff === null || Date.parse(p.at) >= cutoff
+      );
+      return total
+        ? {...s, totals: points, rates: []}
+        : {
+            ...s,
+            totals: [],
+            rates: ratePerHour(s.series).filter((r) => cutoff === null || r.to >= cutoff),
+          };
+    })
+    .filter((s) => (total ? s.totals.length > 0 : s.rates.length > 0));
 
   if (laid.length === 0) return null;
 
@@ -349,19 +366,23 @@ function pulseChart(seriesSet, windowHours, render = 'bars') {
     So the card says how many readings it has instead, and the totals
     underneath still tell the truth from the first run.
   */
-  const points = Math.max(...laid.map((s) => s.rates.length));
-  const spanHours = (Math.max(...laid.flatMap((s) => s.rates.map((r) => r.to))) -
-    Math.min(...laid.flatMap((s) => s.rates.map((r) => r.from)))) / 3600000;
-  if (points < 3 && spanHours < 6) {
-    return {thin: true, readings: points + 1};
+  const marks = total
+    ? Math.max(...laid.map((s) => s.totals.length))
+    : Math.max(...laid.map((s) => s.rates.length));
+  if (marks < 2) {
+    return {thin: true, readings: total ? marks : marks + 1};
   }
 
   // ONE time axis and ONE value axis across every series in the chart. Scaling
   // each to itself would put a Short's quiet week at the same height as an
   // episode's launch night.
-  const all = laid.flatMap((s) => s.rates);
-  const t0 = Math.min(...all.map((r) => r.from));
-  const t1 = Math.max(...all.map((r) => r.to));
+  const all = laid.flatMap((s) => (total ? s.totals : s.rates));
+  const t0 = total
+    ? Math.min(...all.map((p) => Date.parse(p.at)))
+    : Math.min(...all.map((r) => r.from));
+  const t1 = total
+    ? Math.max(...all.map((p) => Date.parse(p.at)))
+    : Math.max(...all.map((r) => r.to));
   const hours = (t1 - t0) / 3600000;
 
   // Wide enough that a busy hour is a bar rather than a hairline, bounded so a
@@ -371,11 +392,37 @@ function pulseChart(seriesSet, windowHours, render = 'bars') {
   const width = plotWidth + pad.left + pad.right;
   const h = PULSE_HEIGHT - pad.top - pad.bottom;
 
-  const top = Math.max(...all.map((r) => r.perHour), 0);
-  const floor = Math.min(...all.map((r) => r.perHour), 0);
-  const ticks = niceTicks(Math.min(0, floor), top || 1, 3);
+  const values = all.map((r) => (total ? r.value : r.perHour));
+  const top = Math.max(...values, 0);
+
+  /*
+    THE TOTAL AXIS DOES NOT START AT ZERO, and that is a deliberate exception
+    to the rule the rest of this page follows.
+
+    Zero-baselining a running total makes it useless for the one thing it is
+    for. Fifteen thousand Shorts views plus three hundred more draws as a flat
+    line on a zero axis: the growth is real, it is simply two percent of the
+    height, and Sam asked for this chart precisely so he could watch the
+    numbers move.
+
+    WHAT KEEPS IT HONEST is that the area fill is dropped in this mode. The
+    fill is the part that lies, because a filled shape invites the eye to read
+    its HEIGHT as the quantity, and against a cropped baseline that reading is
+    wrong. A bare line against a clearly labelled axis is making a different
+    claim: this is where the number went, and here are the numbers. The note
+    under the chart says the axis is cropped.
+
+    The rate chart keeps its zero baseline, because there a proportion IS the
+    point and zero means nothing happened.
+  */
+  const low = Math.min(...values);
+  const floor = total ? Math.max(0, low - Math.max(1, (top - low) * 0.6)) : Math.min(...values, 0);
+  const ticks = total
+    ? niceTicks(floor, top || 1, 3)
+    : niceTicks(Math.min(0, floor), top || 1, 3);
   const y = linearScale([ticks[0], ticks.at(-1)], [h, 0]);
   const domain = [t0, t1, ticks[0], ticks.at(-1)];
+  const croppedAxis = total && ticks[0] > 0;
 
   // Room past the last bar for the final date label, which otherwise loses its
   // last two characters against the edge of the scroller.
@@ -446,38 +493,51 @@ function pulseChart(seriesSet, windowHours, render = 'bars') {
 
   // Every mark says what it is. A chart whose numbers can only be guessed from
   // a grid line is a picture, not a measurement.
-  const tip = (s, rate) =>
+  const tip = (s, mark) =>
     el(
       'title',
       {},
-      `${s.label}: ${num(Math.round(rate.perHour))} per hour, ${axisHour(rate.to)}` +
-        (rate.coarse ? ' (a whole day averaged, before hourly collection began)' : '')
+      total
+        ? `${s.label}: ${num(mark.value)} total, ${axisHour(Date.parse(mark.at))}` +
+          (mark.daily ? ' (one reading for that whole day)' : '')
+        : `${s.label}: ${num(Math.round(mark.perHour))} per hour, ${axisHour(mark.to)}` +
+          (mark.coarse ? ' (a whole day averaged, before hourly collection began)' : '')
     );
 
   for (const s of laid) {
     const layer = el('g', {class: `${render} ${s.className}`});
 
+    const runsOf = () =>
+      total
+        ? seriesRuns(s.totals, {width: plotWidth, height: h, domain})
+        : rateRuns(s.rates, {width: plotWidth, height: h, domain});
+
     if (render === 'line') {
-      for (const run of rateRuns(s.rates, {width: plotWidth, height: h, domain})) {
+      for (const run of runsOf()) {
         const d = pathOf(run.points);
         if (!d) continue;
         const cls = run.coarse ? 'line coarse' : 'line';
         // Closed along the baseline from the same path, so the fill can never
         // disagree with the line above it.
-        const first = run.points[0];
-        const last = run.points.at(-1);
-        layer.append(
-          el('path', {
-            class: run.coarse ? 'area coarse' : 'area',
-            d: `${d} L${last.x.toFixed(1)},${y(0)} L${first.x.toFixed(1)},${y(0)} Z`,
-          })
-        );
+        // No fill against a cropped baseline. A filled shape invites the eye
+        // to read its height as the quantity, and that reading is wrong when
+        // the axis does not start at zero.
+        if (!croppedAxis) {
+          const first = run.points[0];
+          const last = run.points.at(-1);
+          layer.append(
+            el('path', {
+              class: run.coarse ? 'area coarse' : 'area',
+              d: `${d} L${last.x.toFixed(1)},${y(ticks[0])} L${first.x.toFixed(1)},${y(ticks[0])} Z`,
+            })
+          );
+        }
         layer.append(el('path', {class: cls, d}));
       }
 
       // A hit target per reading. The line itself is two pixels wide and
       // nobody can hover it, so the numbers would be unreachable without this.
-      for (const run of rateRuns(s.rates, {width: plotWidth, height: h, domain})) {
+      for (const run of runsOf()) {
         for (const point of run.points) {
           const dot = el('circle', {
             class: point.coarse ? 'dot coarse' : 'dot',
@@ -485,7 +545,7 @@ function pulseChart(seriesSet, windowHours, render = 'bars') {
             cy: point.y.toFixed(1),
             r: 2.5,
           });
-          dot.append(tip(s, point.rate));
+          dot.append(tip(s, total ? point.point : point.rate));
           layer.append(dot);
         }
       }
@@ -507,7 +567,7 @@ function pulseChart(seriesSet, windowHours, render = 'bars') {
   }
 
   svg.append(g);
-  return {axis, plot: svg, width: canvas};
+  return {axis, plot: svg, width: canvas, croppedAxis};
 }
 
 /**
@@ -524,8 +584,13 @@ function pulseCard({title, seriesSet, unit, render}) {
   const head = document.createElement('div');
   head.className = 'chart-head';
 
+  const totalMode = state.pulseMode === 'total';
   const recent = seriesSet
     .map((s) => {
+      if (totalMode) {
+        const last = (s.series ?? []).at(-1);
+        return last ? {label: s.label, className: s.className, value: last.value} : null;
+      }
       const rates = ratePerHour(s.series);
       const fine = rates.filter((r) => !r.coarse);
       const last = (fine.length ? fine : rates).at(-1);
@@ -539,8 +604,11 @@ function pulseCard({title, seriesSet, unit, render}) {
       ${(thin ? [] : recent)
         .map(
           (r) =>
-            `<span class="legend-item ${r.className}"><i></i>${r.label}
-             <strong>${num(Math.round(r.perHour))}</strong>/hr</span>`
+            totalMode
+              ? `<span class="legend-item ${r.className}"><i></i>${r.label}
+                 <strong>${num(r.value)}</strong></span>`
+              : `<span class="legend-item ${r.className}"><i></i>${r.label}
+                 <strong>${num(Math.round(r.perHour))}</strong>/hr</span>`
         )
         .join('')}
     </div>`;
@@ -643,9 +711,13 @@ function pulseCard({title, seriesSet, unit, render}) {
 
   const note = document.createElement('p');
   note.className = 'note small';
-  note.textContent = thin
-    ? unit
-    : `The dashed stretch is averaged over a whole day, from before per-hour collection started, so it does not claim to have measured any particular hour. ${unit}`;
+  const dashNote = totalMode
+    ? 'The dashed stretch is one reading per day, from before hourly collection started, so the line between two of those points is an assumption rather than a measurement.'
+    : 'The dashed stretch is averaged over a whole day, from before per-hour collection started, so it does not claim to have measured any particular hour.';
+  const cropNote = chart.croppedAxis
+    ? 'The axis is cropped to the readings rather than starting at zero, so small movements are visible; read the numbers on it rather than the height of the line.'
+    : '';
+  note.textContent = thin ? unit : [dashNote, cropNote, unit].filter(Boolean).join(' ');
   card.append(note);
 
   return card;
@@ -666,11 +738,41 @@ const PULSE_WINDOWS = [
   {label: 'All', hours: null},
 ];
 
+/*
+  TWO DIFFERENT QUESTIONS, TWO CHARTS, ONE TOGGLE.
+
+  "Running total" is what the numbers ARE, climbing reading by reading. Sam
+  asked for it in those words: he wants to watch them move from one point to
+  the next. It is baselined at zero like everything else here, so a short
+  window can look flat, and that is honest rather than a fault: a hundred views
+  on a base of fifteen thousand IS a small move.
+
+  "Per hour" is the derivative, and it is the only one that can show WHEN
+  something happened. A cumulative line only ever slopes upward, so a launch
+  evening and a dead Tuesday look identical on it.
+
+  Neither answers both, so the page does not pretend one does.
+*/
+const PULSE_MODES = [
+  {id: 'total', label: 'Running total'},
+  {id: 'rate', label: 'Per hour'},
+];
+
 function renderPulseFilter() {
   $('pulse-filter').replaceChildren(
     ...PULSE_WINDOWS.map((w) =>
       chip(w.label, state.pulseHours === w.hours, () => {
         state.pulseHours = w.hours;
+        renderPulseFilter();
+        renderPulse();
+      })
+    )
+  );
+
+  $('pulse-mode').replaceChildren(
+    ...PULSE_MODES.map((m) =>
+      chip(m.label, state.pulseMode === m.id, () => {
+        state.pulseMode = m.id;
         renderPulseFilter();
         renderPulse();
       })
@@ -695,19 +797,20 @@ function renderPulse() {
     the note says they are not comparable. An unreadable chart cannot be saved
     by being technically fair.
   */
+  const per = state.pulseMode === 'total' ? '' : ' per hour';
   const charts = [
     {
-      title: 'Long form views per hour',
+      title: `Long form views${per}`,
       unit: 'Its own scale. Long form and Shorts are never plotted together, because a Short outruns an episode by so much that the episode would lie flat on zero.',
       seriesSet: [{label: 'Long form', className: 'long', series: samples.viewsLongForm ?? []}],
     },
     {
-      title: 'Shorts views per hour',
+      title: `Shorts views${per}`,
       unit: 'Its own scale, for the same reason. Shorts are measured on swipes, an episode on watch time.',
       seriesSet: [{label: 'Shorts', className: 'short', series: samples.viewsShorts ?? []}],
     },
     {
-      title: 'Subscribers per hour',
+      title: `Subscribers${per}`,
       unit: 'A thousand subscribers is one of the two doors to monetisation.',
       seriesSet: [{label: 'Subscribers', className: 'subs', series: samples.subscribers ?? []}],
     },

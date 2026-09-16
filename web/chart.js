@@ -235,3 +235,61 @@ export function pathOf(points) {
     .map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)},${p.y.toFixed(1)}`)
     .join(' ');
 }
+
+/**
+ * A CUMULATIVE series laid out for a line, split the same way rates are.
+ *
+ * WHY THIS EXISTS BESIDE ratePerHour. The rate chart answers "when did it
+ * move", which a running total cannot, because a total only ever slopes upward
+ * and every day looks like every other. But the rate chart cannot answer "what
+ * are the numbers doing", which is the question you actually open a dashboard
+ * with, and Sam asked for it directly: he wants to watch the figures climb from
+ * one reading to the next.
+ *
+ * They are different questions and neither chart answers both, so the page
+ * offers both rather than picking one and being wrong half the time.
+ *
+ * A point sits at the moment it was READ, not at the middle of an interval. A
+ * total is a measurement of an instant, where a rate is a measurement across a
+ * span, and that difference is exactly why the two cannot share a layout.
+ */
+export function seriesRuns(points, {width, height, domain} = {}) {
+  if (!Array.isArray(points) || points.length === 0) return [];
+
+  const times = points.map((p) => Date.parse(p.at ?? p.date));
+  const values = points.map((p) => p.value);
+
+  const t0 = domain?.[0] ?? Math.min(...times);
+  const t1 = domain?.[1] ?? Math.max(...times);
+  // Baselined at ZERO, the same rule every other chart on this page follows.
+  // Scaling a total to its own minimum turns 990 to 1000 into a tenfold rise,
+  // and on a page about where to spend effort that is the single most
+  // misleading thing a chart can do.
+  const floor = domain?.[2] ?? 0;
+  const top = domain?.[3] ?? Math.max(...values, 0);
+
+  const x = linearScale([t0, t1], [0, width]);
+  const y = linearScale([floor, top || 1], [height, 0]);
+
+  const laid = points.map((p, i) => ({
+    x: x(times[i]),
+    y: y(p.value),
+    // A backfilled point is one reading for a whole day, so the line between
+    // two of them is an assumption rather than a measurement, and it is drawn
+    // as one.
+    coarse: p.daily === true,
+    point: p,
+  }));
+
+  const runs = [];
+  for (const point of laid) {
+    const last = runs.at(-1);
+    if (last && last.coarse === point.coarse) {
+      last.points.push(point);
+    } else {
+      const bridge = last ? [last.points.at(-1)] : [];
+      runs.push({coarse: point.coarse, points: [...bridge, point]});
+    }
+  }
+  return runs;
+}

@@ -97,17 +97,23 @@
                total only ever slopes upward, so it answers "how many" and
                never "when did it move". These two answer "when", which is the
                question you open a dashboard with. -->
-          <h2 class="pulse-head">Per hour, from launch</h2>
+          <h2 class="pulse-head">Growth, from launch</h2>
           <p class="note">
-            How fast views and subscribers are arriving, not how many have
-            arrived. Each point is the growth between two readings divided by
-            the hours between them, so an overnight gap reads as a slow night
-            rather than as a spike. Scroll sideways: the axis is real time, so
-            a busy week takes more room than a quiet one.
+            Running total is what the numbers are, reading by reading. Per hour
+            is how fast they are arriving, which is the only one of the two that
+            can show WHEN something moved, because a total only ever slopes
+            upward. Both start at zero, and both scroll sideways on a real time
+            axis, so a busy week takes more room than a quiet one.
           </p>
-          <div class="filter-group pulse-filter-row">
-            <span class="filter-label">Window</span>
-            <div id="pulse-filter" class="chips" role="group" aria-label="Per hour window"></div>
+          <div class="filters pulse-filter-row">
+            <div class="filter-group">
+              <span class="filter-label">Showing</span>
+              <div id="pulse-mode" class="chips" role="group" aria-label="What the line shows"></div>
+            </div>
+            <div class="filter-group">
+              <span class="filter-label">Window</span>
+              <div id="pulse-filter" class="chips" role="group" aria-label="Time window"></div>
+            </div>
           </div>
           <div id="pulse"></div>
 

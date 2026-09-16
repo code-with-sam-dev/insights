@@ -232,3 +232,55 @@ test('a path is drawn for a single point rather than an empty string', () => {
   assert.match(pathOf([{x: 1, y: 2}]), /^M1\.0,2\.0$/);
   assert.equal(pathOf([]), '');
 });
+
+/* ---------- the running total ---------- */
+
+import {seriesRuns} from '../src/chart.mjs';
+
+test('a total is baselined at zero, not at its own minimum', () => {
+  const [run] = seriesRuns(
+    [
+      {at: '2026-09-16T08:00:00.000Z', value: 900},
+      {at: '2026-09-16T09:00:00.000Z', value: 1000},
+    ],
+    {width: 100, height: 100}
+  );
+
+  // 900 of 1000 sits at nine tenths of the way up. Scaled to its own minimum
+  // it would sit on the floor and a eleven percent rise would read as a
+  // tenfold one.
+  assert.equal(Math.round(run.points[0].y), 10);
+  assert.equal(run.points[1].y, 0);
+});
+
+test('a total point sits at the moment it was read, not at a midpoint', () => {
+  const [run] = seriesRuns(
+    [
+      {at: '2026-09-16T00:00:00.000Z', value: 1},
+      {at: '2026-09-17T00:00:00.000Z', value: 2},
+    ],
+    {width: 100, height: 100}
+  );
+  assert.equal(run.points[0].x, 0);
+  assert.equal(run.points[1].x, 100);
+});
+
+test('the backfilled stretch of a total is marked and joins the measured one', () => {
+  const runs = seriesRuns(
+    [
+      {at: '2026-09-14T00:00:00.000Z', value: 10, daily: true},
+      {at: '2026-09-15T00:00:00.000Z', value: 20, daily: true},
+      {at: '2026-09-15T08:00:00.000Z', value: 24},
+    ],
+    {width: 100, height: 100}
+  );
+  assert.equal(runs.length, 2);
+  assert.equal(runs[0].coarse, true);
+  assert.deepEqual(runs[1].points[0], runs[0].points.at(-1));
+});
+
+test('one reading still lays out rather than throwing', () => {
+  const runs = seriesRuns([{at: '2026-09-16T08:00:00.000Z', value: 5}], {width: 100, height: 100});
+  assert.equal(runs.length, 1);
+  assert.equal(runs[0].points.length, 1);
+});
