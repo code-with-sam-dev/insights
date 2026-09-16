@@ -375,9 +375,29 @@ td.cell-na { color: var(--hairline); }
   font-size: 14px;
 }
 
-.refresh:hover {
+.refresh:hover:not(:disabled) {
   filter: brightness(1.08);
   color: #fff;
+}
+
+.refresh:disabled {
+  opacity: 0.75;
+  cursor: default;
+}
+
+/* Secondary on purpose. Collection runs every fifteen minutes by itself, so
+   starting one by hand is the rare case, and it leaves the page. */
+.collect-link {
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+  white-space: nowrap;
+}
+
+.collect-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 /* ---------- per hour, from launch ---------- */
@@ -458,6 +478,16 @@ td.cell-na { color: var(--hairline); }
 .legend-item.subs i { background: #e8622d; }
 
 .note.small { font-size: 0.78rem; margin-top: 8px; }
+
+/* A young series says so, rather than drawing a lone dot in an empty grid. */
+.pulse-thin {
+  margin: 10px 0 0;
+  padding: 22px 0 18px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  border-top: 1px dashed var(--hairline);
+  border-bottom: 1px dashed var(--hairline);
+}
 
 /* The running total, under the chart. The chart shows a RATE on purpose, which
    leaves "how many altogether" unanswered; this answers it without being

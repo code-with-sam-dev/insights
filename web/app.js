@@ -332,6 +332,30 @@ function pulseChart(seriesSet, windowHours, render = 'bars') {
 
   if (laid.length === 0) return null;
 
+  /*
+    TOO FEW READINGS IS NOT A CHART.
+
+    A rate needs two readings, and a LINE needs at least two rates, so a metric
+    that started being collected an hour ago has exactly one point. SVG draws a
+    single-point path as nothing at all, so the card rendered as a lone dot
+    floating in an empty grid with one hour label under it, which reads as a
+    broken chart rather than as a young one. Sam saw exactly that on the long
+    form and Shorts splits, which only began being collected separately today.
+
+    It also would not be worth reading if it did draw. One hour's delta
+    presented on a time axis invites the eye to read a trend into a single
+    measurement, and there is no trend in one number.
+
+    So the card says how many readings it has instead, and the totals
+    underneath still tell the truth from the first run.
+  */
+  const points = Math.max(...laid.map((s) => s.rates.length));
+  const spanHours = (Math.max(...laid.flatMap((s) => s.rates.map((r) => r.to))) -
+    Math.min(...laid.flatMap((s) => s.rates.map((r) => r.from)))) / 3600000;
+  if (points < 3 && spanHours < 6) {
+    return {thin: true, readings: points + 1};
+  }
+
   // ONE time axis and ONE value axis across every series in the chart. Scaling
   // each to itself would put a Short's quiet week at the same height as an
   // episode's launch night.
@@ -492,6 +516,7 @@ function pulseChart(seriesSet, windowHours, render = 'bars') {
 function pulseCard({title, seriesSet, unit, render}) {
   const chart = pulseChart(seriesSet, state.pulseHours, render);
   if (!chart) return null;
+  const thin = chart.thin === true;
 
   const card = document.createElement('article');
   card.className = 'card pulse-card';
@@ -511,7 +536,7 @@ function pulseCard({title, seriesSet, unit, render}) {
   head.innerHTML = `
     <h3>${title}</h3>
     <div class="legend">
-      ${recent
+      ${(thin ? [] : recent)
         .map(
           (r) =>
             `<span class="legend-item ${r.className}"><i></i>${r.label}
@@ -520,15 +545,25 @@ function pulseCard({title, seriesSet, unit, render}) {
         .join('')}
     </div>`;
 
-  const scroller = document.createElement('div');
-  scroller.className = 'chart-scroll';
-  scroller.append(chart.plot);
+  if (thin) {
+    const waiting = document.createElement('p');
+    waiting.className = 'pulse-thin';
+    waiting.textContent =
+      chart.readings < 2
+        ? 'One reading so far. A rate needs two, so the line appears after the next collection.'
+        : `${chart.readings} readings so far. The line starts drawing once there are a few more, roughly an hour apart each.`;
+    card.append(head, waiting);
+  } else {
+    const scroller = document.createElement('div');
+    scroller.className = 'chart-scroll';
+    scroller.append(chart.plot);
 
-  const body = document.createElement('div');
-  body.className = 'pulse-body';
-  body.append(chart.axis, scroller);
+    const body = document.createElement('div');
+    body.className = 'pulse-body';
+    body.append(chart.axis, scroller);
 
-  card.append(head, body);
+    card.append(head, body);
+  }
 
   /*
     THE RUNNING TOTAL, UNDER THE CHART, on Sam's instruction.
@@ -599,13 +634,18 @@ function pulseCard({title, seriesSet, unit, render}) {
   // Opened at the right hand edge, because the useful end of a growth chart is
   // now, not launch. Scrolling back is a deliberate act; scrolling forward
   // every single visit is a tax.
-  requestAnimationFrame(() => {
-    scroller.scrollLeft = scroller.scrollWidth;
-  });
+  if (!thin) {
+    const scroller = card.querySelector('.chart-scroll');
+    requestAnimationFrame(() => {
+      scroller.scrollLeft = scroller.scrollWidth;
+    });
+  }
 
   const note = document.createElement('p');
   note.className = 'note small';
-  note.textContent = `The dashed stretch is averaged over a whole day, from before per-hour collection started, so it does not claim to have measured any particular hour. ${unit}`;
+  note.textContent = thin
+    ? unit
+    : `The dashed stretch is averaged over a whole day, from before per-hour collection started, so it does not claim to have measured any particular hour. ${unit}`;
   card.append(note);
 
   return card;
@@ -1057,12 +1097,13 @@ let refreshTimer = null;
  * same as the one on screen, nothing re-renders, so scroll position and the
  * open tab survive.
  */
+/** Returns true when a newer reading was actually pulled in. */
 async function refresh() {
-  if (!state.dataKey) return;
+  if (!state.dataKey) return false;
   try {
     const box = await fetchJson(REPORT_URL);
     const next = await decryptPayload(state.dataKey, box);
-    if (next.generatedAt === state.report?.generatedAt) return;
+    if (next.generatedAt === state.report?.generatedAt) return false;
     state.report = next;
     for (const platform of next.platforms) {
       // A platform added since unlock should appear rather than silently sit
@@ -1071,14 +1112,47 @@ async function refresh() {
     }
     buildFilters();
     render();
+    return true;
   } catch {
     // A failed poll is not worth interrupting a working page for. The
     // freshness clock keeps counting, so a run of failures becomes visible as
     // the reading ageing rather than as an error nobody can act on.
+    return false;
   }
 }
 
+/**
+ * The Refresh button.
+ *
+ * It says what happened, which is the part that was missing. A button that
+ * looks identical before and after the click leaves the reader unable to tell
+ * a working refresh from a dead one, and "nothing appeared to happen" is
+ * exactly why the old link felt wrong even when it worked.
+ */
+function wireRefreshButton() {
+  const button = $('refresh');
+  if (!button || button.dataset.wired) return;
+  button.dataset.wired = 'true';
+
+  button.addEventListener('click', async () => {
+    if (button.disabled) return;
+    const original = 'Refresh data';
+    button.disabled = true;
+    button.textContent = 'Refreshing';
+
+    const changed = await refresh();
+    paintFreshness();
+
+    button.textContent = changed ? 'Updated' : 'Already current';
+    setTimeout(() => {
+      button.textContent = original;
+      button.disabled = false;
+    }, 1600);
+  });
+}
+
 function startRefresh() {
+  wireRefreshButton();
   if (refreshTimer) return;
   paintFreshness();
   setInterval(paintFreshness, 10_000);

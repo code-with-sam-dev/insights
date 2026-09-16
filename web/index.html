@@ -22,18 +22,30 @@
             <span id="freshness-dot" class="dot-live"></span>
             <span id="freshness-text">checking</span>
           </div>
-          <!-- The page cannot collect anything itself: doing so would mean
-               shipping the API keys to whoever opens it, and the read-only
-               guarantee in the README is worth more than one saved click. So
-               the button opens the Action that does the collecting, on GitHub,
-               where Sam is already signed in. Two clicks, no secrets. -->
+          <!-- REFRESH PULLS THE LATEST READING INTO THE PAGE. It used to be a
+               link to the Action on GitHub, and Sam clicked it expecting the
+               numbers to update and landed on a workflow list instead. Fair:
+               the label said refresh and it navigated away.
+
+               What it does now is re-fetch the encrypted report and decrypt it
+               with the key already in memory, which is the same thing the page
+               does on its own every sixty seconds. No secrets involved.
+
+               Collecting NEW data is a different act, and that one genuinely
+               cannot happen here: it needs the YouTube API key and the data
+               key, and shipping those to whoever opens a public URL is exactly
+               what this design exists to avoid. So it keeps its own link,
+               labelled for what it is, and it is the secondary control because
+               collection already runs every fifteen minutes on its own. -->
+          <button id="refresh" class="refresh" type="button">Refresh data</button>
           <a
-            id="refresh"
-            class="refresh"
+            id="collect-now"
+            class="collect-link"
             href="https://github.com/code-with-sam-dev/insights/actions/workflows/collect.yml"
             target="_blank"
             rel="noopener"
-            >Refresh data</a
+            title="Collection runs by itself every fifteen minutes. This starts one now, on GitHub."
+            >Collect now</a
           >
         </div>
       </header>
