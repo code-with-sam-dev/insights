@@ -17,7 +17,16 @@ import {
   unwrapWithSecret,
 } from './crypto.js';
 import {passkeysSupported, readSecret} from './passkey.js';
-import {seriesPath, filterSince, niceTicks, linearScale, ratePerHour, rateBars} from './chart.js';
+import {
+  seriesPath,
+  filterSince,
+  niceTicks,
+  linearScale,
+  ratePerHour,
+  rateBars,
+  rateRuns,
+  pathOf,
+} from './chart.js';
 
 const $ = (id) => document.getElementById(id);
 
@@ -310,7 +319,7 @@ const axisClock = (ms) => new Date(ms).toLocaleTimeString(undefined, {hour: 'num
  * exactly what a fixed-width chart would do here as the history grows. So the
  * chart grows and the container scrolls.
  */
-function pulseChart(seriesSet, windowHours) {
+function pulseChart(seriesSet, windowHours, render = 'bars') {
   const pad = {left: 44, right: 12, top: 10, bottom: 26};
   const cutoff = windowHours ? Date.now() - windowHours * 3600000 : null;
 
@@ -411,29 +420,65 @@ function pulseChart(seriesSet, windowHours) {
     }
   }
 
+  // Every mark says what it is. A chart whose numbers can only be guessed from
+  // a grid line is a picture, not a measurement.
+  const tip = (s, rate) =>
+    el(
+      'title',
+      {},
+      `${s.label}: ${num(Math.round(rate.perHour))} per hour, ${axisHour(rate.to)}` +
+        (rate.coarse ? ' (a whole day averaged, before hourly collection began)' : '')
+    );
+
   for (const s of laid) {
-    const bars = rateBars(s.rates, {width: plotWidth, height: h, domain});
-    const layer = el('g', {class: `bars ${s.className}`});
-    for (const bar of bars) {
-      const rect = el('rect', {
-        x: bar.x.toFixed(1),
-        y: bar.y.toFixed(1),
-        width: bar.width.toFixed(1),
-        height: bar.height.toFixed(1),
-        class: bar.rate.coarse ? 'bar coarse' : 'bar',
-      });
-      // Every bar says what it is. A chart whose numbers can only be guessed
-      // from a grid line is a picture, not a measurement.
-      rect.append(
-        el(
-          'title',
-          {},
-          `${s.label}: ${num(Math.round(bar.rate.perHour))} per hour, ${axisHour(bar.rate.to)}` +
-            (bar.rate.coarse ? ' (a whole day averaged, before hourly collection began)' : '')
-        )
-      );
-      layer.append(rect);
+    const layer = el('g', {class: `${render} ${s.className}`});
+
+    if (render === 'line') {
+      for (const run of rateRuns(s.rates, {width: plotWidth, height: h, domain})) {
+        const d = pathOf(run.points);
+        if (!d) continue;
+        const cls = run.coarse ? 'line coarse' : 'line';
+        // Closed along the baseline from the same path, so the fill can never
+        // disagree with the line above it.
+        const first = run.points[0];
+        const last = run.points.at(-1);
+        layer.append(
+          el('path', {
+            class: run.coarse ? 'area coarse' : 'area',
+            d: `${d} L${last.x.toFixed(1)},${y(0)} L${first.x.toFixed(1)},${y(0)} Z`,
+          })
+        );
+        layer.append(el('path', {class: cls, d}));
+      }
+
+      // A hit target per reading. The line itself is two pixels wide and
+      // nobody can hover it, so the numbers would be unreachable without this.
+      for (const run of rateRuns(s.rates, {width: plotWidth, height: h, domain})) {
+        for (const point of run.points) {
+          const dot = el('circle', {
+            class: point.coarse ? 'dot coarse' : 'dot',
+            cx: point.x.toFixed(1),
+            cy: point.y.toFixed(1),
+            r: 2.5,
+          });
+          dot.append(tip(s, point.rate));
+          layer.append(dot);
+        }
+      }
+    } else {
+      for (const bar of rateBars(s.rates, {width: plotWidth, height: h, domain})) {
+        const rect = el('rect', {
+          x: bar.x.toFixed(1),
+          y: bar.y.toFixed(1),
+          width: bar.width.toFixed(1),
+          height: bar.height.toFixed(1),
+          class: bar.rate.coarse ? 'bar coarse' : 'bar',
+        });
+        rect.append(tip(s, bar.rate));
+        layer.append(rect);
+      }
     }
+
     g.append(layer);
   }
 
@@ -444,8 +489,8 @@ function pulseChart(seriesSet, windowHours) {
 /**
  * A titled, scrolling rate chart with its own legend and current reading.
  */
-function pulseCard({title, seriesSet, unit}) {
-  const chart = pulseChart(seriesSet, state.pulseHours);
+function pulseCard({title, seriesSet, unit, render}) {
+  const chart = pulseChart(seriesSet, state.pulseHours, render);
   if (!chart) return null;
 
   const card = document.createElement('article');
@@ -494,7 +539,7 @@ function pulseCard({title, seriesSet, unit}) {
 
   const note = document.createElement('p');
   note.className = 'note small';
-  note.textContent = `Paler bars are averaged over a whole day, from before per-hour collection started. ${unit}`;
+  note.textContent = `The dashed stretch is averaged over a whole day, from before per-hour collection started, so it does not claim to have measured any particular hour. ${unit}`;
   card.append(note);
 
   return card;
@@ -529,24 +574,40 @@ function renderPulseFilter() {
 
 function renderPulse() {
   const samples = state.report.history?.samples?.youtube ?? {};
-  const cards = [];
 
-  const views = pulseCard({
-    title: 'Views per hour',
-    unit: 'Long form and Shorts are counted separately because they are not comparable.',
-    seriesSet: [
-      {label: 'Long form', className: 'long', series: samples.viewsLongForm ?? []},
-      {label: 'Shorts', className: 'short', series: samples.viewsShorts ?? []},
-    ],
-  });
-  if (views) cards.push(views);
+  /*
+    LONG FORM AND SHORTS GET A CHART EACH, on Sam's ruling, and the data settles
+    the argument rather than taste. Drawn on one shared axis the two lines are
+    truthful and half of the chart is unreadable: Shorts outrun long form by
+    roughly two orders of magnitude on this channel, one episode having taken
+    23 views while its own Shorts took 1,713, so the long form line lies flat on
+    zero exactly when there is something to see in it.
 
-  const subs = pulseCard({
-    title: 'Subscribers per hour',
-    unit: 'A thousand subscribers is one of the two doors to monetisation.',
-    seriesSet: [{label: 'Subscribers', className: 'subs', series: samples.subscribers ?? []}],
-  });
-  if (subs) cards.push(subs);
+    The risk of separating them is that a reader compares the two heights and
+    concludes something false. That is handled the way the Library panel already
+    handles it: they are visibly different charts, each with its own axis, and
+    the note says they are not comparable. An unreadable chart cannot be saved
+    by being technically fair.
+  */
+  const charts = [
+    {
+      title: 'Long form views per hour',
+      unit: 'Its own scale. Long form and Shorts are never plotted together, because a Short outruns an episode by so much that the episode would lie flat on zero.',
+      seriesSet: [{label: 'Long form', className: 'long', series: samples.viewsLongForm ?? []}],
+    },
+    {
+      title: 'Shorts views per hour',
+      unit: 'Its own scale, for the same reason. Shorts are measured on swipes, an episode on watch time.',
+      seriesSet: [{label: 'Shorts', className: 'short', series: samples.viewsShorts ?? []}],
+    },
+    {
+      title: 'Subscribers per hour',
+      unit: 'A thousand subscribers is one of the two doors to monetisation.',
+      seriesSet: [{label: 'Subscribers', className: 'subs', series: samples.subscribers ?? []}],
+    },
+  ];
+
+  const cards = charts.map((c) => pulseCard({...c, render: 'line'})).filter(Boolean);
 
   if (cards.length === 0) {
     const empty = document.createElement('p');

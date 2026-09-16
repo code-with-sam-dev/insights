@@ -421,6 +421,34 @@ td.cell-na { color: var(--hairline); }
 .pulse-chart .bars.short .bar { fill: var(--good); }
 .pulse-chart .bars.subs .bar { fill: #e8622d; }
 
+/* The line form, for a metric that arrives in ones. Bars drew subscribers as a
+   scatter of identical squares with no sense of direction; a line carries the
+   pace, which is the only thing that chart is for. */
+.pulse-chart .line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+/* Dashed where the readings either side were a day apart, so the line cannot
+   claim it measured any particular hour in that stretch. */
+.pulse-chart .line.coarse { stroke-width: 1.5; stroke-dasharray: 4 3; opacity: 0.55; }
+.pulse-chart .area { opacity: 0.12; stroke: none; }
+.pulse-chart .area.coarse { opacity: 0.05; }
+.pulse-chart .dot.coarse { opacity: 0; }
+
+.pulse-chart .line.subs .line, .pulse-chart .line.subs .dot { stroke: #e8622d; }
+.pulse-chart .line.subs .line { stroke: #e8622d; }
+.pulse-chart .line.subs .area { fill: #e8622d; }
+.pulse-chart .line.subs .dot { fill: #e8622d; stroke: none; }
+.pulse-chart .line.long .line { stroke: var(--accent); }
+.pulse-chart .line.long .area { fill: var(--accent); }
+.pulse-chart .line.long .dot { fill: var(--accent); stroke: none; }
+.pulse-chart .line.short .line { stroke: var(--good); }
+.pulse-chart .line.short .area { fill: var(--good); }
+.pulse-chart .line.short .dot { fill: var(--good); stroke: none; }
+
 .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.82rem; color: var(--ink-soft); }
 .legend-item { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 .legend-item strong { color: var(--ink); font-variant-numeric: tabular-nums; }

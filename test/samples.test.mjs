@@ -193,3 +193,42 @@ test('a video with no readable view count is left out of both sides', () => {
   ]);
   assert.deepEqual(split, {viewsLongForm: 0, viewsShorts: 5});
 });
+
+/* ---------- the line form ---------- */
+
+import {rateRuns, pathOf} from '../src/chart.mjs';
+
+test('a rate point sits at the middle of the interval it was measured across', () => {
+  // A day-wide interval placed at its end would date every backfilled reading
+  // twelve hours late.
+  const rates = ratePerHour([
+    {at: '2026-09-14T00:00:00.000Z', value: 0},
+    {at: '2026-09-15T00:00:00.000Z', value: 24},
+  ]);
+  const [run] = rateRuns(rates, {width: 100, height: 100});
+  assert.equal(run.points[0].x, 50, 'a single day-wide interval centres on the axis');
+});
+
+test('the line splits where the resolution changes, and the two runs join', () => {
+  const runs = rateRuns(
+    ratePerHour([
+      {at: '2026-09-14T00:00:00.000Z', value: 100},
+      {at: '2026-09-15T00:00:00.000Z', value: 340},
+      {at: '2026-09-15T01:00:00.000Z', value: 355},
+      {at: '2026-09-15T02:00:00.000Z', value: 360},
+    ]),
+    {width: 300, height: 100}
+  );
+
+  assert.equal(runs.length, 2);
+  assert.equal(runs[0].coarse, true);
+  assert.equal(runs[1].coarse, false);
+  // The joining point is repeated, or the line breaks at the changeover and
+  // reads as missing data rather than as a change of pace.
+  assert.deepEqual(runs[1].points[0], runs[0].points.at(-1));
+});
+
+test('a path is drawn for a single point rather than an empty string', () => {
+  assert.match(pathOf([{x: 1, y: 2}]), /^M1\.0,2\.0$/);
+  assert.equal(pathOf([]), '');
+});

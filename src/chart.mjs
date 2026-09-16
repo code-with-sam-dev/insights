@@ -176,3 +176,61 @@ export function rateBars(rates, {width, height, pxPerHour = 6, minWidth = 2, dom
     };
   });
 }
+
+/**
+ * A rate series as points on a line, rather than as bars.
+ *
+ * WHERE THE POINT SITS, and it is not a detail. A rate is measured ACROSS an
+ * interval, not at an instant, so the point goes at the MIDDLE of the interval
+ * it came from. Putting it at the end would shift every reading later than it
+ * happened, and on the backfilled part of the history, where an interval is a
+ * whole day wide, that error is twelve hours.
+ *
+ * Returned as runs rather than one list, split wherever the resolution changes.
+ * A day-averaged stretch and a truly hourly one are different measurements and
+ * the line has to be able to say so, which a single path cannot. Each run
+ * repeats the previous run's last point so the segments join rather than
+ * leaving a gap at the changeover.
+ */
+export function rateRuns(rates, {width, height, domain} = {}) {
+  if (!Array.isArray(rates) || rates.length === 0) return [];
+
+  const t0 = domain?.[0] ?? Math.min(...rates.map((r) => r.from));
+  const t1 = domain?.[1] ?? Math.max(...rates.map((r) => r.to));
+  const floor = domain?.[2] ?? Math.min(...rates.map((r) => r.perHour), 0);
+  const top = domain?.[3] ?? Math.max(...rates.map((r) => r.perHour), 0);
+
+  const x = linearScale([t0, t1], [0, width]);
+  const y = linearScale([floor, top || 1], [height, 0]);
+
+  const points = rates.map((r) => ({
+    x: x(r.from + (r.to - r.from) / 2),
+    y: y(r.perHour),
+    coarse: r.coarse,
+    rate: r,
+  }));
+
+  const runs = [];
+  for (const point of points) {
+    const last = runs.at(-1);
+    if (last && last.coarse === point.coarse) {
+      last.points.push(point);
+    } else {
+      // Carry the joining point across, or the line breaks at every change of
+      // resolution and reads as missing data rather than as a change of pace.
+      const bridge = last ? [last.points.at(-1)] : [];
+      runs.push({coarse: point.coarse, points: [...bridge, point]});
+    }
+  }
+
+  return runs;
+}
+
+/** An SVG path through laid-out points. */
+export function pathOf(points) {
+  if (!Array.isArray(points) || points.length === 0) return '';
+  if (points.length === 1) return `M${points[0].x.toFixed(1)},${points[0].y.toFixed(1)}`;
+  return points
+    .map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)},${p.y.toFixed(1)}`)
+    .join(' ');
+}
