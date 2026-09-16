@@ -800,6 +800,48 @@
       "asset": "java-short-pass-semantics-v2",
       "url": "https://x.com/CodeWithSamDev",
       "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "linkedin",
+      "asset": "ejb-to-spring-post",
+      "url": "https://www.linkedin.com/company/code-with-sam-dev",
+      "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "linkedin",
+      "asset": "digital-wallet-post",
+      "url": "https://www.linkedin.com/company/code-with-sam-dev",
+      "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "facebook",
+      "asset": "ejb-to-spring-post",
+      "url": "https://www.facebook.com/profile.php?id=61594191065024",
+      "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "facebook",
+      "asset": "digital-wallet-post",
+      "url": "https://www.facebook.com/profile.php?id=61594191065024",
+      "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "instagram",
+      "asset": "ejb-short-1",
+      "url": "https://www.instagram.com/codewithsamdev/",
+      "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "instagram",
+      "asset": "digital-wallet-short-3",
+      "url": "https://www.instagram.com/codewithsamdev/",
+      "at": "2026-09-16"
     }
   ]
 }
