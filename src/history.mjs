@@ -20,12 +20,77 @@ import {postingPlan} from './schedule.mjs';
 import {performanceByPlatform} from './performance.mjs';
 
 /**
+ * The hour a reading belongs to, as an ISO string: 2026-09-16T08:00:00.000Z.
+ *
+ * Collection runs every fifteen minutes, so four readings land in the same
+ * hour. Keeping all four would quadruple the payload for resolution nobody
+ * asked for, and quarter-hour noise on a view count is not a signal. The last
+ * reading in an hour wins, which is the same rule the daily series already
+ * uses for the last reading in a day.
+ */
+export function hourOf(when) {
+  const t = new Date(when);
+  t.setUTCMinutes(0, 0, 0);
+  return t.toISOString();
+}
+
+/**
+ * The hourly sample series, which is what makes the graphs incremental.
+ *
+ * WHY THIS EXISTS SEPARATELY FROM THE DAILY SERIES. The daily series keys on
+ * the date and REPLACES a same-day reading, so ninety-six runs a day collapse
+ * into one point and the shape of a launch is lost: a video that takes four
+ * thousand views in its first evening looks identical to one that took them
+ * over a week. Nothing that was thrown away can be recovered later, so the
+ * fine-grained series has to start accruing before it is needed, not when
+ * someone finally asks for the chart.
+ *
+ * It is kept BESIDE the daily series rather than replacing it, because every
+ * projection, every target line and every stall check on this dashboard is
+ * written against the daily shape, and because the daily points are the only
+ * record that exists for everything before this was added.
+ *
+ * Stored under history.samples, a key no platform will ever be called, and one
+ * that nothing which walks the history by platform id will pick up.
+ */
+export function mergeSamples(history, platformId, metric, value, at) {
+  const samples = history.samples ??= {};
+  const forPlatform = samples[platformId] ??= {};
+  let series = forPlatform[metric] ?? [];
+
+  // Seed from the daily series the first time a metric is sampled, so the
+  // chart runs from launch rather than from the day this was deployed. A
+  // backfilled point sits at midnight, exactly where the daily charts already
+  // draw it, so the two cannot disagree about the same reading.
+  const hour = hourOf(at);
+
+  if (series.length === 0) {
+    // The daily series has ALREADY been updated with this reading by the time
+    // this runs, and that point is the same measurement about to be written at
+    // its real hour. Seeding it as well would draw today twice: once at
+    // midnight, where nothing was measured, and once where it was.
+    const day = hour.slice(0, 10);
+    series = (history[platformId]?.[metric] ?? [])
+      .filter((p) => p.date !== day)
+      .map((p) => ({at: hourOf(`${p.date}T00:00:00Z`), value: p.value, daily: true}));
+  }
+
+  const existing = series.findIndex((p) => p.at === hour);
+  const point = {at: hour, value};
+  if (existing >= 0) series[existing] = point;
+  else series.push(point);
+
+  series.sort((a, b) => a.at.localeCompare(b.at));
+  forPlatform[metric] = series;
+}
+
+/**
  * Fold one day's snapshot into the accumulated history.
  *
  * Snapshot shape: {date, <platformId>: {<metric>: value | null}}.
  * Returns a new object; the input is never mutated.
  */
-export function mergeSnapshot(history, snapshot) {
+export function mergeSnapshot(history, snapshot, {at} = {}) {
   const {date, ...platforms} = snapshot;
   const merged = structuredClone(history ?? {});
 
@@ -48,6 +113,13 @@ export function mergeSnapshot(history, snapshot) {
 
       series.sort((a, b) => a.date.localeCompare(b.date));
       merged[platformId][metric] = series;
+
+      // The incremental record. Stamped with the moment of collection when
+      // there is one. The hand-entered numbers have no such moment, so they
+      // fall back to midnight on the date they were READ: stamping a reading
+      // that is three weeks old with this hour would invent a measurement
+      // nobody took, and the flat line since would read as a stall.
+      mergeSamples(merged, platformId, metric, value, at ?? `${date}T00:00:00Z`);
     }
   }
 

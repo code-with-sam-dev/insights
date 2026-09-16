@@ -17,7 +17,7 @@ import {
   unwrapWithSecret,
 } from './crypto.js';
 import {passkeysSupported, readSecret} from './passkey.js';
-import {seriesPath, filterSince, niceTicks, linearScale} from './chart.js';
+import {seriesPath, filterSince, niceTicks, linearScale, ratePerHour, rateBars} from './chart.js';
 
 const $ = (id) => document.getElementById(id);
 
@@ -104,6 +104,9 @@ const state = {
   report: null,
   dataKey: null,
   windowDays: 30,
+  // Launch to date, which is what Sam asked the per-hour charts for. The
+  // shorter windows are for reading one launch closely.
+  pulseHours: null,
   platforms: new Set(),
   tab: 'overview',
 };
@@ -273,6 +276,291 @@ function trendCard(platform, metric, series, target) {
   return card;
 }
 
+/* Metrics with no monetisation requirement behind them have no label of their
+   own, and the raw key reads as a variable name rather than as a number about
+   the channel. */
+const METRIC_LABELS = {
+  viewsLongForm: 'long form views',
+  viewsShorts: 'Shorts views',
+  views: 'views',
+  subscribers: 'subscribers',
+  watchHours: 'watch hours',
+};
+
+/* ---------- per hour, from launch ---------- */
+
+const HOUR_PX = 4;
+const PULSE_HEIGHT = 150;
+
+/** Readable dates on an axis that can be a year wide. */
+const axisDate = (ms) =>
+  new Date(ms).toLocaleDateString(undefined, {day: 'numeric', month: 'short'});
+
+const axisHour = (ms) =>
+  new Date(ms).toLocaleString(undefined, {day: 'numeric', month: 'short', hour: 'numeric'});
+
+const axisClock = (ms) => new Date(ms).toLocaleTimeString(undefined, {hour: 'numeric'});
+
+/**
+ * One rate series as bars on a real time axis, scrolling sideways.
+ *
+ * The width is the DATA's width, not the container's. Six weeks of quarter
+ * hourly readings cannot be squeezed into 560 pixels without every bar
+ * becoming sub-pixel and the whole thing turning into a grey smear, which is
+ * exactly what a fixed-width chart would do here as the history grows. So the
+ * chart grows and the container scrolls.
+ */
+function pulseChart(seriesSet, windowHours) {
+  const pad = {left: 44, right: 12, top: 10, bottom: 26};
+  const cutoff = windowHours ? Date.now() - windowHours * 3600000 : null;
+
+  const laid = seriesSet
+    .map((s) => ({
+      ...s,
+      rates: ratePerHour(s.series).filter((r) => cutoff === null || r.to >= cutoff),
+    }))
+    .filter((s) => s.rates.length > 0);
+
+  if (laid.length === 0) return null;
+
+  // ONE time axis and ONE value axis across every series in the chart. Scaling
+  // each to itself would put a Short's quiet week at the same height as an
+  // episode's launch night.
+  const all = laid.flatMap((s) => s.rates);
+  const t0 = Math.min(...all.map((r) => r.from));
+  const t1 = Math.max(...all.map((r) => r.to));
+  const hours = (t1 - t0) / 3600000;
+
+  // Wide enough that a busy hour is a bar rather than a hairline, bounded so a
+  // year of collection does not produce a canvas no browser will paint. The
+  // window chips are how you look closer; this is only the outer limit.
+  const plotWidth = Math.round(Math.min(12000, Math.max(640, hours * HOUR_PX)));
+  const width = plotWidth + pad.left + pad.right;
+  const h = PULSE_HEIGHT - pad.top - pad.bottom;
+
+  const top = Math.max(...all.map((r) => r.perHour), 0);
+  const floor = Math.min(...all.map((r) => r.perHour), 0);
+  const ticks = niceTicks(Math.min(0, floor), top || 1, 3);
+  const y = linearScale([ticks[0], ticks.at(-1)], [h, 0]);
+  const domain = [t0, t1, ticks[0], ticks.at(-1)];
+
+  // Room past the last bar for the final date label, which otherwise loses its
+  // last two characters against the edge of the scroller.
+  const canvas = plotWidth + pad.right + 16;
+  const svg = el('svg', {
+    class: 'chart pulse-chart',
+    width: canvas,
+    height: PULSE_HEIGHT,
+    viewBox: `0 0 ${canvas} ${PULSE_HEIGHT}`,
+    preserveAspectRatio: 'xMinYMin meet',
+    role: 'img',
+  });
+
+  // THE VALUE AXIS DOES NOT SCROLL. It lives in its own fixed SVG beside the
+  // plot, because a scale that slides off the left edge on the first swipe
+  // leaves a chart of bars with no numbers on it at all, which is the state
+  // this chart spent its first render in.
+  const axis = el('svg', {
+    class: 'chart pulse-axis',
+    width: pad.left,
+    height: PULSE_HEIGHT,
+    viewBox: `0 0 ${pad.left} ${PULSE_HEIGHT}`,
+    'aria-hidden': 'true',
+  });
+  const axisG = el('g', {transform: `translate(${pad.left},${pad.top})`});
+  for (const tick of ticks) {
+    axisG.append(
+      el('text', {class: 'axis', x: -6, y: y(tick) + 3, 'text-anchor': 'end'}, compact(tick))
+    );
+  }
+  axis.append(axisG);
+
+  const g = el('g', {transform: `translate(0,${pad.top})`});
+
+  for (const tick of ticks) {
+    g.append(el('line', {class: 'grid', x1: 0, x2: plotWidth, y1: y(tick), y2: y(tick)}));
+  }
+
+  // Date ticks, thinned so a long range does not end up with more grid than
+  // data. Hourly ticks once the window is short enough to warrant them.
+  const xScale = linearScale([t0, t1], [0, plotWidth]);
+  const dayMs = 86400000;
+  if (hours <= 48) {
+    const step = hours <= 12 ? 1 : hours <= 26 ? 3 : 6;
+    const first = new Date(t0);
+    first.setMinutes(0, 0, 0);
+    first.setHours(first.getHours() + 1);
+    for (let t = first.getTime(); t <= t1; t += step * 3600000) {
+      const x = xScale(t);
+      g.append(el('line', {class: 'grid day', x1: x, x2: x, y1: 0, y2: h}));
+      g.append(
+        el('text', {class: 'axis', x, y: h + 16, 'text-anchor': 'middle'}, axisClock(t))
+      );
+    }
+  } else {
+    const days = Math.ceil((t1 - t0) / dayMs);
+    const every = days > 120 ? 14 : days > 40 ? 7 : days > 14 ? 2 : 1;
+    const first = new Date(t0);
+    first.setHours(24, 0, 0, 0);
+    let index = 0;
+    for (let t = first.getTime(); t <= t1; t += dayMs, index += 1) {
+      if (index % every !== 0) continue;
+      const x = xScale(t);
+      g.append(el('line', {class: 'grid day', x1: x, x2: x, y1: 0, y2: h}));
+      g.append(el('text', {class: 'axis', x, y: h + 16, 'text-anchor': 'middle'}, axisDate(t)));
+    }
+  }
+
+  for (const s of laid) {
+    const bars = rateBars(s.rates, {width: plotWidth, height: h, domain});
+    const layer = el('g', {class: `bars ${s.className}`});
+    for (const bar of bars) {
+      const rect = el('rect', {
+        x: bar.x.toFixed(1),
+        y: bar.y.toFixed(1),
+        width: bar.width.toFixed(1),
+        height: bar.height.toFixed(1),
+        class: bar.rate.coarse ? 'bar coarse' : 'bar',
+      });
+      // Every bar says what it is. A chart whose numbers can only be guessed
+      // from a grid line is a picture, not a measurement.
+      rect.append(
+        el(
+          'title',
+          {},
+          `${s.label}: ${num(Math.round(bar.rate.perHour))} per hour, ${axisHour(bar.rate.to)}` +
+            (bar.rate.coarse ? ' (a whole day averaged, before hourly collection began)' : '')
+        )
+      );
+      layer.append(rect);
+    }
+    g.append(layer);
+  }
+
+  svg.append(g);
+  return {axis, plot: svg, width: canvas};
+}
+
+/**
+ * A titled, scrolling rate chart with its own legend and current reading.
+ */
+function pulseCard({title, seriesSet, unit}) {
+  const chart = pulseChart(seriesSet, state.pulseHours);
+  if (!chart) return null;
+
+  const card = document.createElement('article');
+  card.className = 'card pulse-card';
+
+  const head = document.createElement('div');
+  head.className = 'chart-head';
+
+  const recent = seriesSet
+    .map((s) => {
+      const rates = ratePerHour(s.series);
+      const fine = rates.filter((r) => !r.coarse);
+      const last = (fine.length ? fine : rates).at(-1);
+      return last ? {label: s.label, className: s.className, perHour: last.perHour} : null;
+    })
+    .filter(Boolean);
+
+  head.innerHTML = `
+    <h3>${title}</h3>
+    <div class="legend">
+      ${recent
+        .map(
+          (r) =>
+            `<span class="legend-item ${r.className}"><i></i>${r.label}
+             <strong>${num(Math.round(r.perHour))}</strong>/hr</span>`
+        )
+        .join('')}
+    </div>`;
+
+  const scroller = document.createElement('div');
+  scroller.className = 'chart-scroll';
+  scroller.append(chart.plot);
+
+  const body = document.createElement('div');
+  body.className = 'pulse-body';
+  body.append(chart.axis, scroller);
+
+  card.append(head, body);
+
+  // Opened at the right hand edge, because the useful end of a growth chart is
+  // now, not launch. Scrolling back is a deliberate act; scrolling forward
+  // every single visit is a tax.
+  requestAnimationFrame(() => {
+    scroller.scrollLeft = scroller.scrollWidth;
+  });
+
+  const note = document.createElement('p');
+  note.className = 'note small';
+  note.textContent = `Paler bars are averaged over a whole day, from before per-hour collection started. ${unit}`;
+  card.append(note);
+
+  return card;
+}
+
+/**
+ * How far back the per-hour charts look.
+ *
+ * "All" is the default because Sam asked for launch to date, and it is the
+ * window that answers the question the charts exist for: has this channel ever
+ * had a night that worked. The shorter windows are for reading a single
+ * launch, where a month of quiet days squashes the hour you care about.
+ */
+const PULSE_WINDOWS = [
+  {label: '24 hours', hours: 24},
+  {label: '7 days', hours: 24 * 7},
+  {label: '30 days', hours: 24 * 30},
+  {label: 'All', hours: null},
+];
+
+function renderPulseFilter() {
+  $('pulse-filter').replaceChildren(
+    ...PULSE_WINDOWS.map((w) =>
+      chip(w.label, state.pulseHours === w.hours, () => {
+        state.pulseHours = w.hours;
+        renderPulseFilter();
+        renderPulse();
+      })
+    )
+  );
+}
+
+function renderPulse() {
+  const samples = state.report.history?.samples?.youtube ?? {};
+  const cards = [];
+
+  const views = pulseCard({
+    title: 'Views per hour',
+    unit: 'Long form and Shorts are counted separately because they are not comparable.',
+    seriesSet: [
+      {label: 'Long form', className: 'long', series: samples.viewsLongForm ?? []},
+      {label: 'Shorts', className: 'short', series: samples.viewsShorts ?? []},
+    ],
+  });
+  if (views) cards.push(views);
+
+  const subs = pulseCard({
+    title: 'Subscribers per hour',
+    unit: 'A thousand subscribers is one of the two doors to monetisation.',
+    seriesSet: [{label: 'Subscribers', className: 'subs', series: samples.subscribers ?? []}],
+  });
+  if (subs) cards.push(subs);
+
+  if (cards.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'note';
+    empty.textContent = state.pulseHours
+      ? 'Nothing was collected in this window. Try a wider one.'
+      : 'Per-hour charts need two readings. They fill in from the next collection run, and the split between long form and Shorts starts accruing from the same run.';
+    $('pulse').replaceChildren(empty);
+    return;
+  }
+
+  $('pulse').replaceChildren(...cards);
+}
+
 function renderTrends() {
   const cards = [];
   let widened = false;
@@ -286,7 +574,8 @@ function renderTrends() {
 
       const gap = platform.gaps?.find((g) => g.metric === metric);
       const requirement = platform.monetisation?.requirements?.find((r) => r.metric === metric);
-      cards.push(trendCard(platform, gap?.label ?? metric, series, requirement?.target));
+      const label = gap?.label ?? METRIC_LABELS[metric] ?? metric;
+      cards.push(trendCard(platform, label, series, requirement?.target));
     }
   }
 
@@ -531,8 +820,6 @@ function render() {
   const report = state.report;
   $('lock').hidden = true;
   $('report').hidden = false;
-  const refreshLink = $('refresh');
-  if (refreshLink) refreshLink.hidden = false;
 
   const platforms = visiblePlatforms();
   const {headline, body} = verdict(platforms);
@@ -547,6 +834,8 @@ function render() {
   renderLibrary();
   renderSchedule();
   renderTrends();
+  renderPulseFilter();
+  renderPulse();
   paintFreshness();
 
   const best = visibleContent(report.content.best);

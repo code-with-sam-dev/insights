@@ -119,7 +119,10 @@ async function main() {
   const catalogueFile = await readJson(CATALOGUE_PATH);
   const catalogue = catalogueFile?.assets ?? [];
 
-  const merged = mergeSnapshot(history, snapshot);
+  // The moment of collection, carried into the hourly series. Every run of
+  // this job is one point on Sam's incremental graphs, and a point with no
+  // timestamp cannot be one.
+  const merged = mergeSnapshot(history, snapshot, {at: new Date().toISOString()});
   const report = buildReport(merged, {
     content,
     uploads,

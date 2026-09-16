@@ -90,3 +90,89 @@ export function niceTicks(min, max, count = 4) {
   }
   return ticks;
 }
+
+const HOUR_MS = 3600000;
+
+/**
+ * Turn a cumulative series into the rate it grew at, per hour.
+ *
+ * WHY A RATE AND NOT THE RUNNING TOTAL. A cumulative view count only ever goes
+ * up, so its chart is a line that slopes gently upward forever and every day
+ * looks like every other day. The question the dashboard is actually for is
+ * WHEN something moved: which evening a Short was picked up, whether a
+ * publish did anything, whether the channel is still growing this week. That
+ * is the derivative, and it is invisible in the total.
+ *
+ * DIVIDED BY THE REAL GAP, not by one. Readings are fifteen minutes apart now
+ * and were a day apart before that, and a run that fails leaves a gap of
+ * whatever length. Treating every step as one hour would turn a day's growth
+ * into a spike a hundred times the truth, which is the exact failure that
+ * would make the chart worse than no chart.
+ *
+ * A reading BELOW the one before it is kept as a negative rather than clamped.
+ * YouTube does revise counts down when it strips inauthentic views, and a
+ * dashboard that quietly floors that at zero is hiding the one movement its
+ * owner would most want to see.
+ */
+export function ratePerHour(series) {
+  if (!Array.isArray(series) || series.length < 2) return [];
+
+  const out = [];
+  for (let i = 1; i < series.length; i += 1) {
+    const from = Date.parse(series[i - 1].at ?? series[i - 1].date);
+    const to = Date.parse(series[i].at ?? series[i].date);
+    const hours = (to - from) / HOUR_MS;
+    if (!Number.isFinite(hours) || hours <= 0) continue;
+
+    out.push({
+      at: series[i].at ?? series[i].date,
+      from,
+      to,
+      hours,
+      perHour: (series[i].value - series[i - 1].value) / hours,
+      // True where the two readings either side were a day or more apart, so
+      // the rate is a daily average spread over its hours rather than a real
+      // hourly measurement. The chart says so instead of pretending.
+      coarse: hours >= 24,
+    });
+  }
+  return out;
+}
+
+/**
+ * Bar geometry for a rate series, laid out on a real time axis.
+ *
+ * Each bar spans the interval it was measured over, so an overnight gap draws
+ * one wide low bar rather than one narrow tall one, and the eye reads area as
+ * volume the way it expects to.
+ */
+export function rateBars(rates, {width, height, pxPerHour = 6, minWidth = 2, domain} = {}) {
+  if (!Array.isArray(rates) || rates.length === 0) return [];
+
+  const t0 = domain?.[0] ?? Math.min(...rates.map((r) => r.from));
+  const t1 = domain?.[1] ?? Math.max(...rates.map((r) => r.to));
+  const span = width ?? Math.max(360, ((t1 - t0) / HOUR_MS) * pxPerHour);
+
+  const x = linearScale([t0, t1], [0, span]);
+  // The value axis is passed in when two series share a chart. Scaling each to
+  // its own maximum would draw a Short's quiet week at the same height as an
+  // episode's launch night, which is the one thing a reader of this chart must
+  // never be led to believe.
+  const top = domain?.[3] ?? Math.max(...rates.map((r) => r.perHour), 0);
+  const floor = domain?.[2] ?? Math.min(...rates.map((r) => r.perHour), 0);
+  const y = linearScale([floor, top || 1], [height, 0]);
+  const zero = y(0);
+
+  return rates.map((r) => {
+    const left = x(r.from);
+    const w = Math.max(minWidth, x(r.to) - left);
+    const value = y(r.perHour);
+    return {
+      x: left,
+      width: w,
+      y: Math.min(value, zero),
+      height: Math.max(1, Math.abs(zero - value)),
+      rate: r,
+    };
+  });
+}

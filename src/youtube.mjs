@@ -19,6 +19,8 @@
  * trend line.
  */
 
+import {formatOf} from './library.mjs';
+
 const DATA_API = 'https://www.googleapis.com/youtube/v3';
 const ANALYTICS_API = 'https://youtubeanalytics.googleapis.com/v2/reports';
 const TOKEN_URL = 'https://oauth2.googleapis.com/token';
@@ -147,6 +149,33 @@ export async function watchHours({clientId, clientSecret, refreshToken, channelI
   return minutes === undefined ? null : minutes / 60;
 }
 
+/**
+ * Channel views, split into long form and Shorts.
+ *
+ * The channel total is one number and it hides the question that actually
+ * decides what to make next. Shorts and episodes are not comparable and never
+ * should be averaged, but the SPLIT is the whole point: on this channel one
+ * episode drew 23 views while its Shorts drew 1,713, and a single total would
+ * have shown neither.
+ *
+ * Duration decides it, using the same rule the content library uses, so the
+ * two cannot disagree about what counts as a Short. A video whose duration
+ * failed to parse is left out of both rather than guessed into one.
+ */
+export function splitViews(content = []) {
+  let viewsLongForm = 0;
+  let viewsShorts = 0;
+
+  for (const video of content) {
+    if (!Number.isFinite(video?.views)) continue;
+    const format = formatOf({durationSeconds: video.durationSeconds, url: video.url});
+    if (format === 'short') viewsShorts += video.views;
+    else if (format === 'long') viewsLongForm += video.views;
+  }
+
+  return {viewsLongForm, viewsShorts};
+}
+
 /** Everything YouTube can give us today, with per-call failures isolated. */
 export async function collectYouTube(config, log = console) {
   const result = {metrics: {}, content: [], errors: []};
@@ -164,6 +193,7 @@ export async function collectYouTube(config, log = console) {
 
   try {
     result.content = await videoStats({...config, uploadsPlaylist: stats.uploadsPlaylist});
+    Object.assign(result.metrics, splitViews(result.content));
   } catch (error) {
     result.errors.push(`videoStats: ${error.message}`);
     log.warn(`YouTube video stats failed: ${error.message}`);

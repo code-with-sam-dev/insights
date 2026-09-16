@@ -33,8 +33,7 @@
             href="https://github.com/code-with-sam-dev/insights/actions/workflows/collect.yml"
             target="_blank"
             rel="noopener"
-            hidden
-            >Refresh now</a
+            >Refresh data</a
           >
         </div>
       </header>
@@ -82,6 +81,24 @@
 
         <!-- ===================== OVERVIEW ===================== -->
         <section class="panel" data-panel="overview">
+          <!-- FIRST THING ON THE PAGE, on Sam's instruction. A cumulative
+               total only ever slopes upward, so it answers "how many" and
+               never "when did it move". These two answer "when", which is the
+               question you open a dashboard with. -->
+          <h2 class="pulse-head">Per hour, from launch</h2>
+          <p class="note">
+            How fast views and subscribers are arriving, not how many have
+            arrived. Each bar covers the gap between two readings, so an
+            overnight gap draws wide and low rather than as a spike. Scroll
+            sideways: the axis is real time, so a busy week takes more room
+            than a quiet one.
+          </p>
+          <div class="filter-group pulse-filter-row">
+            <span class="filter-label">Window</span>
+            <div id="pulse-filter" class="chips" role="group" aria-label="Per hour window"></div>
+          </div>
+          <div id="pulse"></div>
+
           <div id="verdict" class="verdict"></div>
 
           <div id="kpis" class="kpis"></div>
