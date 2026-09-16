@@ -690,6 +690,61 @@
       "title": "Modern Java: Pass by value or pass by reference?",
       "file": "motion/out/java/shorts/java-short-pass-semantics.mp4",
       "createdAt": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "asset": "ejb-to-spring",
+      "kind": "episode",
+      "title": "EJB to Spring Boot in 18 Minutes: Migrate Without a Big Bang",
+      "file": "assets/exports/ejb-to-spring.mp4",
+      "createdAt": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "asset": "ejb-short-1",
+      "kind": "short",
+      "title": "EJB to Spring Boot: Same interface. Different contract.",
+      "file": "assets/exports/ejb-short-1.mp4",
+      "createdAt": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "asset": "ejb-short-2",
+      "kind": "short",
+      "title": "EJB to Spring Boot: Seven lines you are not allowed to change",
+      "file": "assets/exports/ejb-short-2.mp4",
+      "createdAt": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "asset": "ejb-short-3",
+      "kind": "short",
+      "title": "EJB to Spring Boot: Nobody wrote this down",
+      "file": "assets/exports/ejb-short-3.mp4",
+      "createdAt": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "asset": "ejb-short-4",
+      "kind": "short",
+      "title": "EJB to Spring Boot: The bill nobody puts in the plan",
+      "file": "assets/exports/ejb-short-4.mp4",
+      "createdAt": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "asset": "ejb-to-spring-post",
+      "kind": "post",
+      "title": "EJB to Spring Boot announcement",
+      "createdAt": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "asset": "java-short-pass-semantics-v2",
+      "kind": "short",
+      "title": "Modern Java: Pass by value or pass by reference? (analogy rebuild)",
+      "file": "assets/exports/java-short-pass-semantics.mp4",
+      "createdAt": "2026-09-16"
     }
   ]
 }

@@ -744,6 +744,62 @@
       "asset": "java-short-pass-semantics",
       "url": "https://youtube.com/shorts/y9pLbOR28cs",
       "at": "2026-09-15"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "ejb-to-spring",
+      "url": "https://youtu.be/Ug5eZMkIZeo",
+      "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "ejb-short-1",
+      "url": "https://youtube.com/shorts/oziY5eVP1Vs",
+      "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "ejb-short-2",
+      "url": "https://youtube.com/shorts/13UVLHTJgPc",
+      "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "ejb-short-3",
+      "url": "https://youtube.com/shorts/hcCYOn7u56U",
+      "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "ejb-short-4",
+      "url": "https://youtube.com/shorts/B81Ukla136w",
+      "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "youtube",
+      "asset": "java-short-pass-semantics-v2",
+      "url": "https://youtube.com/shorts/tI9En0GL9q0",
+      "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "x",
+      "asset": "ejb-to-spring-post",
+      "url": "https://x.com/CodeWithSamDev",
+      "at": "2026-09-16"
+    },
+    {
+      "episode": null,
+      "platform": "x",
+      "asset": "java-short-pass-semantics-v2",
+      "url": "https://x.com/CodeWithSamDev",
+      "at": "2026-09-16"
     }
   ]
 }
