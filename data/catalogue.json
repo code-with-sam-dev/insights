@@ -1,750 +1,1430 @@
 {
-  "_comment": [
-    "Everything the channel has MADE, independent of where it went.",
-    "",
-    "This file exists because data/uploads.json only records attempts. An asset",
-    "that was rendered and then never posted anywhere leaves no trace there, so",
-    "the most expensive gap of all, a finished clip nobody published, was the",
-    "one thing the register could not show.",
-    "",
-    "kind decides which platforms are expected to carry it:",
-    "  episode  the long form cut. YouTube only.",
-    "  short    a vertical cut. YouTube, TikTok, Instagram, Facebook.",
-    "  post     the written announcement for an episode. LinkedIn and X.",
-    "",
-    "Add a row here the moment a render is final, not when it is posted."
-  ],
-  "assets": [
-    {
-      "episode": 1,
-      "asset": "episode",
-      "kind": "episode",
-      "title": "Kafka Ordering Explained: Why Your Messages Still Arrive Out of Order",
-      "file": "assets/exports/kafka-ordering-episode-01.mp4",
-      "createdAt": "2026-09-10"
-    },
-    {
-      "episode": 1,
-      "asset": "post",
-      "kind": "post",
-      "title": "Episode 1 announcement",
-      "createdAt": "2026-09-10"
-    },
-    {
-      "episode": 1,
-      "asset": "short-1",
-      "kind": "short",
-      "title": "Does Kafka guarantee ordering? Yes, and no.",
-      "file": "assets/exports/shorts/short-1-yes-and-no.mp4",
-      "createdAt": "2026-09-10"
-    },
-    {
-      "episode": 1,
-      "asset": "short-2",
-      "kind": "short",
-      "title": "How do you keep Kafka events in order?",
-      "file": "assets/exports/shorts/short-2-same-key.mp4",
-      "createdAt": "2026-09-10"
-    },
-    {
-      "episode": 1,
-      "asset": "short-3",
-      "kind": "short",
-      "title": "Kafka kept the order. Your app did not.",
-      "file": "assets/exports/shorts/short-3-consumer-breaks.mp4",
-      "createdAt": "2026-09-10"
-    },
-    {
-      "episode": 2,
-      "asset": "episode",
-      "kind": "episode",
-      "title": "Kafka Partitions Explained: Why More Consumers Do Not Always Make You Faster",
-      "file": "motion/out/ep2/final/kafka-partitions-episode-02.mp4",
-      "createdAt": "2026-09-11"
-    },
-    {
-      "episode": 2,
-      "asset": "post",
-      "kind": "post",
-      "title": "Episode 2 announcement",
-      "createdAt": "2026-09-11"
-    },
-    {
-      "episode": 2,
-      "asset": "short-1",
-      "kind": "short",
-      "title": "4 consumers. 3 partitions. What does consumer 4 do?",
-      "file": "motion/out/ep2/final/Ep2ShortIdle.mp4",
-      "createdAt": "2026-09-11"
-    },
-    {
-      "episode": 2,
-      "asset": "short-2",
-      "kind": "short",
-      "title": "Will more Kafka consumers make it faster?",
-      "file": "motion/out/ep2/final/Ep2ShortFaster.mp4",
-      "createdAt": "2026-09-11"
-    },
-    {
-      "episode": 2,
-      "asset": "short-3",
-      "kind": "short",
-      "title": "Why not just create 100 Kafka partitions?",
-      "file": "motion/out/ep2/final/Ep2ShortMany.mp4",
-      "createdAt": "2026-09-11"
-    },
-    {
-      "episode": 3,
-      "asset": "episode",
-      "kind": "episode",
-      "title": "Design a Digital Wallet: The $100 Transfer That Disappears",
-      "file": "motion/out/digital-wallet/digital-wallet-v02.mp4",
-      "createdAt": "2026-09-12"
-    },
-    {
-      "episode": 3,
-      "asset": "short-1",
-      "kind": "short",
-      "title": "Your API just charged them twice",
-      "file": "motion/out/digital-wallet/shorts/short-1-idempotency.mp4",
-      "createdAt": "2026-09-12"
-    },
-    {
-      "episode": 3,
-      "asset": "short-2",
-      "kind": "short",
-      "title": "Both writes succeeded. The money vanished.",
-      "file": "motion/out/digital-wallet/shorts/short-2-lost-update.mp4",
-      "createdAt": "2026-09-12"
-    },
-    {
-      "episode": 3,
-      "asset": "short-3",
-      "kind": "short",
-      "title": "Your p95 dashboard is lying to you",
-      "file": "motion/out/digital-wallet/shorts/short-3-percentiles.mp4",
-      "createdAt": "2026-09-12"
-    },
-    {
-      "episode": 4,
-      "asset": "episode",
-      "kind": "episode",
-      "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database",
-      "file": "motion/out/kafka-04/",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 4,
-      "asset": "short-1",
-      "kind": "short",
-      "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database (Short 1)",
-      "file": "motion/out/kafka-04/shorts/short-1.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 4,
-      "asset": "short-2",
-      "kind": "short",
-      "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database (Short 2)",
-      "file": "motion/out/kafka-04/shorts/short-2.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 4,
-      "asset": "short-3",
-      "kind": "short",
-      "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database (Short 3)",
-      "file": "motion/out/kafka-04/shorts/short-3.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 4,
-      "asset": "short-4",
-      "kind": "short",
-      "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database (Short 4)",
-      "file": "motion/out/kafka-04/shorts/short-4.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 5,
-      "asset": "episode",
-      "kind": "episode",
-      "title": "Kafka Idempotency: How to Survive Duplicate Messages",
-      "file": "motion/out/kafka-05/",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 5,
-      "asset": "short-1",
-      "kind": "short",
-      "title": "Kafka Idempotency: How to Survive Duplicate Messages (Short 1)",
-      "file": "motion/out/kafka-05/shorts/short-1.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 5,
-      "asset": "short-2",
-      "kind": "short",
-      "title": "Kafka Idempotency: How to Survive Duplicate Messages (Short 2)",
-      "file": "motion/out/kafka-05/shorts/short-2.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 5,
-      "asset": "short-3",
-      "kind": "short",
-      "title": "Kafka Idempotency: How to Survive Duplicate Messages (Short 3)",
-      "file": "motion/out/kafka-05/shorts/short-3.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 5,
-      "asset": "short-4",
-      "kind": "short",
-      "title": "Kafka Idempotency: How to Survive Duplicate Messages (Short 4)",
-      "file": "motion/out/kafka-05/shorts/short-4.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 6,
-      "asset": "episode",
-      "kind": "episode",
-      "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything",
-      "file": "motion/out/kafka-06/",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 6,
-      "asset": "short-1",
-      "kind": "short",
-      "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything (Short 1)",
-      "file": "motion/out/kafka-06/shorts/short-1.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 6,
-      "asset": "short-2",
-      "kind": "short",
-      "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything (Short 2)",
-      "file": "motion/out/kafka-06/shorts/short-2.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 6,
-      "asset": "short-3",
-      "kind": "short",
-      "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything (Short 3)",
-      "file": "motion/out/kafka-06/shorts/short-3.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 6,
-      "asset": "short-4",
-      "kind": "short",
-      "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything (Short 4)",
-      "file": "motion/out/kafka-06/shorts/short-4.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 7,
-      "asset": "episode",
-      "kind": "episode",
-      "title": "Kafka Transactions and the Outbox: Where Atomicity Stops",
-      "file": "motion/out/kafka-07/",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 7,
-      "asset": "short-1",
-      "kind": "short",
-      "title": "Kafka Transactions and the Outbox: Where Atomicity Stops (Short 1)",
-      "file": "motion/out/kafka-07/shorts/short-1.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 7,
-      "asset": "short-2",
-      "kind": "short",
-      "title": "Kafka Transactions and the Outbox: Where Atomicity Stops (Short 2)",
-      "file": "motion/out/kafka-07/shorts/short-2.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 7,
-      "asset": "short-3",
-      "kind": "short",
-      "title": "Kafka Transactions and the Outbox: Where Atomicity Stops (Short 3)",
-      "file": "motion/out/kafka-07/shorts/short-3.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 7,
-      "asset": "short-4",
-      "kind": "short",
-      "title": "Kafka Transactions and the Outbox: Where Atomicity Stops (Short 4)",
-      "file": "motion/out/kafka-07/shorts/short-4.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 8,
-      "asset": "episode",
-      "kind": "episode",
-      "title": "Kafka Observability: Why Consumer Lag Is Not Enough",
-      "file": "motion/out/kafka-08/",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 8,
-      "asset": "short-1",
-      "kind": "short",
-      "title": "Kafka Observability: Why Consumer Lag Is Not Enough (Short 1)",
-      "file": "motion/out/kafka-08/shorts/short-1.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 8,
-      "asset": "short-2",
-      "kind": "short",
-      "title": "Kafka Observability: Why Consumer Lag Is Not Enough (Short 2)",
-      "file": "motion/out/kafka-08/shorts/short-2.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 8,
-      "asset": "short-3",
-      "kind": "short",
-      "title": "Kafka Observability: Why Consumer Lag Is Not Enough (Short 3)",
-      "file": "motion/out/kafka-08/shorts/short-3.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 8,
-      "asset": "short-4",
-      "kind": "short",
-      "title": "Kafka Observability: Why Consumer Lag Is Not Enough (Short 4)",
-      "file": "motion/out/kafka-08/shorts/short-4.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 9,
-      "asset": "episode",
-      "kind": "episode",
-      "title": "Build a Production-Grade Kafka Payment Pipeline",
-      "file": "motion/out/kafka-09/",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 9,
-      "asset": "short-1",
-      "kind": "short",
-      "title": "Build a Production-Grade Kafka Payment Pipeline (Short 1)",
-      "file": "motion/out/kafka-09/shorts/short-1.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 9,
-      "asset": "short-2",
-      "kind": "short",
-      "title": "Build a Production-Grade Kafka Payment Pipeline (Short 2)",
-      "file": "motion/out/kafka-09/shorts/short-2.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 9,
-      "asset": "short-3",
-      "kind": "short",
-      "title": "Build a Production-Grade Kafka Payment Pipeline (Short 3)",
-      "file": "motion/out/kafka-09/shorts/short-3.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 9,
-      "asset": "short-4",
-      "kind": "short",
-      "title": "Build a Production-Grade Kafka Payment Pipeline (Short 4)",
-      "file": "motion/out/kafka-09/shorts/short-4.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 10,
-      "asset": "episode",
-      "kind": "episode",
-      "title": "Senior Kafka Architecture Challenge: Would Your Design Survive?",
-      "file": "motion/out/kafka-10/",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 10,
-      "asset": "short-1",
-      "kind": "short",
-      "title": "Senior Kafka Architecture Challenge: Would Your Design Survive? (Short 1)",
-      "file": "motion/out/kafka-10/shorts/short-1.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 10,
-      "asset": "short-2",
-      "kind": "short",
-      "title": "Senior Kafka Architecture Challenge: Would Your Design Survive? (Short 2)",
-      "file": "motion/out/kafka-10/shorts/short-2.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 10,
-      "asset": "short-3",
-      "kind": "short",
-      "title": "Senior Kafka Architecture Challenge: Would Your Design Survive? (Short 3)",
-      "file": "motion/out/kafka-10/shorts/short-3.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": 10,
-      "asset": "short-4",
-      "kind": "short",
-      "title": "Senior Kafka Architecture Challenge: Would Your Design Survive? (Short 4)",
-      "file": "motion/out/kafka-10/shorts/short-4.mp4",
-      "createdAt": "2026-09-13"
-    },
-    {
-      "episode": null,
-      "asset": "codex-flagship",
-      "kind": "episode",
-      "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know",
-      "file": "motion/out/codex-01/chatgpt-codex-ep01-v2.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "codex-flagship-short-1",
-      "kind": "short",
-      "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know (Short 1)",
-      "file": "motion/out/codex-01/shorts/short-1.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "codex-flagship-short-2",
-      "kind": "short",
-      "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know (Short 2)",
-      "file": "motion/out/codex-01/shorts/short-2.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "codex-flagship-short-3",
-      "kind": "short",
-      "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know (Short 3)",
-      "file": "motion/out/codex-01/shorts/short-3.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "codex-flagship-short-4",
-      "kind": "short",
-      "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know (Short 4)",
-      "file": "motion/out/codex-01/shorts/short-4.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "claude-code-flagship",
-      "kind": "episode",
-      "title": "Claude Code: Everything a Software Engineer Needs to Know",
-      "file": "motion/out/cc-flagship/claude-code-flagship-v2.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "claude-code-flagship-short-1",
-      "kind": "short",
-      "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 1)",
-      "file": "motion/out/cc-flagship/shorts/short-1.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "claude-code-flagship-short-2",
-      "kind": "short",
-      "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 2)",
-      "file": "motion/out/cc-flagship/shorts/short-2.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "claude-code-flagship-short-3",
-      "kind": "short",
-      "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 3)",
-      "file": "motion/out/cc-flagship/shorts/short-3.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "claude-code-flagship-short-4",
-      "kind": "short",
-      "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 4)",
-      "file": "motion/out/cc-flagship/shorts/short-4.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "claude-code-flagship-short-5",
-      "kind": "short",
-      "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 5)",
-      "file": "motion/out/cc-flagship/shorts/short-5.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-episode",
-      "kind": "episode",
-      "title": "Modern Java in 18 Minutes: Everything That Actually Shipped",
-      "file": "motion/out/java/episode.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-01-virtual-threads",
-      "kind": "short",
-      "title": "Modern Java: 10,000 tasks: 5226ms vs 152ms",
-      "file": "motion/out/java/shorts/short-01-virtual-threads.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-02-switch-expressions",
-      "kind": "short",
-      "title": "Modern Java: This code is wrong and will not throw",
-      "file": "motion/out/java/shorts/short-02-switch-expressions.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-03-records",
-      "kind": "short",
-      "title": "Modern Java: Fourteen lines to one",
-      "file": "motion/out/java/shorts/short-03-records.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-04-still-preview",
-      "kind": "short",
-      "title": "Modern Java: Seventh preview. Still not shipped.",
-      "file": "motion/out/java/shorts/short-04-still-preview.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-05-compact-headers",
-      "kind": "short",
-      "title": "Modern Java: 115 MB to 76 MB, for one flag",
-      "file": "motion/out/java/shorts/short-05-compact-headers.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-06-scoped-values",
-      "kind": "short",
-      "title": "Modern Java: alice leaked onto another request",
-      "file": "motion/out/java/shorts/short-06-scoped-values.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-07-sealed-patterns",
-      "kind": "short",
-      "title": "Modern Java: No default branch. On purpose.",
-      "file": "motion/out/java/shorts/short-07-sealed-patterns.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-08-ffm",
-      "kind": "short",
-      "title": "Modern Java: JNI is over and nobody noticed",
-      "file": "motion/out/java/shorts/short-08-ffm.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-09-var",
-      "kind": "short",
-      "title": "Modern Java: Is var dynamic typing? No.",
-      "file": "motion/out/java/shorts/short-09-var.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-10-sequenced",
-      "kind": "short",
-      "title": "Modern Java: No way to ask a Set for its last item",
-      "file": "motion/out/java/shorts/short-10-sequenced.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-11-text-blocks",
-      "kind": "short",
-      "title": "Modern Java: Is this JSON valid? You cannot tell.",
-      "file": "motion/out/java/shorts/short-11-text-blocks.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-12-gatherers",
-      "kind": "short",
-      "title": "Modern Java: A spike or an incident?",
-      "file": "motion/out/java/shorts/short-12-gatherers.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-13-instanceof",
-      "kind": "short",
-      "title": "Modern Java: Two casts you did not need",
-      "file": "motion/out/java/shorts/short-13-instanceof.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-14-compact-source",
-      "kind": "short",
-      "title": "Modern Java: This is a whole Java program",
-      "file": "motion/out/java/shorts/short-14-compact-source.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-15-flexible-ctors",
-      "kind": "short",
-      "title": "Modern Java: Validate before super. Finally legal.",
-      "file": "motion/out/java/shorts/short-15-flexible-ctors.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-short-16-http-client",
-      "kind": "short",
-      "title": "Modern Java: Four lines, brand new protocol",
-      "file": "motion/out/java/shorts/short-16-http-client.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "modern-java-post",
-      "kind": "post",
-      "title": "Modern Java announcement",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "lazy-engineer-episode",
-      "kind": "episode",
-      "title": "Stop Using One AI for Everything: The Bug You Cannot Reproduce",
-      "file": "motion/out/lazy/episode.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "lazy-engineer-short-1",
-      "kind": "short",
-      "title": "The Lazy Software Engineer: You asked the author to be the judge",
-      "file": "motion/out/lazy/shorts/short-1.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "lazy-engineer-short-2",
-      "kind": "short",
-      "title": "The Lazy Software Engineer: Stop asking AI what the bug is",
-      "file": "motion/out/lazy/shorts/short-2.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "lazy-engineer-short-3",
-      "kind": "short",
-      "title": "The Lazy Software Engineer: Green tests. Wrong fix.",
-      "file": "motion/out/lazy/shorts/short-3.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "lazy-engineer-short-4",
-      "kind": "short",
-      "title": "The Lazy Software Engineer: Two models agreed. Still wrong.",
-      "file": "motion/out/lazy/shorts/short-4.mp4",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "lazy-engineer-post",
-      "kind": "post",
-      "title": "Lazy Software Engineer announcement",
-      "createdAt": "2026-09-14"
-    },
-    {
-      "episode": null,
-      "asset": "java-short-pass-semantics",
-      "kind": "short",
-      "title": "Modern Java: Pass by value or pass by reference?",
-      "file": "motion/out/java/shorts/java-short-pass-semantics.mp4",
-      "createdAt": "2026-09-15"
-    },
-    {
-      "episode": null,
-      "asset": "ejb-to-spring",
-      "kind": "episode",
-      "title": "EJB to Spring Boot in 18 Minutes: Migrate Without a Big Bang",
-      "file": "assets/exports/ejb-to-spring.mp4",
-      "createdAt": "2026-09-16"
-    },
-    {
-      "episode": null,
-      "asset": "ejb-short-1",
-      "kind": "short",
-      "title": "EJB to Spring Boot: Same interface. Different contract.",
-      "file": "assets/exports/ejb-short-1.mp4",
-      "createdAt": "2026-09-16"
-    },
-    {
-      "episode": null,
-      "asset": "ejb-short-2",
-      "kind": "short",
-      "title": "EJB to Spring Boot: Seven lines you are not allowed to change",
-      "file": "assets/exports/ejb-short-2.mp4",
-      "createdAt": "2026-09-16"
-    },
-    {
-      "episode": null,
-      "asset": "ejb-short-3",
-      "kind": "short",
-      "title": "EJB to Spring Boot: Nobody wrote this down",
-      "file": "assets/exports/ejb-short-3.mp4",
-      "createdAt": "2026-09-16"
-    },
-    {
-      "episode": null,
-      "asset": "ejb-short-4",
-      "kind": "short",
-      "title": "EJB to Spring Boot: The bill nobody puts in the plan",
-      "file": "assets/exports/ejb-short-4.mp4",
-      "createdAt": "2026-09-16"
-    },
-    {
-      "episode": null,
-      "asset": "ejb-to-spring-post",
-      "kind": "post",
-      "title": "EJB to Spring Boot announcement",
-      "createdAt": "2026-09-16"
-    },
-    {
-      "episode": null,
-      "asset": "java-short-pass-semantics-v2",
-      "kind": "short",
-      "title": "Modern Java: Pass by value or pass by reference? (analogy rebuild)",
-      "file": "assets/exports/java-short-pass-semantics.mp4",
-      "createdAt": "2026-09-16"
-    }
-  ]
+ "_comment": [
+  "Everything the channel has MADE, independent of where it went.",
+  "",
+  "This file exists because data/uploads.json only records attempts. An asset",
+  "that was rendered and then never posted anywhere leaves no trace there, so",
+  "the most expensive gap of all, a finished clip nobody published, was the",
+  "one thing the register could not show.",
+  "",
+  "kind decides which platforms are expected to carry it:",
+  "  episode  the long form cut. YouTube only.",
+  "  short    a vertical cut. YouTube, TikTok, Instagram, Facebook.",
+  "  post     the written announcement for an episode. LinkedIn and X.",
+  "",
+  "Add a row here the moment a render is final, not when it is posted."
+ ],
+ "assets": [
+  {
+   "episode": 1,
+   "asset": "episode",
+   "kind": "episode",
+   "title": "Kafka Ordering Explained: Why Your Messages Still Arrive Out of Order",
+   "file": "assets/exports/kafka-ordering-episode-01.mp4",
+   "createdAt": "2026-09-10"
+  },
+  {
+   "episode": 1,
+   "asset": "post",
+   "kind": "post",
+   "title": "Episode 1 announcement",
+   "createdAt": "2026-09-10"
+  },
+  {
+   "episode": 1,
+   "asset": "short-1",
+   "kind": "short",
+   "title": "Does Kafka guarantee ordering? Yes, and no.",
+   "file": "assets/exports/shorts/short-1-yes-and-no.mp4",
+   "createdAt": "2026-09-10"
+  },
+  {
+   "episode": 1,
+   "asset": "short-2",
+   "kind": "short",
+   "title": "How do you keep Kafka events in order?",
+   "file": "assets/exports/shorts/short-2-same-key.mp4",
+   "createdAt": "2026-09-10"
+  },
+  {
+   "episode": 1,
+   "asset": "short-3",
+   "kind": "short",
+   "title": "Kafka kept the order. Your app did not.",
+   "file": "assets/exports/shorts/short-3-consumer-breaks.mp4",
+   "createdAt": "2026-09-10"
+  },
+  {
+   "episode": 2,
+   "asset": "episode",
+   "kind": "episode",
+   "title": "Kafka Partitions Explained: Why More Consumers Do Not Always Make You Faster",
+   "file": "motion/out/ep2/final/kafka-partitions-episode-02.mp4",
+   "createdAt": "2026-09-11"
+  },
+  {
+   "episode": 2,
+   "asset": "post",
+   "kind": "post",
+   "title": "Episode 2 announcement",
+   "createdAt": "2026-09-11"
+  },
+  {
+   "episode": 2,
+   "asset": "short-1",
+   "kind": "short",
+   "title": "4 consumers. 3 partitions. What does consumer 4 do?",
+   "file": "motion/out/ep2/final/Ep2ShortIdle.mp4",
+   "createdAt": "2026-09-11"
+  },
+  {
+   "episode": 2,
+   "asset": "short-2",
+   "kind": "short",
+   "title": "Will more Kafka consumers make it faster?",
+   "file": "motion/out/ep2/final/Ep2ShortFaster.mp4",
+   "createdAt": "2026-09-11"
+  },
+  {
+   "episode": 2,
+   "asset": "short-3",
+   "kind": "short",
+   "title": "Why not just create 100 Kafka partitions?",
+   "file": "motion/out/ep2/final/Ep2ShortMany.mp4",
+   "createdAt": "2026-09-11"
+  },
+  {
+   "episode": 3,
+   "asset": "episode",
+   "kind": "episode",
+   "title": "Design a Digital Wallet: The $100 Transfer That Disappears",
+   "file": "motion/out/digital-wallet/digital-wallet-v02.mp4",
+   "createdAt": "2026-09-12"
+  },
+  {
+   "episode": 3,
+   "asset": "short-1",
+   "kind": "short",
+   "title": "Your API just charged them twice",
+   "file": "motion/out/digital-wallet/shorts/short-1-idempotency.mp4",
+   "createdAt": "2026-09-12"
+  },
+  {
+   "episode": 3,
+   "asset": "short-2",
+   "kind": "short",
+   "title": "Both writes succeeded. The money vanished.",
+   "file": "motion/out/digital-wallet/shorts/short-2-lost-update.mp4",
+   "createdAt": "2026-09-12"
+  },
+  {
+   "episode": 3,
+   "asset": "short-3",
+   "kind": "short",
+   "title": "Your p95 dashboard is lying to you",
+   "file": "motion/out/digital-wallet/shorts/short-3-percentiles.mp4",
+   "createdAt": "2026-09-12"
+  },
+  {
+   "episode": 4,
+   "asset": "episode",
+   "kind": "episode",
+   "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database",
+   "file": "motion/out/kafka-04/",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 4,
+   "asset": "short-1",
+   "kind": "short",
+   "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database (Short 1)",
+   "file": "motion/out/kafka-04/shorts/short-1.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 4,
+   "asset": "short-2",
+   "kind": "short",
+   "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database (Short 2)",
+   "file": "motion/out/kafka-04/shorts/short-2.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 4,
+   "asset": "short-3",
+   "kind": "short",
+   "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database (Short 3)",
+   "file": "motion/out/kafka-04/shorts/short-3.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 4,
+   "asset": "short-4",
+   "kind": "short",
+   "title": "Kafka Offsets Explained: Why Exactly Once Stops At Your Database (Short 4)",
+   "file": "motion/out/kafka-04/shorts/short-4.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 5,
+   "asset": "episode",
+   "kind": "episode",
+   "title": "Kafka Idempotency: How to Survive Duplicate Messages",
+   "file": "motion/out/kafka-05/",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 5,
+   "asset": "short-1",
+   "kind": "short",
+   "title": "Kafka Idempotency: How to Survive Duplicate Messages (Short 1)",
+   "file": "motion/out/kafka-05/shorts/short-1.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 5,
+   "asset": "short-2",
+   "kind": "short",
+   "title": "Kafka Idempotency: How to Survive Duplicate Messages (Short 2)",
+   "file": "motion/out/kafka-05/shorts/short-2.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 5,
+   "asset": "short-3",
+   "kind": "short",
+   "title": "Kafka Idempotency: How to Survive Duplicate Messages (Short 3)",
+   "file": "motion/out/kafka-05/shorts/short-3.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 5,
+   "asset": "short-4",
+   "kind": "short",
+   "title": "Kafka Idempotency: How to Survive Duplicate Messages (Short 4)",
+   "file": "motion/out/kafka-05/shorts/short-4.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 6,
+   "asset": "episode",
+   "kind": "episode",
+   "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything",
+   "file": "motion/out/kafka-06/",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 6,
+   "asset": "short-1",
+   "kind": "short",
+   "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything (Short 1)",
+   "file": "motion/out/kafka-06/shorts/short-1.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 6,
+   "asset": "short-2",
+   "kind": "short",
+   "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything (Short 2)",
+   "file": "motion/out/kafka-06/shorts/short-2.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 6,
+   "asset": "short-3",
+   "kind": "short",
+   "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything (Short 3)",
+   "file": "motion/out/kafka-06/shorts/short-3.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 6,
+   "asset": "short-4",
+   "kind": "short",
+   "title": "Kafka Retries and Dead Letter Topics: Stop Retrying Everything (Short 4)",
+   "file": "motion/out/kafka-06/shorts/short-4.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 7,
+   "asset": "episode",
+   "kind": "episode",
+   "title": "Kafka Transactions and the Outbox: Where Atomicity Stops",
+   "file": "motion/out/kafka-07/",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 7,
+   "asset": "short-1",
+   "kind": "short",
+   "title": "Kafka Transactions and the Outbox: Where Atomicity Stops (Short 1)",
+   "file": "motion/out/kafka-07/shorts/short-1.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 7,
+   "asset": "short-2",
+   "kind": "short",
+   "title": "Kafka Transactions and the Outbox: Where Atomicity Stops (Short 2)",
+   "file": "motion/out/kafka-07/shorts/short-2.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 7,
+   "asset": "short-3",
+   "kind": "short",
+   "title": "Kafka Transactions and the Outbox: Where Atomicity Stops (Short 3)",
+   "file": "motion/out/kafka-07/shorts/short-3.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 7,
+   "asset": "short-4",
+   "kind": "short",
+   "title": "Kafka Transactions and the Outbox: Where Atomicity Stops (Short 4)",
+   "file": "motion/out/kafka-07/shorts/short-4.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 8,
+   "asset": "episode",
+   "kind": "episode",
+   "title": "Kafka Observability: Why Consumer Lag Is Not Enough",
+   "file": "motion/out/kafka-08/",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 8,
+   "asset": "short-1",
+   "kind": "short",
+   "title": "Kafka Observability: Why Consumer Lag Is Not Enough (Short 1)",
+   "file": "motion/out/kafka-08/shorts/short-1.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 8,
+   "asset": "short-2",
+   "kind": "short",
+   "title": "Kafka Observability: Why Consumer Lag Is Not Enough (Short 2)",
+   "file": "motion/out/kafka-08/shorts/short-2.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 8,
+   "asset": "short-3",
+   "kind": "short",
+   "title": "Kafka Observability: Why Consumer Lag Is Not Enough (Short 3)",
+   "file": "motion/out/kafka-08/shorts/short-3.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 8,
+   "asset": "short-4",
+   "kind": "short",
+   "title": "Kafka Observability: Why Consumer Lag Is Not Enough (Short 4)",
+   "file": "motion/out/kafka-08/shorts/short-4.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 9,
+   "asset": "episode",
+   "kind": "episode",
+   "title": "Build a Production-Grade Kafka Payment Pipeline",
+   "file": "motion/out/kafka-09/",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 9,
+   "asset": "short-1",
+   "kind": "short",
+   "title": "Build a Production-Grade Kafka Payment Pipeline (Short 1)",
+   "file": "motion/out/kafka-09/shorts/short-1.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 9,
+   "asset": "short-2",
+   "kind": "short",
+   "title": "Build a Production-Grade Kafka Payment Pipeline (Short 2)",
+   "file": "motion/out/kafka-09/shorts/short-2.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 9,
+   "asset": "short-3",
+   "kind": "short",
+   "title": "Build a Production-Grade Kafka Payment Pipeline (Short 3)",
+   "file": "motion/out/kafka-09/shorts/short-3.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 9,
+   "asset": "short-4",
+   "kind": "short",
+   "title": "Build a Production-Grade Kafka Payment Pipeline (Short 4)",
+   "file": "motion/out/kafka-09/shorts/short-4.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 10,
+   "asset": "episode",
+   "kind": "episode",
+   "title": "Senior Kafka Architecture Challenge: Would Your Design Survive?",
+   "file": "motion/out/kafka-10/",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 10,
+   "asset": "short-1",
+   "kind": "short",
+   "title": "Senior Kafka Architecture Challenge: Would Your Design Survive? (Short 1)",
+   "file": "motion/out/kafka-10/shorts/short-1.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 10,
+   "asset": "short-2",
+   "kind": "short",
+   "title": "Senior Kafka Architecture Challenge: Would Your Design Survive? (Short 2)",
+   "file": "motion/out/kafka-10/shorts/short-2.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 10,
+   "asset": "short-3",
+   "kind": "short",
+   "title": "Senior Kafka Architecture Challenge: Would Your Design Survive? (Short 3)",
+   "file": "motion/out/kafka-10/shorts/short-3.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": 10,
+   "asset": "short-4",
+   "kind": "short",
+   "title": "Senior Kafka Architecture Challenge: Would Your Design Survive? (Short 4)",
+   "file": "motion/out/kafka-10/shorts/short-4.mp4",
+   "createdAt": "2026-09-13"
+  },
+  {
+   "episode": null,
+   "asset": "codex-flagship",
+   "kind": "episode",
+   "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know",
+   "file": "motion/out/codex-01/chatgpt-codex-ep01-v2.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "codex-flagship-short-1",
+   "kind": "short",
+   "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know (Short 1)",
+   "file": "motion/out/codex-01/shorts/short-1.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "codex-flagship-short-2",
+   "kind": "short",
+   "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know (Short 2)",
+   "file": "motion/out/codex-01/shorts/short-2.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "codex-flagship-short-3",
+   "kind": "short",
+   "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know (Short 3)",
+   "file": "motion/out/codex-01/shorts/short-3.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "codex-flagship-short-4",
+   "kind": "short",
+   "title": "ChatGPT + Codex: Everything a Software Engineer Needs to Know (Short 4)",
+   "file": "motion/out/codex-01/shorts/short-4.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "claude-code-flagship",
+   "kind": "episode",
+   "title": "Claude Code: Everything a Software Engineer Needs to Know",
+   "file": "motion/out/cc-flagship/claude-code-flagship-v2.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "claude-code-flagship-short-1",
+   "kind": "short",
+   "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 1)",
+   "file": "motion/out/cc-flagship/shorts/short-1.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "claude-code-flagship-short-2",
+   "kind": "short",
+   "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 2)",
+   "file": "motion/out/cc-flagship/shorts/short-2.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "claude-code-flagship-short-3",
+   "kind": "short",
+   "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 3)",
+   "file": "motion/out/cc-flagship/shorts/short-3.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "claude-code-flagship-short-4",
+   "kind": "short",
+   "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 4)",
+   "file": "motion/out/cc-flagship/shorts/short-4.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "claude-code-flagship-short-5",
+   "kind": "short",
+   "title": "Claude Code: Everything a Software Engineer Needs to Know (Short 5)",
+   "file": "motion/out/cc-flagship/shorts/short-5.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-episode",
+   "kind": "episode",
+   "title": "Modern Java in 18 Minutes: Everything That Actually Shipped",
+   "file": "motion/out/java/episode.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-01-virtual-threads",
+   "kind": "short",
+   "title": "Modern Java: 10,000 tasks: 5226ms vs 152ms",
+   "file": "motion/out/java/shorts/short-01-virtual-threads.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-02-switch-expressions",
+   "kind": "short",
+   "title": "Modern Java: This code is wrong and will not throw",
+   "file": "motion/out/java/shorts/short-02-switch-expressions.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-03-records",
+   "kind": "short",
+   "title": "Modern Java: Fourteen lines to one",
+   "file": "motion/out/java/shorts/short-03-records.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-04-still-preview",
+   "kind": "short",
+   "title": "Modern Java: Seventh preview. Still not shipped.",
+   "file": "motion/out/java/shorts/short-04-still-preview.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-05-compact-headers",
+   "kind": "short",
+   "title": "Modern Java: 115 MB to 76 MB, for one flag",
+   "file": "motion/out/java/shorts/short-05-compact-headers.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-06-scoped-values",
+   "kind": "short",
+   "title": "Modern Java: alice leaked onto another request",
+   "file": "motion/out/java/shorts/short-06-scoped-values.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-07-sealed-patterns",
+   "kind": "short",
+   "title": "Modern Java: No default branch. On purpose.",
+   "file": "motion/out/java/shorts/short-07-sealed-patterns.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-08-ffm",
+   "kind": "short",
+   "title": "Modern Java: JNI is over and nobody noticed",
+   "file": "motion/out/java/shorts/short-08-ffm.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-09-var",
+   "kind": "short",
+   "title": "Modern Java: Is var dynamic typing? No.",
+   "file": "motion/out/java/shorts/short-09-var.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-10-sequenced",
+   "kind": "short",
+   "title": "Modern Java: No way to ask a Set for its last item",
+   "file": "motion/out/java/shorts/short-10-sequenced.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-11-text-blocks",
+   "kind": "short",
+   "title": "Modern Java: Is this JSON valid? You cannot tell.",
+   "file": "motion/out/java/shorts/short-11-text-blocks.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-12-gatherers",
+   "kind": "short",
+   "title": "Modern Java: A spike or an incident?",
+   "file": "motion/out/java/shorts/short-12-gatherers.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-13-instanceof",
+   "kind": "short",
+   "title": "Modern Java: Two casts you did not need",
+   "file": "motion/out/java/shorts/short-13-instanceof.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-14-compact-source",
+   "kind": "short",
+   "title": "Modern Java: This is a whole Java program",
+   "file": "motion/out/java/shorts/short-14-compact-source.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-15-flexible-ctors",
+   "kind": "short",
+   "title": "Modern Java: Validate before super. Finally legal.",
+   "file": "motion/out/java/shorts/short-15-flexible-ctors.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-short-16-http-client",
+   "kind": "short",
+   "title": "Modern Java: Four lines, brand new protocol",
+   "file": "motion/out/java/shorts/short-16-http-client.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "modern-java-post",
+   "kind": "post",
+   "title": "Modern Java announcement",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "lazy-engineer-episode",
+   "kind": "episode",
+   "title": "Stop Using One AI for Everything: The Bug You Cannot Reproduce",
+   "file": "motion/out/lazy/episode.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "lazy-engineer-short-1",
+   "kind": "short",
+   "title": "The Lazy Software Engineer: You asked the author to be the judge",
+   "file": "motion/out/lazy/shorts/short-1.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "lazy-engineer-short-2",
+   "kind": "short",
+   "title": "The Lazy Software Engineer: Stop asking AI what the bug is",
+   "file": "motion/out/lazy/shorts/short-2.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "lazy-engineer-short-3",
+   "kind": "short",
+   "title": "The Lazy Software Engineer: Green tests. Wrong fix.",
+   "file": "motion/out/lazy/shorts/short-3.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "lazy-engineer-short-4",
+   "kind": "short",
+   "title": "The Lazy Software Engineer: Two models agreed. Still wrong.",
+   "file": "motion/out/lazy/shorts/short-4.mp4",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "lazy-engineer-post",
+   "kind": "post",
+   "title": "Lazy Software Engineer announcement",
+   "createdAt": "2026-09-14"
+  },
+  {
+   "episode": null,
+   "asset": "java-short-pass-semantics",
+   "kind": "short",
+   "title": "Modern Java: Pass by value or pass by reference?",
+   "file": "motion/out/java/shorts/java-short-pass-semantics.mp4",
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "ejb-to-spring",
+   "kind": "episode",
+   "title": "EJB to Spring Boot in 18 Minutes: Migrate Without a Big Bang",
+   "file": "assets/exports/ejb-to-spring.mp4",
+   "createdAt": "2026-09-16"
+  },
+  {
+   "episode": null,
+   "asset": "ejb-short-1",
+   "kind": "short",
+   "title": "EJB to Spring Boot: Same interface. Different contract.",
+   "file": "assets/exports/ejb-short-1.mp4",
+   "createdAt": "2026-09-16"
+  },
+  {
+   "episode": null,
+   "asset": "ejb-short-2",
+   "kind": "short",
+   "title": "EJB to Spring Boot: Seven lines you are not allowed to change",
+   "file": "assets/exports/ejb-short-2.mp4",
+   "createdAt": "2026-09-16"
+  },
+  {
+   "episode": null,
+   "asset": "ejb-short-3",
+   "kind": "short",
+   "title": "EJB to Spring Boot: Nobody wrote this down",
+   "file": "assets/exports/ejb-short-3.mp4",
+   "createdAt": "2026-09-16"
+  },
+  {
+   "episode": null,
+   "asset": "ejb-short-4",
+   "kind": "short",
+   "title": "EJB to Spring Boot: The bill nobody puts in the plan",
+   "file": "assets/exports/ejb-short-4.mp4",
+   "createdAt": "2026-09-16"
+  },
+  {
+   "episode": null,
+   "asset": "ejb-to-spring-post",
+   "kind": "post",
+   "title": "EJB to Spring Boot announcement",
+   "createdAt": "2026-09-16"
+  },
+  {
+   "episode": null,
+   "asset": "java-short-pass-semantics-v2",
+   "kind": "short",
+   "title": "Modern Java: Pass by value or pass by reference? (analogy rebuild)",
+   "file": "assets/exports/java-short-pass-semantics.mp4",
+   "createdAt": "2026-09-16"
+  },
+  {
+   "episode": null,
+   "asset": "cc-00",
+   "kind": "episode",
+   "title": "Claude Code: Claude Code From Scratch: Install, Login, First Commit",
+   "file": "motion/out/cc-00-install.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-00-short-1",
+   "kind": "short",
+   "title": "Claude Code 0: short 1",
+   "file": "motion/out/cc-00-short-1.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-00-short-2",
+   "kind": "short",
+   "title": "Claude Code 0: short 2",
+   "file": "motion/out/cc-00-short-2.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-00-short-3",
+   "kind": "short",
+   "title": "Claude Code 0: short 3",
+   "file": "motion/out/cc-00-short-3.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-00-short-4",
+   "kind": "short",
+   "title": "Claude Code 0: short 4",
+   "file": "motion/out/cc-00-short-4.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-01",
+   "kind": "episode",
+   "title": "Claude Code: Why Claude Code Gets Worse During the Day",
+   "file": "motion/out/cc-01/claude-code-harness-ep01.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-01-short-1",
+   "kind": "short",
+   "title": "Claude Code 1: short 1",
+   "file": "motion/out/cc-01/shorts/short-1.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-01-short-2",
+   "kind": "short",
+   "title": "Claude Code 1: short 2",
+   "file": "motion/out/cc-01/shorts/short-2.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-01-short-3",
+   "kind": "short",
+   "title": "Claude Code 1: short 3",
+   "file": "motion/out/cc-01/shorts/short-3.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-01-short-4",
+   "kind": "short",
+   "title": "Claude Code 1: short 4",
+   "file": "motion/out/cc-01/shorts/short-4.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-02",
+   "kind": "episode",
+   "title": "Claude Code: Claude Code Is Deleting Your Instructions",
+   "file": "motion/out/cc-02/claude-code-context-ep02.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-02-short-1",
+   "kind": "short",
+   "title": "Claude Code 2: short 1",
+   "file": "motion/out/cc-02/shorts/short-1.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-02-short-2",
+   "kind": "short",
+   "title": "Claude Code 2: short 2",
+   "file": "motion/out/cc-02/shorts/short-2.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-02-short-3",
+   "kind": "short",
+   "title": "Claude Code 2: short 3",
+   "file": "motion/out/cc-02/shorts/short-3.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-02-short-4",
+   "kind": "short",
+   "title": "Claude Code 2: short 4",
+   "file": "motion/out/cc-02/shorts/short-4.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-03",
+   "kind": "episode",
+   "title": "Claude Code: Claude Code: Why Resuming Yesterday Makes It Worse",
+   "file": "motion/out/cc-03/claude-code-sessions-ep03.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-03-short-1",
+   "kind": "short",
+   "title": "Claude Code 3: short 1",
+   "file": "motion/out/cc-03/shorts/short-1.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-03-short-2",
+   "kind": "short",
+   "title": "Claude Code 3: short 2",
+   "file": "motion/out/cc-03/shorts/short-2.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-03-short-3",
+   "kind": "short",
+   "title": "Claude Code 3: short 3",
+   "file": "motion/out/cc-03/shorts/short-3.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-03-short-4",
+   "kind": "short",
+   "title": "Claude Code 3: short 4",
+   "file": "motion/out/cc-03/shorts/short-4.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-04",
+   "kind": "episode",
+   "title": "Claude Code: The Claude Code Mistakes You Cannot Undo",
+   "file": "motion/out/cc-04/superseded-ep04.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-04-short-1",
+   "kind": "short",
+   "title": "Claude Code 4: short 1",
+   "file": "motion/out/cc-04/shorts/short-1.mp4",
+   "createdAt": "2026-09-18"
+  },
+  {
+   "episode": null,
+   "asset": "cc-04-short-2",
+   "kind": "short",
+   "title": "Claude Code 4: short 2",
+   "file": "motion/out/cc-04/shorts/short-2.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-04-short-3",
+   "kind": "short",
+   "title": "Claude Code 4: short 3",
+   "file": "motion/out/cc-04/shorts/short-3.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-04-short-4",
+   "kind": "short",
+   "title": "Claude Code 4: short 4",
+   "file": "motion/out/cc-04/shorts/short-4.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-05",
+   "kind": "episode",
+   "title": "Claude Code: Why Maximum Effort Makes Claude Code Worse",
+   "file": "motion/out/cc-05/claude-code-model-effort-ep05.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-05-short-1",
+   "kind": "short",
+   "title": "Claude Code 5: short 1",
+   "file": "motion/out/cc-05/shorts/short-1.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-05-short-2",
+   "kind": "short",
+   "title": "Claude Code 5: short 2",
+   "file": "motion/out/cc-05/shorts/short-2.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-05-short-3",
+   "kind": "short",
+   "title": "Claude Code 5: short 3",
+   "file": "motion/out/cc-05/shorts/short-3.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-05-short-4",
+   "kind": "short",
+   "title": "Claude Code 5: short 4",
+   "file": "motion/out/cc-05/shorts/short-4.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-06",
+   "kind": "episode",
+   "title": "Claude Code: The Claude Code Feature Most People Have Never Made",
+   "file": "motion/out/cc-06/claude-code-skills-ep06.mp4",
+   "createdAt": "2026-09-18"
+  },
+  {
+   "episode": null,
+   "asset": "cc-06-short-1",
+   "kind": "short",
+   "title": "Claude Code 6: short 1",
+   "file": "motion/out/cc-06/shorts/short-1.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-06-short-2",
+   "kind": "short",
+   "title": "Claude Code 6: short 2",
+   "file": "motion/out/cc-06/shorts/short-2.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-06-short-3",
+   "kind": "short",
+   "title": "Claude Code 6: short 3",
+   "file": "motion/out/cc-06/shorts/short-3.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-06-short-4",
+   "kind": "short",
+   "title": "Claude Code 6: short 4",
+   "file": "motion/out/cc-06/shorts/short-4.mp4",
+   "createdAt": "2026-09-18"
+  },
+  {
+   "episode": null,
+   "asset": "cc-07",
+   "kind": "episode",
+   "title": "Claude Code: You Are Worrying About The Wrong MCP Cost",
+   "file": "motion/out/cc-07/superseded-ep07.mp4",
+   "createdAt": "2026-09-18"
+  },
+  {
+   "episode": null,
+   "asset": "cc-07-short-1",
+   "kind": "short",
+   "title": "Claude Code 7: short 1",
+   "file": "motion/out/cc-07/shorts/short-1.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-07-short-2",
+   "kind": "short",
+   "title": "Claude Code 7: short 2",
+   "file": "motion/out/cc-07/shorts/short-2.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-07-short-3",
+   "kind": "short",
+   "title": "Claude Code 7: short 3",
+   "file": "motion/out/cc-07/shorts/short-3.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-07-short-4",
+   "kind": "short",
+   "title": "Claude Code 7: short 4",
+   "file": "motion/out/cc-07/shorts/short-4.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-08",
+   "kind": "episode",
+   "title": "Claude Code: Why Five Claude Code Agents Finished Slower Than One",
+   "file": "motion/out/cc-08/claude-code-subagents-ep08.mp4",
+   "createdAt": "2026-09-18"
+  },
+  {
+   "episode": null,
+   "asset": "cc-08-short-1",
+   "kind": "short",
+   "title": "Claude Code 8: short 1",
+   "file": "motion/out/cc-08/shorts/short-1.mp4",
+   "createdAt": "2026-09-18"
+  },
+  {
+   "episode": null,
+   "asset": "cc-08-short-2",
+   "kind": "short",
+   "title": "Claude Code 8: short 2",
+   "file": "motion/out/cc-08/shorts/short-2.mp4",
+   "createdAt": "2026-09-18"
+  },
+  {
+   "episode": null,
+   "asset": "cc-08-short-3",
+   "kind": "short",
+   "title": "Claude Code 8: short 3",
+   "file": "motion/out/cc-08/shorts/short-3.mp4",
+   "createdAt": "2026-09-18"
+  },
+  {
+   "episode": null,
+   "asset": "cc-08-short-4",
+   "kind": "short",
+   "title": "Claude Code 8: short 4",
+   "file": "motion/out/cc-08/shorts/short-4.mp4",
+   "createdAt": "2026-09-17"
+  },
+  {
+   "episode": null,
+   "asset": "cc-09",
+   "kind": "episode",
+   "title": "Claude Code: Claude Code Stops When The Work LOOKS Done",
+   "file": "motion/out/cc-09/claude-code-working-day-ep09.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-09-short-1",
+   "kind": "short",
+   "title": "Claude Code 9: short 1",
+   "file": "motion/out/cc-09/shorts/short-1.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-09-short-2",
+   "kind": "short",
+   "title": "Claude Code 9: short 2",
+   "file": "motion/out/cc-09/shorts/short-2.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-09-short-3",
+   "kind": "short",
+   "title": "Claude Code 9: short 3",
+   "file": "motion/out/cc-09/shorts/short-3.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-09-short-4",
+   "kind": "short",
+   "title": "Claude Code 9: short 4",
+   "file": "motion/out/cc-09/shorts/short-4.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-10",
+   "kind": "episode",
+   "title": "Claude Code: Clearing Is Free. Compacting Is Not.",
+   "file": "motion/out/cc-10/claude-code-token-economy-ep10.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-10-short-1",
+   "kind": "short",
+   "title": "Claude Code 10: short 1",
+   "file": "motion/out/cc-10/shorts/short-1.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-10-short-2",
+   "kind": "short",
+   "title": "Claude Code 10: short 2",
+   "file": "motion/out/cc-10/shorts/short-2.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-10-short-3",
+   "kind": "short",
+   "title": "Claude Code 10: short 3",
+   "file": "motion/out/cc-10/shorts/short-3.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-10-short-4",
+   "kind": "short",
+   "title": "Claude Code 10: short 4",
+   "file": "motion/out/cc-10/shorts/short-4.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-11",
+   "kind": "episode",
+   "title": "Claude Code: It Never Logged In. It Still Reached Everything.",
+   "file": "motion/out/cc-11/claude-code-chrome-adv01.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-11-short-1",
+   "kind": "short",
+   "title": "Claude Code 11: short 1",
+   "file": "motion/out/cc-11/shorts/short-1.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-11-short-2",
+   "kind": "short",
+   "title": "Claude Code 11: short 2",
+   "file": "motion/out/cc-11/shorts/short-2.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-11-short-3",
+   "kind": "short",
+   "title": "Claude Code 11: short 3",
+   "file": "motion/out/cc-11/shorts/short-3.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-11-short-4",
+   "kind": "short",
+   "title": "Claude Code 11: short 4",
+   "file": "motion/out/cc-11/shorts/short-4.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-12",
+   "kind": "episode",
+   "title": "Claude Code: Your Laptop Is Shut. Is It Still Running?",
+   "file": "motion/out/cc-12/claude-code-anywhere-adv02.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-12-short-1",
+   "kind": "short",
+   "title": "Claude Code 12: short 1",
+   "file": "motion/out/cc-12/shorts/short-1.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-12-short-2",
+   "kind": "short",
+   "title": "Claude Code 12: short 2",
+   "file": "motion/out/cc-12/shorts/short-2.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-12-short-3",
+   "kind": "short",
+   "title": "Claude Code 12: short 3",
+   "file": "motion/out/cc-12/shorts/short-3.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-12-short-4",
+   "kind": "short",
+   "title": "Claude Code 12: short 4",
+   "file": "motion/out/cc-12/shorts/short-4.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-13",
+   "kind": "episode",
+   "title": "Claude Code: It Never Tried To Log In. Here Is Why.",
+   "file": "motion/out/cc-13/claude-code-limits-adv03.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-13-short-1",
+   "kind": "short",
+   "title": "Claude Code 13: short 1",
+   "file": "motion/out/cc-13/shorts/short-1.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-13-short-2",
+   "kind": "short",
+   "title": "Claude Code 13: short 2",
+   "file": "motion/out/cc-13/shorts/short-2.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-13-short-3",
+   "kind": "short",
+   "title": "Claude Code 13: short 3",
+   "file": "motion/out/cc-13/shorts/short-3.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-13-short-4",
+   "kind": "short",
+   "title": "Claude Code 13: short 4",
+   "file": "motion/out/cc-13/shorts/short-4.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-14",
+   "kind": "episode",
+   "title": "Claude Code: You Typed /loop And Walked Away. Where Is It Running?",
+   "file": "motion/out/cc-14/claude-code-schedule-adv04.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-14-short-1",
+   "kind": "short",
+   "title": "Claude Code 14: short 1",
+   "file": "motion/out/cc-14/shorts/short-1.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-14-short-2",
+   "kind": "short",
+   "title": "Claude Code 14: short 2",
+   "file": "motion/out/cc-14/shorts/short-2.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-14-short-3",
+   "kind": "short",
+   "title": "Claude Code 14: short 3",
+   "file": "motion/out/cc-14/shorts/short-3.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-14-short-4",
+   "kind": "short",
+   "title": "Claude Code 14: short 4",
+   "file": "motion/out/cc-14/shorts/short-4.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-15",
+   "kind": "episode",
+   "title": "Claude Code: What Survives When The Model Is Unavailable",
+   "file": "motion/out/cc-15/claude-code-handoffs-adv05.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-15-short-1",
+   "kind": "short",
+   "title": "Claude Code 15: short 1",
+   "file": "motion/out/cc-15/shorts/short-1.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-15-short-2",
+   "kind": "short",
+   "title": "Claude Code 15: short 2",
+   "file": "motion/out/cc-15/shorts/short-2.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-15-short-3",
+   "kind": "short",
+   "title": "Claude Code 15: short 3",
+   "file": "motion/out/cc-15/shorts/short-3.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-15-short-4",
+   "kind": "short",
+   "title": "Claude Code 15: short 4",
+   "file": "motion/out/cc-15/shorts/short-4.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-16",
+   "kind": "episode",
+   "title": "Claude Code: They Agreed. So What?",
+   "file": "motion/out/cc-16-two-models.mp4",
+   "createdAt": "2026-09-20"
+  },
+  {
+   "episode": null,
+   "asset": "cc-16-short-1",
+   "kind": "short",
+   "title": "Claude Code 16: short 1",
+   "file": "motion/out/cc-16/shorts/short-1.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-16-short-2",
+   "kind": "short",
+   "title": "Claude Code 16: short 2",
+   "file": "motion/out/cc-16/shorts/short-2.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-16-short-3",
+   "kind": "short",
+   "title": "Claude Code 16: short 3",
+   "file": "motion/out/cc-16/shorts/short-3.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "cc-16-short-4",
+   "kind": "short",
+   "title": "Claude Code 16: short 4",
+   "file": "motion/out/cc-16/shorts/short-4.mp4",
+   "createdAt": "2026-09-19"
+  }
+ ]
 }
