@@ -1425,6 +1425,86 @@
    "title": "Claude Code 16: short 4",
    "file": "motion/out/cc-16/shorts/short-4.mp4",
    "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "sn-flagship",
+   "kind": "episode",
+   "title": "Spring Boot to NestJS: Everything That Transfers",
+   "file": "motion/out/sn-flagship/spring-to-nestjs-flagship.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "sn-00",
+   "kind": "episode",
+   "title": "Java to TypeScript: The Setup Nobody Shows You",
+   "file": "motion/out/sn-00/spring-to-node-install-ep00.mp4",
+   "createdAt": "2026-09-21"
+  },
+  {
+   "episode": null,
+   "asset": "sn-flagship-short-1",
+   "kind": "short",
+   "title": "sn-flagship short 1",
+   "file": "motion/out/sn-flagship/shorts/short-1.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "sn-flagship-short-2",
+   "kind": "short",
+   "title": "sn-flagship short 2",
+   "file": "motion/out/sn-flagship/shorts/short-2.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "sn-flagship-short-3",
+   "kind": "short",
+   "title": "sn-flagship short 3",
+   "file": "motion/out/sn-flagship/shorts/short-3.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "sn-flagship-short-4",
+   "kind": "short",
+   "title": "sn-flagship short 4",
+   "file": "motion/out/sn-flagship/shorts/short-4.mp4",
+   "createdAt": "2026-09-19"
+  },
+  {
+   "episode": null,
+   "asset": "sn-00-short-1",
+   "kind": "short",
+   "title": "sn-00 short 1",
+   "file": "motion/out/sn-00/shorts/short-1.mp4",
+   "createdAt": "2026-09-21"
+  },
+  {
+   "episode": null,
+   "asset": "sn-00-short-2",
+   "kind": "short",
+   "title": "sn-00 short 2",
+   "file": "motion/out/sn-00/shorts/short-2.mp4",
+   "createdAt": "2026-09-21"
+  },
+  {
+   "episode": null,
+   "asset": "sn-00-short-3",
+   "kind": "short",
+   "title": "sn-00 short 3",
+   "file": "motion/out/sn-00/shorts/short-3.mp4",
+   "createdAt": "2026-09-21"
+  },
+  {
+   "episode": null,
+   "asset": "sn-00-short-4",
+   "kind": "short",
+   "title": "sn-00 short 4",
+   "file": "motion/out/sn-00/shorts/short-4.mp4",
+   "createdAt": "2026-09-21"
   }
  ]
 }
