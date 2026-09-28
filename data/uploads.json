@@ -1898,6 +1898,41 @@
    "platform": "youtube",
    "url": "https://youtube.com/shorts/sRW3lVVZcmQ",
    "at": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "dbs",
+   "platform": "youtube",
+   "url": "https://youtu.be/7q42Crma6GE",
+   "at": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "dbs-short-1",
+   "platform": "youtube",
+   "url": "https://youtube.com/shorts/xMgxNs-wlTQ",
+   "at": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "dbs-short-2",
+   "platform": "youtube",
+   "url": "https://youtube.com/shorts/3ajGUBFF4Lk",
+   "at": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "dbs-short-3",
+   "platform": "youtube",
+   "url": "https://youtube.com/shorts/Km_J_fvBL1U",
+   "at": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "dbs-short-4",
+   "platform": "youtube",
+   "url": "https://youtube.com/shorts/oUpbyQQo0OI",
+   "at": "2026-09-28"
   }
  ]
 }

@@ -1945,6 +1945,46 @@
    "title": "sa short 4",
    "file": null,
    "createdAt": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "dbs",
+   "kind": "episode",
+   "title": "Database Scaling in 12 Minutes: What to Fix Before You Shard 🔥",
+   "file": null,
+   "createdAt": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "dbs-short-1",
+   "kind": "short",
+   "title": "dbs short 1",
+   "file": null,
+   "createdAt": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "dbs-short-2",
+   "kind": "short",
+   "title": "dbs short 2",
+   "file": null,
+   "createdAt": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "dbs-short-3",
+   "kind": "short",
+   "title": "dbs short 3",
+   "file": null,
+   "createdAt": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "dbs-short-4",
+   "kind": "short",
+   "title": "dbs short 4",
+   "file": null,
+   "createdAt": "2026-09-28"
   }
  ]
 }
