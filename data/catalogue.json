@@ -1505,6 +1505,446 @@
    "title": "sn-00 short 4",
    "file": "motion/out/sn-00/shorts/short-4.mp4",
    "createdAt": "2026-09-21"
+  },
+  {
+   "episode": null,
+   "asset": "while-ai",
+   "kind": "episode",
+   "title": "🔥 What You Do While the AI Writes the Code: The 4 Jobs That Are Left",
+   "file": null,
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "tdd",
+   "kind": "episode",
+   "title": "🔥 TDD for Java in 12 Minutes: The Step Everyone Skips",
+   "file": null,
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "txn",
+   "kind": "episode",
+   "title": "🔥 Distributed Transactions in 14 Minutes: What @Transactional Actually Covers",
+   "file": null,
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "assertions",
+   "kind": "episode",
+   "title": "🔥 JUnit vs AssertJ vs Hamcrest in 13 Minutes: What the Failure Tells You",
+   "file": null,
+   "createdAt": "2026-09-15"
+  },
+  {
+   "episode": null,
+   "asset": "sn-01",
+   "kind": "episode",
+   "title": "TypeScript for Java Developers: The 20% That Bites 🔥",
+   "file": null,
+   "createdAt": "2026-09-22"
+  },
+  {
+   "episode": null,
+   "asset": "sn-02",
+   "kind": "episode",
+   "title": "Spring to NestJS Controllers in 9 Minutes: Two Silent Bugs 🔥",
+   "file": null,
+   "createdAt": "2026-09-22"
+  },
+  {
+   "episode": null,
+   "asset": "sn-02-short-1",
+   "kind": "short",
+   "title": "sn-02 short 1",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "sn-02-short-2",
+   "kind": "short",
+   "title": "sn-02 short 2",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "sn-02-short-3",
+   "kind": "short",
+   "title": "sn-02 short 3",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "sn-02-short-4",
+   "kind": "short",
+   "title": "sn-02 short 4",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "sn-03",
+   "kind": "episode",
+   "title": "Spring to NestJS Modules in 6 Minutes: Registered Is Not Visible 🔥",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "sn-03-short-1",
+   "kind": "short",
+   "title": "sn-03 short 1",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "sn-03-short-2",
+   "kind": "short",
+   "title": "sn-03 short 2",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "sn-03-short-3",
+   "kind": "short",
+   "title": "sn-03 short 3",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "sn-03-short-4",
+   "kind": "short",
+   "title": "sn-03 short 4",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "fq",
+   "kind": "episode",
+   "title": "Spring Boot to Quarkus in 7 Minutes: What Changes at Build Time 🔥",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "fq-short-1",
+   "kind": "short",
+   "title": "fq short 1",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "fq-short-2",
+   "kind": "short",
+   "title": "fq short 2",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "fq-short-3",
+   "kind": "short",
+   "title": "fq short 3",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "fq-short-4",
+   "kind": "short",
+   "title": "fq short 4",
+   "file": null,
+   "createdAt": "2026-09-23"
+  },
+  {
+   "episode": null,
+   "asset": "fm",
+   "kind": "episode",
+   "title": "Spring Boot to Micronaut in 8 Minutes: What Moves to Compile Time 🔥",
+   "file": null,
+   "createdAt": "2026-09-24"
+  },
+  {
+   "episode": null,
+   "asset": "fm-short-1",
+   "kind": "short",
+   "title": "fm short 1",
+   "file": null,
+   "createdAt": "2026-09-24"
+  },
+  {
+   "episode": null,
+   "asset": "fm-short-2",
+   "kind": "short",
+   "title": "fm short 2",
+   "file": null,
+   "createdAt": "2026-09-24"
+  },
+  {
+   "episode": null,
+   "asset": "fm-short-3",
+   "kind": "short",
+   "title": "fm short 3",
+   "file": null,
+   "createdAt": "2026-09-24"
+  },
+  {
+   "episode": null,
+   "asset": "fm-short-4",
+   "kind": "short",
+   "title": "fm short 4",
+   "file": null,
+   "createdAt": "2026-09-24"
+  },
+  {
+   "episode": null,
+   "asset": "fd",
+   "kind": "episode",
+   "title": "Spring Boot to .NET 10 in 7 Minutes: The DI Validation Trap 🔥",
+   "file": null,
+   "createdAt": "2026-09-24"
+  },
+  {
+   "episode": null,
+   "asset": "fd-short-1",
+   "kind": "short",
+   "title": "fd short 1",
+   "file": null,
+   "createdAt": "2026-09-24"
+  },
+  {
+   "episode": null,
+   "asset": "fd-short-2",
+   "kind": "short",
+   "title": "fd short 2",
+   "file": null,
+   "createdAt": "2026-09-24"
+  },
+  {
+   "episode": null,
+   "asset": "fd-short-3",
+   "kind": "short",
+   "title": "fd short 3",
+   "file": null,
+   "createdAt": "2026-09-24"
+  },
+  {
+   "episode": null,
+   "asset": "fd-short-4",
+   "kind": "short",
+   "title": "fd short 4",
+   "file": null,
+   "createdAt": "2026-09-24"
+  },
+  {
+   "episode": null,
+   "asset": "fk",
+   "kind": "episode",
+   "title": "GraphQL Federation and Kafka in 29 Minutes: Spring and Micronaut 🔥",
+   "file": null,
+   "createdAt": "2026-09-25"
+  },
+  {
+   "episode": null,
+   "asset": "fk-short-1",
+   "kind": "short",
+   "title": "fk short 1",
+   "file": null,
+   "createdAt": "2026-09-26"
+  },
+  {
+   "episode": null,
+   "asset": "fk-short-2",
+   "kind": "short",
+   "title": "fk short 2",
+   "file": null,
+   "createdAt": "2026-09-26"
+  },
+  {
+   "episode": null,
+   "asset": "fk-short-3",
+   "kind": "short",
+   "title": "fk short 3",
+   "file": null,
+   "createdAt": "2026-09-26"
+  },
+  {
+   "episode": null,
+   "asset": "fk-short-4",
+   "kind": "short",
+   "title": "fk short 4",
+   "file": null,
+   "createdAt": "2026-09-26"
+  },
+  {
+   "episode": null,
+   "asset": "gq",
+   "kind": "episode",
+   "title": "GraphQL with Spring Boot in 27 Minutes: What the Server Pays 🔥",
+   "file": null,
+   "createdAt": "2026-09-26"
+  },
+  {
+   "episode": null,
+   "asset": "gq-short-1",
+   "kind": "short",
+   "title": "gq short 1",
+   "file": null,
+   "createdAt": "2026-09-26"
+  },
+  {
+   "episode": null,
+   "asset": "gq-short-2",
+   "kind": "short",
+   "title": "gq short 2",
+   "file": null,
+   "createdAt": "2026-09-26"
+  },
+  {
+   "episode": null,
+   "asset": "gq-short-3",
+   "kind": "short",
+   "title": "gq short 3",
+   "file": null,
+   "createdAt": "2026-09-26"
+  },
+  {
+   "episode": null,
+   "asset": "gq-short-4",
+   "kind": "short",
+   "title": "gq short 4",
+   "file": null,
+   "createdAt": "2026-09-26"
+  },
+  {
+   "episode": null,
+   "asset": "go",
+   "kind": "episode",
+   "title": "Spring Boot to Go in 15 Minutes: What Your Framework Did for You 🔥",
+   "file": null,
+   "createdAt": "2026-09-27"
+  },
+  {
+   "episode": null,
+   "asset": "go-short-1",
+   "kind": "short",
+   "title": "go short 1",
+   "file": null,
+   "createdAt": "2026-09-27"
+  },
+  {
+   "episode": null,
+   "asset": "go-short-2",
+   "kind": "short",
+   "title": "go short 2",
+   "file": null,
+   "createdAt": "2026-09-27"
+  },
+  {
+   "episode": null,
+   "asset": "go-short-3",
+   "kind": "short",
+   "title": "go short 3",
+   "file": null,
+   "createdAt": "2026-09-27"
+  },
+  {
+   "episode": null,
+   "asset": "go-short-4",
+   "kind": "short",
+   "title": "go short 4",
+   "file": null,
+   "createdAt": "2026-09-27"
+  },
+  {
+   "episode": null,
+   "asset": "opus",
+   "kind": "episode",
+   "title": "Opus 5.5 in 7 Minutes: 27 Real Claude Code Runs 🔥",
+   "file": null,
+   "createdAt": "2026-09-27"
+  },
+  {
+   "episode": null,
+   "asset": "opus-short-1",
+   "kind": "short",
+   "title": "opus short 1",
+   "file": null,
+   "createdAt": "2026-09-27"
+  },
+  {
+   "episode": null,
+   "asset": "opus-short-2",
+   "kind": "short",
+   "title": "opus short 2",
+   "file": null,
+   "createdAt": "2026-09-27"
+  },
+  {
+   "episode": null,
+   "asset": "opus-short-3",
+   "kind": "short",
+   "title": "opus short 3",
+   "file": null,
+   "createdAt": "2026-09-27"
+  },
+  {
+   "episode": null,
+   "asset": "opus-short-4",
+   "kind": "short",
+   "title": "opus short 4",
+   "file": null,
+   "createdAt": "2026-09-27"
+  },
+  {
+   "episode": null,
+   "asset": "sa",
+   "kind": "episode",
+   "title": "Spring AI and Claude in 9 Minutes: An MCP Support Agent 🔥",
+   "file": null,
+   "createdAt": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "sa-short-1",
+   "kind": "short",
+   "title": "sa short 1",
+   "file": null,
+   "createdAt": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "sa-short-2",
+   "kind": "short",
+   "title": "sa short 2",
+   "file": null,
+   "createdAt": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "sa-short-3",
+   "kind": "short",
+   "title": "sa short 3",
+   "file": null,
+   "createdAt": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "sa-short-4",
+   "kind": "short",
+   "title": "sa short 4",
+   "file": null,
+   "createdAt": "2026-09-28"
   }
  ]
 }
