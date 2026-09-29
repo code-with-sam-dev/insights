@@ -1985,6 +1985,46 @@
    "title": "dbs short 4",
    "file": null,
    "createdAt": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "srd",
+   "kind": "episode",
+   "title": "Stop Reading the Code? Uncle Bob's Rule, Tested in 8 Minutes 🔥",
+   "file": null,
+   "createdAt": "2026-09-29"
+  },
+  {
+   "episode": null,
+   "asset": "srd-short-1",
+   "kind": "short",
+   "title": "srd short 1",
+   "file": null,
+   "createdAt": "2026-09-29"
+  },
+  {
+   "episode": null,
+   "asset": "srd-short-2",
+   "kind": "short",
+   "title": "srd short 2",
+   "file": null,
+   "createdAt": "2026-09-29"
+  },
+  {
+   "episode": null,
+   "asset": "srd-short-3",
+   "kind": "short",
+   "title": "srd short 3",
+   "file": null,
+   "createdAt": "2026-09-29"
+  },
+  {
+   "episode": null,
+   "asset": "srd-short-4",
+   "kind": "short",
+   "title": "srd short 4",
+   "file": null,
+   "createdAt": "2026-09-29"
   }
  ]
 }

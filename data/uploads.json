@@ -1933,6 +1933,41 @@
    "platform": "youtube",
    "url": "https://youtube.com/shorts/oUpbyQQo0OI",
    "at": "2026-09-28"
+  },
+  {
+   "episode": null,
+   "asset": "srd",
+   "platform": "youtube",
+   "url": "https://youtu.be/d0PoeWQ3g3o",
+   "at": "2026-09-29"
+  },
+  {
+   "episode": null,
+   "asset": "srd-short-1",
+   "platform": "youtube",
+   "url": "https://youtube.com/shorts/bN0JUDqQxTs",
+   "at": "2026-09-29"
+  },
+  {
+   "episode": null,
+   "asset": "srd-short-2",
+   "platform": "youtube",
+   "url": "https://youtube.com/shorts/V25Wt9H0BtU",
+   "at": "2026-09-29"
+  },
+  {
+   "episode": null,
+   "asset": "srd-short-3",
+   "platform": "youtube",
+   "url": "https://youtube.com/shorts/KAEZN65uLgA",
+   "at": "2026-09-29"
+  },
+  {
+   "episode": null,
+   "asset": "srd-short-4",
+   "platform": "youtube",
+   "url": "https://youtube.com/shorts/k48lQn5StSg",
+   "at": "2026-09-29"
   }
  ]
 }
