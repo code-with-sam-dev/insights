@@ -2025,6 +2025,46 @@
    "title": "srd short 4",
    "file": null,
    "createdAt": "2026-09-29"
+  },
+  {
+   "episode": null,
+   "asset": "mpp",
+   "kind": "episode",
+   "title": "I Built a Spring Boot AI Agent That Pays for APIs (MPP) 🔥",
+   "file": "motion/out/mpp/mpp-episode.mp4",
+   "createdAt": "2026-10-11"
+  },
+  {
+   "episode": null,
+   "asset": "mpp-short-1",
+   "kind": "short",
+   "title": "This API refused my Java request until I paid 🔥",
+   "file": "motion/out/mpp/mpp-short-1.mp4",
+   "createdAt": "2026-10-11"
+  },
+  {
+   "episode": null,
+   "asset": "mpp-short-2",
+   "kind": "short",
+   "title": "MCP Doesn't Pay for Your API Calls 🔥",
+   "file": "motion/out/mpp/mpp-short-2.mp4",
+   "createdAt": "2026-10-11"
+  },
+  {
+   "episode": null,
+   "asset": "mpp-short-3",
+   "kind": "short",
+   "title": "My Java AI Agent Paid Twice for One API Call 🔥",
+   "file": "motion/out/mpp/mpp-short-3.mp4",
+   "createdAt": "2026-10-11"
+  },
+  {
+   "episode": null,
+   "asset": "mpp-short-4",
+   "kind": "short",
+   "title": "Give Your AI a Budget, Not a Wallet 🔥",
+   "file": "motion/out/mpp/mpp-short-4.mp4",
+   "createdAt": "2026-10-11"
   }
  ]
 }

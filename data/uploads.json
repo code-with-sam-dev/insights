@@ -1968,6 +1968,82 @@
    "platform": "youtube",
    "url": "https://youtube.com/shorts/k48lQn5StSg",
    "at": "2026-09-29"
+  },
+  {
+   "episode": null,
+   "asset": "mpp",
+   "platform": "youtube",
+   "url": "https://youtu.be/llvwwYixIFM",
+   "at": "2026-10-12"
+  },
+  {
+   "episode": null,
+   "asset": "mpp-short-1",
+   "platform": "youtube",
+   "url": "https://youtube.com/shorts/gQR2ASwRQcA",
+   "at": "2026-10-12"
+  },
+  {
+   "episode": null,
+   "asset": "mpp-short-2",
+   "platform": "youtube",
+   "url": "https://youtube.com/shorts/pO9XzCjeHjo",
+   "at": "2026-10-12"
+  },
+  {
+   "episode": null,
+   "asset": "mpp-short-3",
+   "platform": "youtube",
+   "url": "https://youtube.com/shorts/vtrzPZg-Bgk",
+   "at": "2026-10-12"
+  },
+  {
+   "episode": null,
+   "asset": "mpp-short-4",
+   "platform": "youtube",
+   "url": "https://youtube.com/shorts/J7Q0gWdPEpg",
+   "at": "2026-10-12"
+  },
+  {
+   "episode": null,
+   "asset": "mpp",
+   "platform": "linkedin",
+   "url": "https://www.linkedin.com/company/code-with-sam-dev/posts/",
+   "at": "2026-10-12"
+  },
+  {
+   "episode": null,
+   "asset": "mpp",
+   "platform": "x",
+   "url": "https://x.com/CodeWithSamDev/status/2109543977934303258",
+   "at": "2026-10-12"
+  },
+  {
+   "episode": null,
+   "asset": "mpp",
+   "platform": "facebook",
+   "url": "https://www.facebook.com/profile.php?id=61594191065024",
+   "at": "2026-10-12"
+  },
+  {
+   "episode": null,
+   "asset": "mpp-short-3",
+   "platform": "facebook",
+   "url": "https://www.facebook.com/reel/4035797520063406/",
+   "at": "2026-10-12"
+  },
+  {
+   "episode": null,
+   "asset": "mpp-short-3",
+   "platform": "instagram",
+   "url": "https://www.instagram.com/codewithsamdev/reel/DeYtRBYBGJX/",
+   "at": "2026-10-12"
+  },
+  {
+   "episode": null,
+   "asset": "mpp-short-3",
+   "platform": "tiktok",
+   "at": "2026-10-12"
   }
  ]
 }
